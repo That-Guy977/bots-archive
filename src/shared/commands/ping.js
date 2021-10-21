@@ -3,8 +3,8 @@ import { MessageEmbed } from 'discord.js'
 
 export const command = new Command({
   name: "ping",
-  help: "Pings the bot.",
-  desc: "Gets the bot's latency and heartbeat."
+  desc: "Pings the bot.",
+  help: "Gets the bot's latency and heartbeat."
 }, (client, msg) => {
   const embed = new MessageEmbed()
   .setTitle("Pong!")

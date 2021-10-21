@@ -2,8 +2,8 @@ import { Command, SendError } from '../../shared/structures.js'
 
 export const command = new Command({
   name: "invite",
-  help: "Gives the invite link of the server.",
-  desc: "Gives Japanese 101's invite link."
+  desc: "Gives the invite link of the server.",
+  help: "Gives Japanese 101's invite link."
 }, (client, msg) => {
   if (msg.guild.id !== client.guild.id) return SendError.general.invalidGuild(msg)
   msg.channel.send(

@@ -2,8 +2,8 @@ export default class Command {
   constructor(
     {
       name = "test",
-      help = "Unknown use",
       desc = "Unknown use",
+      help = "Unknown use",
       errr = '\u2757',
       args = [],
       perm = [],

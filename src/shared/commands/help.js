@@ -11,20 +11,20 @@ const order = [
 
 export const command = new Command({
   name: "help",
-  help: "Sends this help embed, or details for the specified command or argument.",
-  desc: "Sends a embed with basic info on each command, or detailed info about a specific command or argument.",
+  desc: "Sends this help embed, or details for the specified command or argument.",
+  help: "Sends a embed with basic info on each command, or detailed info about a specific command or argument.",
   args: [
     {
       name: "command",
-      help: "The command to send info about.",
-      desc: "Sends information about the given command, if provided.",
+      desc: "The command to send info about.",
+      help: "Sends information about the given command, if provided.",
       type: "string",
       req: false
     },
     {
       name: "argument",
-      help: "The argument to send info about.",
-      desc: "Sends information about the given argument of the command, if provided.",
+      desc: "The argument to send info about.",
+      help: "Sends information about the given argument of the command, if provided.",
       type: "string",
       req: false
     }
@@ -40,25 +40,25 @@ export const command = new Command({
   .setTimestamp()
   if (!arg[0]) embed.addFields(commands.map(({ info }, name) => ({
     name: `${client.prefix}${name}`,
-    value: info.help
+    value: info.desc
   })))
   else {
     if (!commands.has(arg[0])) return SendError[thisFile].invalidCommand(msg, arg[0])
     const { info } = commands.get(arg[0])
     if (!arg[1]) {
-      const { name: cmdName, desc, args } = info
+      const { name: cmdName, help, args } = info
       embed
       .setTitle(`${client.prefix}${cmdName} ${args.map(({ name: argName, req }) => (req ? `<${argName}>` : `[${argName}]`)).join(" ")}`)
-      .setDescription(desc)
-      .addFields(args.map(({ name: argName, help, type, req }) => ({
+      .setDescription(help)
+      .addFields(args.map(({ name: argName, desc, type, req }) => ({
         name: `${argName} (${type})`,
-        value: `[${req ? "Required" : "Optional"}] ${help}`
+        value: `[${req ? "Required" : "Optional"}] ${desc}`
       })))
       if (!embed.fields.length) embed.description += `\n\`${client.prefix}${cmdName}\` has no arguments.`
     } else {
       const { args } = info
       if (!args.some(({ name: argName }) => argName === arg[1])) return SendError[thisFile].invalidArgument(msg, arg[0], arg[1])
-      const { name, desc, req } = args.find(({ argName }) => argName === arg[1])
+      const { name, help, req } = args.find(({ argName }) => argName === arg[1])
       embed
       .setTitle(`${client.prefix}${name} ${
         args.map(({ name: argName, req: argReq }) => (
@@ -67,7 +67,7 @@ export const command = new Command({
             : argName === arg[1] ? `__**[${argName}]**__` : `[${argName}]`
         )).join(" ")
       }`)
-      .setDescription(`[${req ? "Required" : "Optional"}] ${desc}`)
+      .setDescription(`[${req ? "Required" : "Optional"}] ${help}`)
     }
   }
   msg.channel.send({ embeds: [embed] })
