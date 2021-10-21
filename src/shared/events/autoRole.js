@@ -1,9 +1,9 @@
-const { Event } = require('../../shared/structures.js')
-const { strCapitalize, genLogs } = require('../../shared/util.js')
-const { evtData } = require('../../shared/config.json')
-const thisFile = require('node:path').basename(__filename, '.js')
+import { Event } from '../../shared/structures.js'
+import { getSource, strCapitalize, genLogs } from '../../shared/util.js'
+import { evtData } from '../../shared/config.js'
+const { thisFile } = getSource(import.meta.url)
 
-module.exports = new Event('guildMemberAdd', (client, member) => {
+export const event = new Event('guildMemberAdd', (client, member) => {
   if (member.guild.id !== client.guild.id) return
   if (client.data.alternate && !client.state.active) return
   const [memberRole, botRole, logChannel] = evtData[thisFile][client.data.guild]

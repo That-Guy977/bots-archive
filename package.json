@@ -1,4 +1,6 @@
 {
+  "name": "japanese101-bots",
+  "type": "module",
   "dependencies": {
     "discord.js": "13",
     "dotenv": "10"

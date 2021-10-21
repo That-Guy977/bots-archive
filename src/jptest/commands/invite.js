@@ -1,6 +1,6 @@
-const { Command, SendError } = require('../../shared/structures.js')
+import { Command, SendError } from '../../shared/structures.js'
 
-module.exports = new Command({
+export const command = new Command({
   name: "invite",
   help: "Gives the invite link of the server.",
   desc: "Gives Japanese 101's invite link."

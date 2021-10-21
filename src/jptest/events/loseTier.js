@@ -1,7 +1,6 @@
-const { Event } = require('../../shared/structures.js')
-const { updatePremium } = require('../../shared/util.js')
-const { MessageEmbed } = require('discord.js')
-
+import { Event } from '../../shared/structures.js'
+import { updatePremium } from '../../shared/util.js'
+import { MessageEmbed } from 'discord.js'
 const tiers = {
   NONE: 0,
   TIER_1: 1,
@@ -9,7 +8,7 @@ const tiers = {
   TIER_3: 3
 }
 
-module.exports = new Event('guildUpdate', (client, _oldGuild, guild) => {
+export const event = new Event('guildUpdate', (client, _oldGuild, guild) => {
   if (guild.id !== client.guild.id) return
   if (!client.state.active) return updatePremium(client)
   if (guild.premiumTier >= client.state.premium.premiumTier) return

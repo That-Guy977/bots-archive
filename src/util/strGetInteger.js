@@ -1,4 +1,4 @@
-function strGetInteger(str) {
+export default function strGetInteger(str) {
   if (!/^-?(?:0[xbo])?\d+n?$/.test(str)) return null
   const [absInt] = str.match(/(?<=^-?)[\dxbo]+(?=n?$)/)
   const isBigInt = /n$/.test(str)
@@ -11,5 +11,3 @@ function strGetInteger(str) {
     )
   )
 }
-
-module.exports = strGetInteger

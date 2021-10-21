@@ -1,7 +1,7 @@
-const { Command, SendError } = require('../../shared/structures.js')
-const { MessageEmbed } = require('discord.js')
-const thisFile = require('node:path').basename(__filename, '.js')
-
+import { Command, SendError } from '../../shared/structures.js'
+import { getSource } from '../../shared/util.js'
+import { MessageEmbed } from 'discord.js'
+const { thisFile } = getSource(import.meta.url)
 const order = [
   "help",
   "ping",
@@ -9,7 +9,7 @@ const order = [
   "delsigma"
 ]
 
-module.exports = new Command({
+export const command = new Command({
   name: "help",
   help: "Sends this help embed, or details for the specified command or argument.",
   desc: "Sends a embed with basic info on each command, or detailed info about a specific command or argument.",

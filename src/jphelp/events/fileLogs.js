@@ -1,7 +1,6 @@
-const { Event } = require('../../shared/structures.js')
-const { strCapitalize } = require('../../shared/util.js')
-const { MessageEmbed, MessageAttachment } = require('discord.js')
-
+import { Event } from '../../shared/structures.js'
+import { strCapitalize } from '../../shared/util.js'
+import { MessageEmbed, MessageAttachment } from 'discord.js'
 const maxSizes = {
   NONE: 8388608,
   TIER_1: 8388608,
@@ -9,7 +8,7 @@ const maxSizes = {
   TIER_3: 104857600
 }
 
-module.exports = new Event('messageCreate', (client, msg) => {
+export const event = new Event('messageCreate', (client, msg) => {
   if (msg.author.bot) return
   if (msg.guild?.id !== client.guild.id) return
   const channel = client.getChannel('file-logs')

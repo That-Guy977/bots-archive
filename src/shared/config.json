@@ -12,7 +12,7 @@
         "mee6": "159985870458322944",
         "rroles": "550613223733329920",
         "kotoba": "251239170058616833",
-        "sora" : "750260711460175894"
+        "sora": "750260711460175894"
       },
       "guilds": {
         "jp101": "778426035141869620",
@@ -88,7 +88,7 @@
   },
   "evtData": {
     "botPresence": {
-      "jp101": [ true, null, [
+      "jp101": [true, null, [
         "dyno",
         "sigma",
         "mee6",
@@ -96,14 +96,14 @@
         "kotoba",
         "sora"
       ]],
-      "pain": [ false, "RED", [
+      "pain": [false, "RED", [
         "jphelp",
         "jptest"
       ]]
     },
     "autoRole": {
-      "jp101": [ null, "bots", "role-logs" ],
-      "pain": [ "member", "bot", null ]
+      "jp101": [null, "bots", "role-logs"],
+      "pain": ["member", "bot", null]
     }
   }
 }

@@ -1,6 +1,6 @@
-const { BitField, DataManager } = require('discord.js')
+import { BitField, DataManager } from 'discord.js'
 
-function isJson(strc) {
+export default function isJson(strc) {
   return !!(
     strc
     && typeof strc === 'object'
@@ -8,5 +8,3 @@ function isJson(strc) {
     && ![Array, Map, Date, BitField, DataManager].some((c) => strc instanceof c)
   )
 }
-
-module.exports = isJson

@@ -1,4 +1,4 @@
-class Command {
+export default class Command {
   constructor(
     {
       name = "test",
@@ -28,5 +28,3 @@ class Command {
     this.run = run
   }
 }
-
-module.exports = Command

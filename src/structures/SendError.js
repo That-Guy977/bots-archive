@@ -1,6 +1,6 @@
-const { getShortStructure, strCapitalize } = require('../shared/util.js')
+import { getShortStructure, strCapitalize } from '../shared/util.js'
 
-function SendError(msg, str) {
+export default function SendError(msg, str) {
   msg.channel.send(
     str.length <= 2000 ? {
       content: str,
@@ -65,5 +65,3 @@ SendError.delsigma = {
 SendError.genInvite = {
   invalidChannel: (msg, id) => SendError(msg, `${id} is not a valid channel.`)
 }
-
-module.exports = SendError

@@ -1,7 +1,7 @@
-const isJson = require('./isJson.js')
-const { BitField, DataManager } = require('discord.js')
+import isJson from './isJson.js'
+import { BitField, DataManager } from 'discord.js'
 
-function getShortStructure(strc) {
+export default function getShortStructure(strc) {
   if (strc?.constructor?.name === 'Object' && !Object.entries(strc).length) return "{}"
   if (isJson(strc)) return strc.id ? `${strc.constructor.name}{ id: "${strc.id}" }` : strc.constructor.name
   if (typeof strc === 'string') return `"${strc.replace(/```/g, "`\u200B`\u200B`")}"`
@@ -13,5 +13,3 @@ function getShortStructure(strc) {
   if (strc && !strc.constructor) return "{ null }"
   return `${strc}`
 }
-
-module.exports = getShortStructure

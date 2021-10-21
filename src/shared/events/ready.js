@@ -1,7 +1,7 @@
-const { Event } = require('../../shared/structures.js')
-const { MessageEmbed } = require('discord.js')
+import { Event } from '../../shared/structures.js'
+import { MessageEmbed } from 'discord.js'
 
-module.exports = new Event('ready', (client) => {
+export const event = new Event('ready', (client) => {
   console.log(`Logged in as ${client.user.tag}`)
   client.channel.send({ embeds: [
     new MessageEmbed()

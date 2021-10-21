@@ -1,4 +1,4 @@
-class Event {
+export default class Event {
   constructor(
     name = 'ready',
     run = () => console.log(`Event ${name} triggered.`)
@@ -7,5 +7,3 @@ class Event {
     this.run = run
   }
 }
-
-module.exports = Event

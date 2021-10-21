@@ -1,9 +1,10 @@
-const { Event } = require('../../shared/structures.js')
-const { evtData } = require('../config.json')
-const { MessageEmbed } = require('discord.js')
-const thisFile = require('node:path').basename(__filename, '.js')
+import { Event } from '../../shared/structures.js'
+import { getSource } from '../../shared/util.js'
+import { evtData } from '../config.js'
+import { MessageEmbed } from 'discord.js'
+const { thisFile } = getSource(import.meta.url)
 
-module.exports = new Event('presenceUpdate', async (client, oldPresence, presence) => {
+export const event = new Event('presenceUpdate', async (client, oldPresence, presence) => {
   if (presence.guild.id !== client.guild.id) return
   if (client.data.alternate && !client.state.active) return
   if (isOnline(presence) === isOnline(oldPresence)) return

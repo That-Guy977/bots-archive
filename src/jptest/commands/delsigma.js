@@ -1,7 +1,8 @@
-const { Command, SendError } = require('../../shared/structures.js')
-const thisFile = require('node:path').basename(__filename, '.js')
+import { Command, SendError } from '../../shared/structures.js'
+import { getSource } from '../../shared/util.js'
+const { thisFile } = getSource(import.meta.url)
 
-module.exports = new Command({
+export const command = new Command({
   name: "delsigma",
   help: "Deletes recent messages from Apex Sigma in the channel it's used in.",
   desc: "Finds and deletes past messages from Apex Sigma in the channel it's used in. Checks up to 50 past messages.",

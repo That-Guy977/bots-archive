@@ -1,15 +1,14 @@
-const { Command, SendError } = require('../../shared/structures.js')
-const {
+import { Command, SendError } from '../../shared/structures.js'
+import {
   isPrimitive, isSnowflake, isToken,
-  getStructure, getShortChain,
+  getSource, getStructure, getShortChain,
   strIsPrimitive, strGetPrimitive, strEscapeMention
-} = require('../../shared/util.js')
-const thisFile = require('node:path').basename(__filename, '.js')
-
+} from '../../shared/util.js'
+const { thisFile } = getSource(import.meta.url)
 const types = ["guild", "channel", "user", "member", "role", "message"]
 const altVal = ["this", "reply"]
 
-module.exports = new Command({
+export const command = new Command({
   name: "getdata",
   perm: ['ADMINISTRATOR'],
   indm: false,

@@ -1,7 +1,7 @@
-const { Command } = require('../../shared/structures.js')
-const { MessageEmbed } = require('discord.js')
+import { Command } from '../../shared/structures.js'
+import { MessageEmbed } from 'discord.js'
 
-module.exports = new Command({
+export const command = new Command({
   name: "ping",
   help: "Pings the bot.",
   desc: "Gets the bot's latency and heartbeat."

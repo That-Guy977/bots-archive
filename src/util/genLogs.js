@@ -1,6 +1,6 @@
-const strCapitalize = require('./strCapitalize.js')
+import strCapitalize from './strCapitalize.js'
 
-async function genLogs(client, id, data, match) {
+export default async function genLogs(client, id, data, match) {
   if (!client.data.logs) return
   const dynoOnline = await client.getMember('dyno').then((m) => m.presence?.status ?? 'offline') !== 'offline'
   data.logs = dynoOnline ? "Pending..." : "N/A - Dyno offline"
@@ -32,5 +32,3 @@ async function genLogs(client, id, data, match) {
 function updateLogs(msg, val) {
   msg.edit(msg.content.replace(/^(?<header>Logs +): .+/m, `$<header>: ${val}`))
 }
-
-module.exports = genLogs

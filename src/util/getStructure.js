@@ -1,8 +1,8 @@
-const isJson = require('./isJson.js')
-const getShortStructure = require('./getShortStructure.js')
-const { BitField, DataManager } = require('discord.js')
+import isJson from './isJson.js'
+import getShortStructure from './getShortStructure.js'
+import { BitField, DataManager } from 'discord.js'
 
-function getStructure(strc) {
+export default function getStructure(strc) {
   let str = ""
   switch (strc?.constructor?.name) {
     case 'String': {
@@ -46,5 +46,3 @@ function getStructure(strc) {
   }
   return str
 }
-
-module.exports = getStructure

@@ -1,8 +1,7 @@
-const strGetInteger = require('./strGetInteger.js')
-
+import strGetInteger from './strGetInteger.js'
 const primitive = [true, false, null, undefined]
 
-function strGetPrimitive(str) {
+export default function strGetPrimitive(str) {
   return (
     primitive.some((e) => str === e.toString()) ? primitive.find((e) => str === e.toString())
     : /^(?<quote>["'])(?!.*?(?<!\\)\k<quote>.).*(?<!\\)\k<quote>$/.test(str) ? str.replace(/^.|.$|\\(?<quote>["'])/g, "$<quote>")
@@ -10,5 +9,3 @@ function strGetPrimitive(str) {
     : null
   )
 }
-
-module.exports = strGetPrimitive

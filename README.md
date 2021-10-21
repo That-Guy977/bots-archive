@@ -1,1 +1,1 @@
-Utility bots
+Utility bots for Japanese 101

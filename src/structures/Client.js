@@ -1,8 +1,8 @@
-const { isSnowflake } = require('../shared/util.js')
-const { botData, cmdData } = require('../shared/config.json')
-const { Client: DiscordClient, Collection } = require('discord.js')
+import { isSnowflake } from '../shared/util.js'
+import { botData, cmdData } from '../shared/config.js'
+import { Client as DiscordClient, Collection } from 'discord.js'
 
-module.exports = class Client extends DiscordClient {
+export default class Client extends DiscordClient {
   constructor(options, source) {
     super(options)
     this.token = process.env[`TOKEN_${source.toUpperCase()}`]

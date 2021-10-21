@@ -1,6 +1,6 @@
-const { Command } = require('../../shared/structures.js')
+import { Command } from '../../shared/structures.js'
 
-module.exports = new Command({
+export const command = new Command({
   name: "end",
   perm: ['ADMINISTRATOR'],
   hide: true

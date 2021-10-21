@@ -1,5 +1,7 @@
-const { cmdData } = require('../shared/config.json')
-const source = __dirname.slice(__dirname.lastIndexOf("/") + 1)
+import { cmdData } from '../shared/config.js'
+import { getSource } from '../shared/util.js'
+import init from '../shared/init.js'
+const { source } = getSource(import.meta.url)
 const options = {
   intents: [
     'GUILDS',
@@ -22,4 +24,4 @@ const options = {
   retryLimit: 10
 }
 
-require('../shared/init.js')(options, source)
+init(options, source)

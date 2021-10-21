@@ -1,10 +1,11 @@
-const { Event, SendError } = require('../../shared/structures.js')
-const { hasPerm } = require('../../shared/util.js')
-const { botData } = require('../../shared/config.json')
-const { Permissions: { FLAGS: PFlags } } = require('discord.js')
-const thisFile = require('node:path').basename(__filename, '.js')
+import { Event, SendError } from '../../shared/structures.js'
+import { getSource, hasPerm } from '../../shared/util.js'
+import { botData } from '../../shared/config.js'
+import { Permissions } from 'discord.js'
+const { FLAGS: PFlags } = Permissions
+const { thisFile } = getSource(import.meta.url)
 
-module.exports = new Event('messageCreate', async (client, msg) => {
+export const event = new Event('messageCreate', async (client, msg) => {
   if (msg.author.bot || !msg.content.startsWith(client.prefix)) return
   const [cmd, ...arg] = msg.content.trim().slice(client.prefix.length).split(/\s+/)
   if (!client.commands.has(cmd.toLowerCase())) return
