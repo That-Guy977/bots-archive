@@ -1,6 +1,6 @@
 import { Event } from '../../shared/structures.js'
 import { getSource } from '../../shared/util.js'
-import { evtData } from '../config.js'
+import { evtData } from '../../shared/config.js'
 import { MessageEmbed } from 'discord.js'
 const { thisFile } = getSource(import.meta.url)
 
