@@ -50,11 +50,6 @@ SendError.getdata = {
   invalidGetMessage: (msg) => SendError(msg, "The specified channel is not a text-based channel.")
 }
 
-SendError.ignore = {
-  authorIgnored: (msg) => SendError(msg, "You are already being ignored."),
-  userIgnored: (msg, user) => SendError(msg, `${user} is already being ignored.`)
-}
-
 SendError.delsigma = {
   invalidNumber: (msg, num) => SendError(msg, `\`${num}\` is not a valid number.`),
   numberTooLarge: (msg) => SendError(msg, "Cannot delete more than 20 messages."),
