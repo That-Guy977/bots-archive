@@ -12,7 +12,7 @@ const order = [
 export const command = new Command({
   name: "help",
   desc: "Sends this help embed, or details for the specified command or argument.",
-  help: "Sends a embed with basic info on each command, or detailed info about a specific command or argument.",
+  help: "Sends an embed with basic info on each command, or detailed info about a specific command or argument.",
   args: [
     {
       name: "command",
