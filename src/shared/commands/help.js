@@ -34,9 +34,9 @@ export const command = new Command({
   .filter(({ info }) => !info.hide && !info.test)
   .sort((cmdA, cmdB) => order.indexOf(cmdA.info.name) - order.indexOf(cmdB.info.name))
   const embed = new MessageEmbed()
-  .setTitle("Japanese 101 Help Commands")
+  .setTitle(`${client.user.username} Commands`)
   .setColor(client.color)
-  .setFooter(`Requested by ${msg.author.tag}.`, msg.author.displayAvatarURL())
+  .setFooter(`Requested by ${msg.author.tag}.${"slash" in client ? " | Use /help to see Slash Commands." : ""}`, msg.author.displayAvatarURL())
   .setTimestamp()
   if (!arg[0]) embed.addFields(commands.map(({ info }, name) => ({
     name: `${client.prefix}${name}`,
