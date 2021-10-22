@@ -9,7 +9,7 @@ const types = {
   NUMBER: 10
 }
 
-export default class SlashCommand {
+export default class Slash {
   constructor(
     {
       name = "test",

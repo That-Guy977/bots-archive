@@ -14,17 +14,19 @@ const commands = {
   guild: []
 }
 
-for (const file of await readdir(`./slashCommands`).then((files) => files.filter((f) => f.endsWith(".js")))) {
-  const { command } = await import(file)
+for (const file of await readdir(`../jphelp/slash`).then((files) => files.filter((f) => f.endsWith(".js")))) {
+  const { command } = await import(`../jphelp/slash/${file}`)
   commands[command.info.isGlobal ? "global" : "guild"].push(command.structure)
 }
 
-rest.put(
-  Routes.applicationCommands(botData.ids.users[source]),
-  { body: commands.global }
-)
+if (commands.global.length)
+  rest.put(
+    Routes.applicationCommands(botData.ids.users[source]),
+    { body: commands.global }
+  )
 
-rest.put(
-  Routes.applicationGuildCommands(botData.ids.users[source], botData.ids.guilds['jp101']),
-  { body: commands.guild }
-)
+if (commands.guild.length)
+  rest.put(
+    Routes.applicationGuildCommands(botData.ids.users[source], botData.ids.guilds['jp101']),
+    { body: commands.guild }
+  )
