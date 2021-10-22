@@ -56,7 +56,3 @@ SendError.delsigma = {
   numberTooSmall: (msg) => SendError(msg, "Cannot delete less than 1 message."),
   noMessages: (msg) => SendError(msg, "No messages found to delete.")
 }
-
-SendError.genInvite = {
-  invalidChannel: (msg, id) => SendError(msg, `${id} is not a valid channel.`)
-}
