@@ -6,25 +6,21 @@ export default class Client extends DiscordClient {
   constructor(options, source) {
     super(options)
     this.token = process.env[`TOKEN_${source.toUpperCase()}`]
-    this.state = {}
     this.data = botData.data[source]
     this.color = botData.color[source]
     this.prefix = cmdData.prefix[source]
-    this.commands = new Collection()
-    this.events = new Collection()
   }
+
+  state = {}
+  commands = new Collection()
+  events = new Collection()
+
+  get guild() { return this.getGuild(this.data.guild) }
+  get channel() { return this.getChannel(this.data.channel) }
 
   login() {
     super.login(this.token)
     return this
-  }
-
-  get guild() {
-    return this.getGuild(this.data.guild)
-  }
-
-  get channel() {
-    return this.getChannel(this.data.channel)
   }
 
   getGuild(id) {
