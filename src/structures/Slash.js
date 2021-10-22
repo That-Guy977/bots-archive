@@ -37,7 +37,7 @@ export default class Slash {
         name: option.name,
         description: option.desc,
         type: types[option.type],
-        required: option.req
+        required: option.required
       }))
     }
 
