@@ -5,7 +5,7 @@ export const command = new Command({
   desc: "Gives the invite link of the server.",
   help: "Gives Japanese 101's invite link."
 }, (client, msg) => {
-  if (msg.guild.id !== client.guild.id) return SendError.general.invalidGuild(msg)
+  if (msg.guild && msg.guild.id !== client.guild.id) return SendError.general.invalidGuild(msg)
   msg.channel.send(
     `**Invite link of ${
       msg.guild.name
