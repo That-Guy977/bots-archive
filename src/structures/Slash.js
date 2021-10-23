@@ -38,7 +38,7 @@ export default class Slash {
         description: option.desc,
         type: types[option.type],
         required: option.required,
-        choices: option.choices
+        ...option.restraints
       }))
     }
 
