@@ -36,7 +36,7 @@ export const command = new Command({
   const embed = new MessageEmbed()
   .setTitle(`${client.user.username} Commands`)
   .setColor(client.color)
-  .setFooter(`Requested by ${msg.author.tag}.${"slash" in client ? " | Use /help to see Slash Commands." : ""}`, msg.author.displayAvatarURL())
+  .setFooter(`Requested by ${msg.author.tag}.${"slash" in client ? " | Type / to see Slash Commands." : ""}`, msg.author.displayAvatarURL())
   .setTimestamp()
   if (!arg[0]) embed.addFields(commands.map(({ info }, name) => ({
     name: `${client.prefix}${name}`,
