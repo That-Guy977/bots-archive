@@ -3,5 +3,5 @@ import mongoose from 'mongoose'
 
 export const event = new Event('ready', () => {
   // not connecting
-  mongoose.connect(/* ??? */)
+  mongoose.connect(/* ??? */).then(console.log)
 })
