@@ -28,6 +28,6 @@ init(options, source)
 
 /**
  * //-- to test
+ * guildMemberUpdate - gain level
  * guildUpdate - lose level
- * guildMemberUpdate - boost, gain level
  */
