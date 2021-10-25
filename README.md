@@ -15,3 +15,7 @@ Create a `.env` file to store Discord tokens and MongoDB passwords in the format
 ### Registering Slash Commands
 
 To use slash commands where offered, `cd` into the desired folder and run `node deploy` in console. This must also be run to add new commands.
+
+### Contact
+
+You may contact me at `That_Guy977#5882` on Discord, or in the `Japanese101` Discord server at https://discord.gg/jp101.
