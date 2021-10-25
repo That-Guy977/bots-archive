@@ -16,7 +16,7 @@ export const event = new Event('ready', async (client) => {
     if (await client.getMember(id).then((m) => m.presence?.status ?? 'offline') === 'offline')
       client.state.offline.push(client.resolveId(id, 'users'))
   updatePremium(client)
-  client.db = await mongoose.connect(
+  client.database = await mongoose.connect(
     `mongodb+srv://japanese101db.mcpc1.mongodb.net`,
     { auth: { username: `MONGO_${client.source}`, password: process.env[`MONGO_${client.source}`] }, dbName: "Japanese101DB" }
   )
