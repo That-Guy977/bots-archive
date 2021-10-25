@@ -24,7 +24,12 @@ const botData = {
         "mod-logs": "805444415443173376",
         "file-logs": "808218683288584232",
         "role-logs": "805443587574988810",
-        "mod-test": "779380025299959829"
+        "mod-test": "779380025299959829",
+        "nihongo-center": "778965985360609290",
+        "q-a": "778855628725813258",
+        "wotd-n4": "787856481209810994",
+        "wotd-n3": "787857267310985236",
+        "wotd-n2": "787857545975955466"
       },
       "pain": {
         "general": "847292548589289513"
@@ -33,6 +38,7 @@ const botData = {
     "roles": {
       "jp101": {
         "mod": "778434956891783170",
+        "contributor": "813758503113457675",
         "bots": "778961297987207208",
         "trusted": "801679146060742676"
       },
@@ -83,7 +89,13 @@ const cmdData = {
     "jphelp": "h!",
     "jptest": "t!",
     "omega": "o!"
-  }
+  },
+  "nc-manage-exempt": [
+    "q-a",
+    "wotd-n4",
+    "wotd-n3",
+    "wotd-n2"
+  ]
 }
 const evtData = {
   "botPresence": {
