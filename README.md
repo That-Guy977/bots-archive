@@ -18,4 +18,4 @@ To use slash commands where offered, `cd` into the desired folder and run `node 
 
 ### Contact
 
-You can contact me at `That_Guy977#5882` on Discord, or in the `Japanese101` Discord server at https://discord.gg/jp101.
+You can contact me at `That_Guy977#5882` on Discord, or in the `Japanese 101` Discord server at https://discord.gg/jp101.
