@@ -2,13 +2,13 @@
   "name": "japanese101-bots",
   "type": "module",
   "dependencies": {
-    "@discordjs/rest": "",
-    "discord-api-types": "",
-    "discord.js": "13",
-    "dotenv": "10",
-    "mongoose": "6"
+    "@discordjs/rest": "^0.1.0",
+    "discord-api-types": "^0.24.0",
+    "discord.js": "^13.2.0",
+    "dotenv": "^10.0.0",
+    "mongoose": "^6.0.12"
   },
   "devDependencies": {
-    "eslint": "8"
+    "eslint": "^8.0.1"
   }
 }
