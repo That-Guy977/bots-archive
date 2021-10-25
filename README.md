@@ -6,7 +6,7 @@ Install a version of Node.js [here](https://nodejs.org/en/ "Download Node.js") t
 
 Run `npm i` in console to install all necessary packages.
 
-Create a `.env` file to store tokens, and replace `ids` in `src/shared/config.js` or `src/shared/config.json` to desired IDs.
+Create a `.env` file to store Discord tokens and MongoDB passwords in the format `TOKEN_SOURCE` and `MONGO_SOURCE`, with `SOURCE` being the source of the bot. 
 
 ### Running Bots
 
