@@ -5,8 +5,8 @@ import { Client as DiscordClient, Collection } from 'discord.js'
 export default class Client extends DiscordClient {
   constructor(options, source) {
     super(options)
-    this.source = source
-    this.token = process.env[`TOKEN_${source.toUpperCase()}`]
+    this.source = source.toUpperCase()
+    this.token = process.env[`TOKEN_${this.source}`]
     this.data = botData.data[source]
     this.color = botData.color[source]
     this.prefix = cmdData.prefix[source]
