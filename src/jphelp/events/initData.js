@@ -17,16 +17,14 @@ export const event = new Event('ready', async (client) => {
     if (await client.getMember(id).then((m) => m.presence?.status ?? 'offline') === 'offline')
       client.state.offline.push(client.resolveId(id, 'users'))
   updatePremium(client)
-  client.database = await mongoose.connect(
+  client.mongoose = await mongoose.connect(
     `mongodb+srv://japanese101db.mcpc1.mongodb.net`,
     { auth: { username: `MONGO_${client.source}`, password: process.env[`MONGO_${client.source}`] }, dbName: "Japanese101DB" }
   )
-  client.models = {
-    ncMsgLink: mongoose.model("nc_msglink", new Schema({
-      _id: String,
-      firstMsg: { type: String, default: null },
-      linkMsg: { type: String, default: null },
-      user: { type: String, default: null }
-    }, { versionKey: false }))
-  }
+  mongoose.model("nc_msglink", new Schema({
+    _id: String,
+    firstMsg: { type: String, default: null },
+    linkMsg: { type: String, default: null },
+    user: { type: String, default: null }
+  }, { versionKey: false }))
 })
