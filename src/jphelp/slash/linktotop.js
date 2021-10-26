@@ -32,7 +32,7 @@ export const command = new Slash({
       const msgs = await cmd.channel.messages.fetch({ limit: 100, before: doc.firstMsg })
       doc.firstMsg = msgs.lastKey()
       if (msgs.size < 100) break
-      if (i === 4) return recieveFirstMsg(cmd)
+      if (i === 4) return recieveFirstMsg(cmd, doc)
     }
     doc.save()
   }
@@ -52,4 +52,20 @@ function recieveFirstMsg(cmd, doc) {
   cmd.reply({ content: "More than 500 messages found, please provide a message ID manually.", ephemeral: true })
   doc.firstMsg = null
   // add collector logic for message id
+  cmd.channel.awaitMessages({
+    // update filter
+    filter: (msg) => msg.author.id === cmd.user.id,
+    max: 1,
+    // change time to 30000 after testing
+    time: 5000,
+    errors: ['time']
+  }).then((coll) => {
+    // add recieving logic
+    const msg = coll.first()
+  }).catch(() => {
+    // figure out how to check for the ephemeral message getting deleted
+    // might followUp instead if deleted
+    cmd.editReply("More than 500 messages found, please provide a message ID manually.\nNo valid message ID recieved, cancelling command.")
+    doc.save()
+  })
 }
