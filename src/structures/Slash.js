@@ -1,4 +1,4 @@
-const optionTypes = {
+const types = {
   STRING: 3,
   INTEGER: 4,
   BOOLEAN: 5,
@@ -7,10 +7,6 @@ const optionTypes = {
   ROLE: 8,
   MENTIONABLE: 9,
   NUMBER: 10
-}
-const permissionTypes = {
-  ROLE: 1,
-  USER: 2
 }
 
 export default class Slash {
@@ -21,8 +17,6 @@ export default class Slash {
       help = "Unknown use",
       options = [],
       isGlobal = true,
-      enabled = true,
-      permissions = [],
       test = false
     },
     run = (_client, cmd) => cmd.reply("This command does not have functionality.")
@@ -33,7 +27,6 @@ export default class Slash {
       help,
       options,
       isGlobal,
-      enabled,
       test
     }
 
@@ -43,18 +36,11 @@ export default class Slash {
       options: options.map((option) => ({
         name: option.name,
         description: option.desc,
-        type: optionTypes[option.type],
+        type: types[option.type],
         required: option.required,
         ...option.restraints
-      })),
-      default_permission: enabled
+      }))
     }
-
-    this.permissions = !isGlobal && permissions?.length ? permissions.map((permission) => ({
-      id: permission.id,
-      type: permissionTypes[permission.type],
-      permission: permission.allow
-    })) : null
 
     this.run = run
   }
