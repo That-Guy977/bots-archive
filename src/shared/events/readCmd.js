@@ -1,9 +1,8 @@
-import { Event, SendError } from '../../shared/structures.js'
-import { getSource, hasPerm } from '../../shared/util.js'
+import { Event } from '../../shared/structures.js'
+import { hasPerm } from '../../shared/util.js'
 import { botData } from '../../shared/config.js'
 import { Permissions } from 'discord.js'
 const { FLAGS: PFlags } = Permissions
-const { thisFile } = getSource(import.meta.url)
 
 export const event = new Event('messageCreate', async (client, msg) => {
   if (msg.author.bot || !msg.content.startsWith(client.prefix)) return
@@ -13,7 +12,7 @@ export const event = new Event('messageCreate', async (client, msg) => {
   if (msg.author.id === botData.ids.users['main']) return run(client, msg, arg)
   if (info.test) return
   if (!info.indm && msg.channel.type === 'DM')
-    return info.hide ? null : SendError[thisFile].invalidChannel(msg)
+    return info.hide ? null : msg.channel.send("This command is not available in Direct Messages.")
   const { channel } = msg
   if (!await hasPerm(client, {
     isClient: false,
@@ -24,9 +23,9 @@ export const event = new Event('messageCreate', async (client, msg) => {
     data: info.perm
   }))
     return info.hide ? null
-      : hasPerm(client, { data: { channel, permission: PFlags.SEND_MESSAGES } }) ? SendError.general.insufficientPerms(msg)
+      : hasPerm(client, { data: { channel, permission: PFlags.SEND_MESSAGES } }) ? msg.channel.send("You don't have permission to do that!")
       : hasPerm(client, { data: { channel, permission: PFlags.ADD_REACTIONS } }) ? msg.react(info.errr) : null
   if (info.args.filter((a) => a.req).length > arg.length)
-    return SendError[thisFile].requiredArgs(msg, info.args[arg.length].name)
+    return msg.channel.send(`Argument \`${info.args[arg.length].name}\` is required for this command.`)
   run(client, msg, arg)
 })
