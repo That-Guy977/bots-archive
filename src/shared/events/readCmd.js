@@ -1,5 +1,4 @@
 import { Event } from '../../shared/structures.js'
-import { hasPerm } from '../../shared/util.js'
 import { botData } from '../../shared/config.js'
 import { Permissions } from 'discord.js'
 const { FLAGS: PFlags } = Permissions
@@ -29,3 +28,13 @@ export const event = new Event('messageCreate', async (client, msg) => {
     return msg.channel.send(`Argument \`${info.args[arg.length].name}\` is required for this command.`)
   run(client, msg, arg)
 })
+
+function hasPerm(client, {
+  isClient = true,
+  user = client,
+  data
+}) {
+  return isClient
+    ? data.channel.type === 'DM' || data.channel.permissionsFor(client.user).has([PFlags.VIEW_CHANNEL, PFlags.READ_MESSAGE_HISTORY, data.permission])
+    : data.every((perm) => user.id === perm || user.roles.cache.has(perm) || user.permissions.has(perm))
+}

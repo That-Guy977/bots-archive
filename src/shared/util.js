@@ -16,5 +16,4 @@ export { default as strEscapeMention } from '../util/strEscapeMention.js'
 
 export { default as updatePremium } from '../util/updatePremium.js'
 export { default as updatePresence } from '../util/updatePresence.js'
-export { default as hasPerm } from '../util/hasPerm.js'
 export { default as genLogs } from '../util/genLogs.js'
