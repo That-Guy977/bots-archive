@@ -89,19 +89,18 @@ export const command = new Command({
     } catch { return SendError[thisFile].invalidId(msg, type, id) }
   }
   const pchain = [type]
-  while (arg.length) {
-    const cur = arg.shift()
+  for (const prop of arg) {
     if (strc === undefined) return SendError[thisFile].propUndefined(msg, getShortChain(pchain))
-    if (cur === 'token' && isToken(strc?.[cur])) return SendError[thisFile].propToken(msg)
-    if (isPrimitive(strc) && strc?.[cur] === undefined) return SendError[thisFile].propPrimitive(msg, getShortChain(pchain), strc)
-    if (/^\w+$/.test(cur)) {
-      pchain.push(cur)
-      if (['entries', 'keys', 'values'].includes(cur) && strc instanceof Map) {
-        strc = [...strc[cur]()]
+    if (prop === 'token' && isToken(strc?.[prop])) return SendError[thisFile].propToken(msg)
+    if (isPrimitive(strc) && strc?.[prop] === undefined) return SendError[thisFile].propPrimitive(msg, getShortChain(pchain), strc)
+    if (/^\w+$/.test(prop)) {
+      pchain.push(prop)
+      if (['entries', 'keys', 'values'].includes(prop) && strc instanceof Map) {
+        strc = [...strc[prop]()]
         pchain[pchain.length - 1] += "()"
-      } else strc = strc[cur]
-    } else if (/^\w+\(.*\)$/.test(cur)) {
-      const { func, paramList } = cur.match(/^(?<func>\w+)\((?<paramList>.*)\)$/).groups
+      } else strc = strc[prop]
+    } else if (/^\w+\(.*\)$/.test(prop)) {
+      const { func, paramList } = prop.match(/^(?<func>\w+)\((?<paramList>.*)\)$/).groups
       pchain.push(func)
       if (strc[func] === undefined) return SendError[thisFile].propUndefined(msg, getShortChain(pchain))
       if (typeof strc[func] !== 'function') return SendError[thisFile].propNotMethod(msg, getShortChain(pchain))
@@ -115,7 +114,7 @@ export const command = new Command({
         strc = await strc[func](...params)
       } catch (err) { return SendError[thisFile].methodError(msg, getShortChain(pchain), `${err}`) }
     } else {
-      return SendError[thisFile].invalidAccess(msg, cur)
+      return SendError[thisFile].invalidAccess(msg, prop)
     }
   }
   const res = getStructure(strc)
