@@ -1,3 +1,8 @@
+const commandTypes = {
+  CHAT_INPUT: 1,
+  USER: 2,
+  MESSAGE: 3
+}
 const optionTypes = {
   STRING: 3,
   INTEGER: 4,
@@ -13,31 +18,38 @@ const permissionTypes = {
   USER: 2
 }
 
-export default class Slash {
+export default class ApplicationCommand {
   constructor(
     {
+      type = "CHAT_INPUT",
       name = "test",
       desc = "Unknown use",
-      help = "Unknown use",
       options = [],
       isGlobal = true,
       enabled = true,
       permissions = [],
       test = false
     },
-    run = (_client, cmd) => cmd.reply("This command does not have functionality.")
+    run = (_client, cmd) => cmd.reply({ content: "This command does not have functionality.", ephemeral: true })
   ) {
-    this.info = {
+    this.info = type === "CHAT_INPUT" ? {
+      type,
       name,
       desc,
-      help,
       options,
+      isGlobal,
+      enabled,
+      test
+    } : {
+      type,
+      name,
       isGlobal,
       enabled,
       test
     }
 
-    this.structure = {
+    this.structure = type === "CHAT_INPUT" ? {
+      type: commandTypes[type],
       name,
       description: desc,
       options: options.map((option) => ({
@@ -47,6 +59,11 @@ export default class Slash {
         required: option.required,
         ...option.restraints
       })),
+      default_permission: enabled
+    } : {
+      type: commandTypes[type],
+      name,
+      description: "",
       default_permission: enabled
     }
 

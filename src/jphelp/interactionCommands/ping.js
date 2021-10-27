@@ -1,7 +1,7 @@
-import { Slash } from '../../shared/structures.js'
+import { ApplicationCommand } from '../../shared/structures.js'
 import { MessageEmbed } from 'discord.js'
 
-export const command = new Slash({
+export const command = new ApplicationCommand({
   name: "ping",
   desc: "Pings the bot."
 }, async (client, cmd) => {

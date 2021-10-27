@@ -7,10 +7,10 @@ import mongoose from 'mongoose'
 const { Schema } = mongoose
 
 export const event = new Event('ready', async (client) => {
-  client.slash = new Collection()
-  for (const file of await readdir('../jphelp/slash').then((files) => files.filter((f) => f.endsWith(".js")))) {
-    const { command } = await import(`../slash/${file}`)
-    client.slash.set(command.info.name, command)
+  client.interactionCommands = new Collection()
+  for (const file of await readdir('../jphelp/interactionCommands').then((files) => files.filter((f) => f.endsWith(".js")))) {
+    const { command } = await import(`../interactionCommands/${file}`)
+    client.interactionCommands.set(command.info.name, command)
   }
   client.state.offline = []
   for (const id of evtData['botPresence'][client.data.guild][2])
