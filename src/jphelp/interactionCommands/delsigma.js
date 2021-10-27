@@ -1,6 +1,6 @@
-import { Slash } from '../../shared/structures.js'
+import { ApplicationCommand } from '../../shared/structures.js'
 
-export const command = new Slash({
+export const command = new ApplicationCommand({
   name: "delsigma",
   desc: "Deletes recent messages from Apex Sigma in the channel it's used in.",
   options: [{

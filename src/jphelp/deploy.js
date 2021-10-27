@@ -15,8 +15,8 @@ const data = {
   guildCommandPermissions: []
 }
 
-for (const file of await readdir(`../jphelp/slash`).then((files) => files.filter((f) => f.endsWith(".js")))) {
-  const { command } = await import(`../jphelp/slash/${file}`)
+for (const file of await readdir(`../jphelp/interactionCommands`).then((files) => files.filter((f) => f.endsWith(".js")))) {
+  const { command } = await import(`../jphelp/interactionCommands/${file}`)
   data[command.info.isGlobal ? "globalCommands" : "guildCommands"].push(command.structure)
   if (command.permissions) data.guildCommandPermissions.push({ name: command.info.name, permissions: command.permissions })
 }

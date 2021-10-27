@@ -1,8 +1,8 @@
-import { Client, Slash } from '../../shared/structures.js'
+import { Client, ApplicationCommand } from '../../shared/structures.js'
 import { isSnowflake } from '../../shared/util.js'
 import { cmdData } from '../../shared/config.js'
 
-export const command = new Slash({
+export const command = new ApplicationCommand({
   name: "linktotop",
   desc: "Provides a message linking to the start of the channel.",
   isGlobal: false,
@@ -41,10 +41,9 @@ export const command = new Slash({
         if (i === 4) {
           doc.firstMsg = null
           doc.save()
-          return cmd.reply({ content: "More than 500 messages found, please provide a message ID manually with `/linktotop id:MSG_ID`.", ephemeral: true })
+          return cmd.reply({ content: "More than 500 messages found, please provide a message ID manually with `/linktotop id:MSG_ID` or use the Context Menu command.", ephemeral: true })
         }
       }
-      doc.save()
     }
     sendLink(cmd, doc)
   } else {
