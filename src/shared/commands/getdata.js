@@ -1,10 +1,9 @@
-import { Command, SendError } from '../../shared/structures.js'
+import { Command } from '../../shared/structures.js'
 import {
   isPrimitive, isSnowflake, isToken,
-  getSource, getStructure, getShortChain,
-  strIsPrimitive, strGetPrimitive, strEscapeMention
+  getStructure, getShortStructure, getShortChain,
+  strIsPrimitive, strGetPrimitive, strCapitalize, strEscapeMention
 } from '../../shared/util.js'
-const { thisFile } = getSource(import.meta.url)
 const types = ["guild", "channel", "user", "member", "role", "message"]
 const altVal = ["this", "reply"]
 
@@ -23,9 +22,9 @@ export const command = new Command({
     strc = client
   } else {
     let val = arg.shift().toLowerCase()
-    if (!types.includes(type)) return SendError[thisFile].invalidType(msg)
-    if (!altVal.includes(val) && !isSnowflake(val)) return SendError[thisFile].invalidData(msg)
-    if (val === altVal[1] && !msg.reference) return SendError[thisFile].noReply(msg)
+    if (!types.includes(type)) return sendError(msg, "invalidType")
+    if (!altVal.includes(val) && !isSnowflake(val)) return sendError(msg, "invalidValue")
+    if (val === altVal[1] && !msg.reference) return sendError(msg, "invalidReference")
     if (altVal.includes(val)) {
       const message
       = val === altVal[0]
@@ -40,7 +39,7 @@ export const command = new Command({
         : type === types[5] ? message
         : null
       )?.id ?? null
-      if (!val) return SendError[thisFile].invalidGetThis(msg, type)
+      if (!val) return sendError(msg, "invalidThisProp", type)
     }
     const id = val
     try {
@@ -62,7 +61,7 @@ export const command = new Command({
           if (altVal.includes(arg[0])) arg.shift()
           try {
             guild = await client.guilds.fetch(guild)
-          } catch { return SendError[thisFile].invalidId(msg, types[0], guild) }
+          } catch { return sendError(msg, "invalidId", types[0], guild) }
           strc = await guild.members.fetch(id)
           break
         }
@@ -71,7 +70,7 @@ export const command = new Command({
           if (altVal.includes(arg[0])) arg.shift()
           try {
             guild = await client.guilds.fetch(guild)
-          } catch { return SendError[thisFile].invalidId(msg, types[0], guild) }
+          } catch { return sendError(msg, "invalidId", types[0], guild) }
           strc = await guild.roles.fetch(id)
           break
         }
@@ -80,19 +79,19 @@ export const command = new Command({
           if (altVal.includes(arg[0])) arg.shift()
           try {
             channel = await client.channels.fetch(channel)
-          } catch { return SendError[thisFile].invalidId(msg, types[1], channel) }
-          if (!channel.isText()) return SendError[thisFile].invalidGetMessage(msg)
+          } catch { return sendError(msg, "invalidId", types[1], channel) }
+          if (!channel.isText()) return sendError(msg, "invalidChannelType")
           strc = await channel.messages.fetch(id)
           break
         }
       }
-    } catch { return SendError[thisFile].invalidId(msg, type, id) }
+    } catch { return sendError(msg, "invalidId", type, id) }
   }
   const pchain = [type]
   for (const prop of arg) {
-    if (strc === undefined) return SendError[thisFile].propUndefined(msg, getShortChain(pchain))
-    if (prop === 'token' && isToken(strc?.[prop])) return SendError[thisFile].propToken(msg)
-    if (isPrimitive(strc) && strc?.[prop] === undefined) return SendError[thisFile].propPrimitive(msg, getShortChain(pchain), strc)
+    if (strc === undefined) return sendError(msg, "propUndefined", pchain)
+    if (prop === 'token' && isToken(strc?.[prop])) return sendError(msg, "propToken")
+    if (isPrimitive(strc) && strc?.[prop] === undefined) return sendError(msg, "propPrimitive", pchain, strc)
     if (/^\w+$/.test(prop)) {
       pchain.push(prop)
       if (['entries', 'keys', 'values'].includes(prop) && strc instanceof Map) {
@@ -102,19 +101,19 @@ export const command = new Command({
     } else if (/^\w+\(.*\)$/.test(prop)) {
       const { func, paramList } = prop.match(/^(?<func>\w+)\((?<paramList>.*)\)$/).groups
       pchain.push(func)
-      if (strc[func] === undefined) return SendError[thisFile].propUndefined(msg, getShortChain(pchain))
-      if (typeof strc[func] !== 'function') return SendError[thisFile].propNotMethod(msg, getShortChain(pchain))
+      if (strc[func] === undefined) return sendError(msg, "propUndefined", pchain)
+      if (typeof strc[func] !== 'function') return sendError(msg, "methodInvalid", pchain)
       const params = []
       for (const param of paramList ? paramList.split(", ") : []) {
-        if (!strIsPrimitive(param)) return SendError[thisFile].paramNotPrimitive(msg, param)
+        if (!strIsPrimitive(param)) return sendError(msg, "methodParamInvalid", param)
         params.push(strGetPrimitive(param))
       }
       pchain[pchain.length - 1] += `(${params.length ? "…" : ''})`
       try {
         strc = await strc[func](...params)
-      } catch (err) { return SendError[thisFile].methodError(msg, getShortChain(pchain), `${err}`) }
+      } catch (err) { return sendError(msg, "methodError", pchain, `${err}`) }
     } else {
-      return SendError[thisFile].invalidAccess(msg, prop)
+      return sendError(msg, "invalidProp", prop)
     }
   }
   const res = getStructure(strc)
@@ -126,3 +125,33 @@ export const command = new Command({
     }]
   })
 })
+
+function sendError(msg, error, ...args) {
+  const errorMsg
+  = error === "invalidType" ? () => "Please provide a valid structure to get."
+  : error === "invalidValue" ? () => "Please specify a valid ID or keyword to get."
+  : error === "invalidId" ? () => `${strCapitalize(args[0])} of ID ${args[1]} not found.`
+  : error === "invalidReference" ? () => "Please reply to the message to get data from."
+  : error === "invalidThisProp" ? () => `Messages do not have a \`${args[0]}\` property.`
+  : error === "invalidChannelType" ? () => "The specified channel is not a text-based channel."
+  : error === "invalidProp" ? () => `Invalid property: \`${args[0]}\`.`
+  : error === "propUndefined" ? () => `Value \`undefined\` at \`${getShortChain(args[0])}\`.`
+  : error === "propPrimitive" ? () => `Primitive value \`${getShortStructure(args[1])}\` at \`${getShortChain(args[0])}\`.`
+  : error === "propToken" ? () => "Token access is prohibited."
+  : error === "methodInvalid" ? () => `Property \`${getShortChain(args[0])}\` is not a function.`
+  : error === "methodParamInvalid" ? () => `Value \`${getShortChain(args[0])}\` is not a valid primitive value.`
+  : error === "methodError" ? () => `Error at \`${args[0]}\`:\n\`${args[1]}\``
+  : null
+  msg.channel.send(
+    errorMsg.length <= 2000 ? {
+      content: errorMsg.length,
+      allowedMentions: { parse: [] }
+    } : {
+      content: "Something went wrong while executing this command.",
+      files: [{
+        attachment: Buffer.from(errorMsg),
+        name: "error.txt"
+      }]
+    }
+  ).catch(() => msg.react('\u2757'))
+}

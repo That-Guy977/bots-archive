@@ -1,7 +1,5 @@
-import { Command, SendError } from '../../shared/structures.js'
-import { getSource } from '../../shared/util.js'
+import { Command } from '../../shared/structures.js'
 import { MessageEmbed } from 'discord.js'
-const { thisFile } = getSource(import.meta.url)
 const order = [
   "help",
   "ping",
@@ -43,7 +41,7 @@ export const command = new Command({
     value: info.desc
   })))
   else {
-    if (!commands.has(arg[0])) return SendError[thisFile].invalidCommand(msg, arg[0])
+    if (!commands.has(arg[0])) return msg.channel.send(`Command \`${arg[0]}\` not found.`)
     const { info } = commands.get(arg[0])
     if (!arg[1]) {
       const { name: cmdName, help, args } = info
@@ -57,7 +55,7 @@ export const command = new Command({
       if (!embed.fields.length) embed.description += `\n\`${client.prefix}${cmdName}\` has no arguments.`
     } else {
       const { args } = info
-      if (!args.some(({ name: argName }) => argName === arg[1])) return SendError[thisFile].invalidArgument(msg, arg[0], arg[1])
+      if (!args.some(({ name: argName }) => argName === arg[1])) return msg.channel.send(`Argument \`${arg[1]}\` of command \`${arg[0]}\` not found.`)
       const { name, help, req } = args.find(({ argName }) => argName === arg[1])
       embed
       .setTitle(`${client.prefix}${name} ${
