@@ -36,14 +36,15 @@ export const command = new Command({
   .setColor(client.color)
   .setFooter(`Requested by ${msg.author.tag}.${"slash" in client ? " | Type / to see Slash Commands." : ""}`, msg.author.displayAvatarURL())
   .setTimestamp()
-  if (!arg[0]) embed.addFields(commands.map(({ info }, name) => ({
+  if (!arg.length) embed.addFields(commands.map(({ info }, name) => ({
     name: `${client.prefix}${name}`,
     value: info.desc
   })))
   else {
-    if (!commands.has(arg[0])) return msg.channel.send(`Command \`${arg[0]}\` not found.`)
-    const { info } = commands.get(arg[0])
-    if (!arg[1]) {
+    const cmd = arg.shift()
+    if (!commands.has(cmd)) return msg.channel.send(`Command \`${arg[0]}\` not found.`)
+    const { info } = commands.get(cmd)
+    if (!arg.length) {
       const { name: cmdName, help, args } = info
       embed
       .setTitle(`${client.prefix}${cmdName} ${args.map(({ name: argName, req }) => (req ? `<${argName}>` : `[${argName}]`)).join(" ")}`)
@@ -54,18 +55,17 @@ export const command = new Command({
       })))
       if (!embed.fields.length) embed.description += `\n\`${client.prefix}${cmdName}\` has no arguments.`
     } else {
+      const argument = arg.shift()
       const { args } = info
-      if (!args.some(({ name: argName }) => argName === arg[1])) return msg.channel.send(`Argument \`${arg[1]}\` of command \`${arg[0]}\` not found.`)
-      const { name, help, req } = args.find(({ argName }) => argName === arg[1])
-      embed
-      .setTitle(`${client.prefix}${name} ${
+      if (!args.some(({ name: argName }) => argName === argument)) return msg.channel.send(`Argument \`${argument}\` of command \`${cmd}\` not found.`)
+      const { name, help, req } = args.find(({ argName }) => argName === argument)
+      embed.setTitle(`${client.prefix}${name} ${
         args.map(({ name: argName, req: argReq }) => (
           argReq
-            ? argName === arg[1] ? `__**<${argName}>**__` : `<${argName}>`
-            : argName === arg[1] ? `__**[${argName}]**__` : `[${argName}]`
+            ? argName === argument ? `__**<${argName}>**__` : `<${argName}>`
+            : argName === argument ? `__**[${argName}]**__` : `[${argName}]`
         )).join(" ")
-      }`)
-      .setDescription(`[${req ? "Required" : "Optional"}] ${help}`)
+      }`).setDescription(`[${req ? "Required" : "Optional"}] ${help}`)
     }
   }
   msg.channel.send({ embeds: [embed] })
