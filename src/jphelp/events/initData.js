@@ -4,7 +4,6 @@ import { evtData } from '../../shared/config.js'
 import { Collection } from 'discord.js'
 import { readdir } from 'node:fs/promises'
 import mongoose from 'mongoose'
-const { Schema } = mongoose
 
 export const event = new Event('ready', async (client) => {
   client.slash = new Collection()
@@ -17,14 +16,8 @@ export const event = new Event('ready', async (client) => {
     if (await client.getMember(id).then((m) => m.presence?.status ?? 'offline') === 'offline')
       client.state.offline.push(client.resolveId(id, 'users'))
   updatePremium(client)
-  client.mongoose = await mongoose.connect(
+  client.database = await mongoose.connect(
     `mongodb+srv://japanese101db.mcpc1.mongodb.net`,
     { auth: { username: `MONGO_${client.source}`, password: process.env[`MONGO_${client.source}`] }, dbName: "Japanese101DB" }
   )
-  mongoose.model("nc_msglink", new Schema({
-    _id: String,
-    firstMsg: { type: String, default: null },
-    linkMsg: { type: String, default: null },
-    user: { type: String, default: null }
-  }, { versionKey: false }))
 })
