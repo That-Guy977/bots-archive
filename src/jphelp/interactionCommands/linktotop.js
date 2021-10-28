@@ -30,7 +30,7 @@ export const command = new ApplicationCommand({
   if (cmd.channel.parentId !== client.resolveId("nihongo-centre", "channels") || exemptChannels.some((id) => cmd.channelId === client.resolveId(id, "channels")))
     return cmd.reply({ content: "This command is not available in this channel.", ephemeral: true })
   const msgLink = client.mongoose.models["nc_msglink"]
-  const doc = await msgLink.findById(cmd.channelId).exec() ?? await msgLink.create({ _id: cmd.channelId })
+  const doc = await msgLink.findById(cmd.channelId).exec() ?? await msgLink.create({ _id: cmd.channelId, name: cmd.channel.name })
   if (!cmd.options.get("id")) {
     if (!doc.firstMsg || !await cmd.channel.messages.fetch(doc.firstMsg).catch(() => null)) {
       doc.firstMsg = null
