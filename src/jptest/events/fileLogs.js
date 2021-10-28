@@ -11,7 +11,7 @@ const maxSizes = {
 export const event = new Event('messageCreate', (client, msg) => {
   if (!client.state.active) return
   if (msg.author.bot) return
-  if (msg.guild?.id !== client.guild.id) return
+  if (msg.guildId !== client.guild.id) return
   const channel = client.getChannel('file-logs')
   for (const [, att] of msg.attachments) {
     const [type] = att.contentType.match(/^\w+/)

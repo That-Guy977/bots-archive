@@ -13,7 +13,7 @@ export const command = new Command({
   }],
   indm: false
 }, async (client, msg, arg) => {
-  if (msg.guild.id !== client.guild.id) return msg.channel.send("This command is not available in this guild.")
+  if (msg.guildId !== client.guild.id) return msg.channel.send("This command is not available in this guild.")
   arg[0] ??= "1"
   if (!/^-?\d+$/.test(arg[0])) return msg.channel.send(`\`${arg[0]}\` is not a valid number.`)
   const limit = parseInt(arg[0])
