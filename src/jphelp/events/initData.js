@@ -23,6 +23,7 @@ export const event = new Event('ready', async (client) => {
   )
   mongoose.model("nc_msglink", new Schema({
     _id: String,
+    name: String,
     firstMsg: { type: String, default: null },
     linkMsg: { type: String, default: null },
     user: { type: String, default: null }
