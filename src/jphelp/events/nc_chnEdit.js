@@ -1,6 +1,6 @@
 import { Event } from '../../shared/structures.js'
 
-export const event = new Event('channelUpdate', async (client, oldChannel, channel) => {
+export const event = new Event('channelUpdate', async (client, _oldChannel, channel) => {
   if (channel.guildId !== client.guild.id) return
   if (channel.type !== 'GUILD_TEXT') return
   if (channel.parentId !== client.resolveId('nihongo-centre', 'channels')) return
