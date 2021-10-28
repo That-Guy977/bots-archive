@@ -35,7 +35,14 @@ export const event = new Event('ready', async (client) => {
       type: [{
         id: { type: String, validate: isSnowflake, required: true },
         content: { type: String, required: true },
-        attachments: { type: [Buffer], required: true },
+        attachments: {
+          type: [{
+            file: { type: Buffer, required: true },
+            name: { type: String, required: true },
+            url: { type: String, required: true }
+          }],
+          required: true
+        },
         author: { type: String, validate: isSnowflake, required: true },
         createdTimestamp: { type: Number, required: true },
         deleted: { type: Boolean, default: false },
