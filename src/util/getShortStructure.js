@@ -2,10 +2,10 @@ import isJson from './isJson.js'
 import { BitField, DataManager } from 'discord.js'
 
 export default function getShortStructure(strc) {
-  if (strc?.constructor?.name === 'Object' && !Object.entries(strc).length) return "{}"
+  if (strc?.constructor === Object && !Object.keys(strc).length) return "{}"
   if (isJson(strc)) return `${strc.constructor.name}${strc.id ? ` { id: "${strc.id}" }` : ""}`
-  if (typeof strc === 'string') return `"${strc.replace(/```/g, "`\u200B`\u200B`")}"`
-  if (typeof strc === 'bigint') return `${strc}n`
+  if (strc instanceof String) return `"${strc.replace(/```/g, "`\u200B`\u200B`")}"`
+  if (strc instanceof BigInt) return `${strc}n`
   if (strc instanceof Function) return `${strc.constructor.name}`
   if ([Array, Map, Date].some((c) => strc instanceof c)) return `${strc.constructor.name}(${strc.length ?? strc.size ?? strc.getTime?.() ?? 0})`
   if (strc instanceof BitField) return `${strc.constructor.name} { bitfield: ${strc.bitfield} }`
