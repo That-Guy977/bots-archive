@@ -1,5 +1,5 @@
 import { Event } from '../../shared/structures.js'
-import { updatePremium } from '../../shared/util.js'
+import { isSnowflake, updatePremium } from '../../shared/util.js'
 import { evtData } from '../../shared/config.js'
 import { Collection } from 'discord.js'
 import { readdir } from 'node:fs/promises'
@@ -22,10 +22,10 @@ export const event = new Event('ready', async (client) => {
     { auth: { username: `MONGO_${client.source}`, password: process.env[`MONGO_${client.source}`] }, dbName: "Japanese101DB" }
   )
   mongoose.model("nc_msglink", new Schema({
-    _id: String,
-    name: String,
-    firstMsg: { type: String, default: null },
-    linkMsg: { type: String, default: null },
-    user: { type: String, default: null }
+    _id: { type: String, validate: isSnowflake, required: true },
+    name: { type: String, match: /^[a-z-]$/, required: true },
+    firstMsg: { type: String, validate: isSnowflake, default: null },
+    linkMsg: { type: String, validate: isSnowflake, default: null },
+    user: { type: String, validate: isSnowflake, default: null }
   }, { versionKey: false }))
 })
