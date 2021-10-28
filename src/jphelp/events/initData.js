@@ -28,4 +28,20 @@ export const event = new Event('ready', async (client) => {
     linkMsg: { type: String, validate: isSnowflake, default: null },
     user: { type: String, validate: isSnowflake, default: null }
   }, { versionKey: false }))
+  mongoose.model("nc_message", new Schema({
+    _id: { type: String, validate: isSnowflake, required: true },
+    name: { type: String, match: /^[a-z-]$/, required: true },
+    messages: {
+      type: [{
+        id: { type: String, validate: isSnowflake, required: true },
+        content: { type: String, required: true },
+        attachments: { type: [Buffer], required: true },
+        author: { type: String, validate: isSnowflake, required: true },
+        createdTimestamp: { type: Number, required: true },
+        deleted: { type: Boolean, default: false },
+        deletedTimestamp: { type: Number, default: null }
+      }],
+      required: true
+    }
+  }, { versionKey: false }))
 })
