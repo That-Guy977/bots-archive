@@ -8,14 +8,16 @@ const { Schema } = mongoose
 
 export const event = new Event('ready', async (client) => {
   client.interactionCommands = new Collection()
-  for (const file of await readdir('../jphelp/interactionCommands').then((files) => files.filter((f) => f.endsWith(".js")))) {
+  const files = await readdir('../jphelp/interactionCommands').then((fs) => fs.filter((f) => f.endsWith(".js")))
+  await Promise.all(files.map(async (file) => {
     const { command } = await import(`../interactionCommands/${file}`)
     client.interactionCommands.set(command.info.name, command)
-  }
+  }))
   client.state.offline = []
-  for (const id of evtData['botPresence'][client.data.guild][2])
+  evtData['botPresence'][client.data.guild][2].map(async (id) => {
     if (await client.getMember(id).then((m) => m.presence?.status ?? 'offline') === 'offline')
       client.state.offline.push(client.resolveId(id, 'users'))
+  })
   updatePremium(client)
   client.mongoose = await mongoose.connect(
     `mongodb+srv://japanese101db.mcpc1.mongodb.net`,
