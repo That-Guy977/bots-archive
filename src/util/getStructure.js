@@ -39,7 +39,15 @@ export default function getStructure(strc) {
           str += "\n}"
         } else str += `${strc.constructor.name}(0) {}`
       } else if (strc && !strc.constructor) str += "{ null }"
-      else if (strc instanceof DiscordAPIError) str += `DiscordAPIError ${getStructure({ message: strc.message, method: strc.method, path: strc.path, code: strc.code, httpStatus: strc.httpStatus })}`
+      else if (strc instanceof DiscordAPIError) str += `DiscordAPIError ${
+        getStructure({
+          message: strc.message,
+          method: strc.method,
+          path: strc.path,
+          code: strc.code,
+          httpStatus: strc.httpStatus
+        })
+      }`
       else if (strc instanceof BitField || strc instanceof DataManager || strc instanceof Error) str += getShortStructure(strc)
       else str += `${strc}`
       break
