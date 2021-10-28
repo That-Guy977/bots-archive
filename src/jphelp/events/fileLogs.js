@@ -13,9 +13,9 @@ export const event = new Event('messageCreate', (client, msg) => {
   if (msg.guildId !== client.guild.id) return
   const channel = client.getChannel('file-logs')
   for (const [, att] of msg.attachments) {
-    const [type] = att.contentType.match(/^\w+/)
+    const { type } = att.contentType?.match(/^(?<type>\w+)/).groups ?? { type: null }
     const embed = new MessageEmbed()
-    .setTitle(`${strCapitalize(type)} file sent: ${att.name}`)
+    .setTitle(`${type ? `${strCapitalize(type)} file` : "File"} sent: ${att.name}`)
     .setColor(client.color)
     .setURL(msg.url)
     .setFooter(`Sent by ${msg.author.tag} in #${msg.channel.name}`, msg.author.displayAvatarURL())
