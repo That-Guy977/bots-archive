@@ -6,7 +6,7 @@ export const command = new ApplicationCommand({
   options: [{
     name: "limit",
     desc: "Limit to how many messages are deleted. 1-20, defaults to 1.",
-    type: "INTEGER",
+    type: 'INTEGER',
     required: false,
     restraints: {
       min_value: 1,
@@ -15,7 +15,7 @@ export const command = new ApplicationCommand({
   }],
   isGlobal: false
 }, async (client, cmd) => {
-  const limit = cmd.options.get("limit")?.value ?? 1
+  const limit = cmd.options.get('limit')?.value ?? 1
   const messages = await cmd.channel.messages.fetch().then((ms) => ms.filter((m) => m.author.id === client.resolveId('sigma', 'users')).first(limit))
   if (!messages.length) return cmd.reply({ content: "No messages found to delete.", ephemeral: true })
   await cmd.channel.bulkDelete(messages, true)

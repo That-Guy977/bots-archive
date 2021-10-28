@@ -10,28 +10,28 @@ export const command = new ApplicationCommand({
   options: [{
     name: "id",
     desc: "Message ID to link to.",
-    type: "STRING",
+    type: 'STRING',
     required: false
   }],
   permissions: [
     {
-      id: Client.resolveId("mod", "roles", "jp101"),
-      type: "ROLE",
+      id: Client.resolveId('mod', 'roles', 'jp101'),
+      type: 'ROLE',
       allow: true
     },
     {
-      id: Client.resolveId("contributor", "roles", "jp101"),
-      type: "ROLE",
+      id: Client.resolveId('contributor', 'roles', 'jp101'),
+      type: 'ROLE',
       allow: true
     }
   ]
 }, async (client, cmd) => {
   const exemptChannels = cmdData['nc-manage-exempt']
-  if (cmd.channel.parentId !== client.resolveId("nihongo-centre", "channels") || exemptChannels.some((id) => cmd.channelId === client.resolveId(id, "channels")))
+  if (cmd.channel.parentId !== client.resolveId('nihongo-centre', 'channels') || exemptChannels.some((id) => cmd.channelId === client.resolveId(id, 'channels')))
     return cmd.reply({ content: "This command is not available in this channel.", ephemeral: true })
-  const msgLink = client.mongoose.models["nc_msglink"]
+  const msgLink = client.mongoose.models['nc_msglink']
   const doc = await msgLink.findById(cmd.channelId).exec() ?? await msgLink.create({ _id: cmd.channelId, name: cmd.channel.name })
-  if (!cmd.options.get("id")) {
+  if (!cmd.options.get('id')) {
     if (!doc.firstMsg || !await cmd.channel.messages.fetch(doc.firstMsg).catch(() => null)) {
       doc.firstMsg = null
       for (let i = 0; i < 5; i++) {
@@ -47,7 +47,7 @@ export const command = new ApplicationCommand({
     }
     sendLink(cmd, doc)
   } else {
-    const id = cmd.options.get("id").value
+    const id = cmd.options.get('id').value
     if (!isSnowflake(id)) return cmd.reply({ content: `\`${id}\` is not a valid ID.`, ephemeral: true })
     if (!await cmd.channel.messages.fetch(id).catch(() => null)) return cmd.reply({ content: `Message of ID \`${id}\` not found.`, ephemeral: true })
     doc.firstMsg = id

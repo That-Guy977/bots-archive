@@ -4,8 +4,8 @@ import {
   getStructure, getShortStructure, getShortChain,
   strIsPrimitive, strGetPrimitive, strCapitalize, strEscapeMention
 } from '../../shared/util.js'
-const types = ["guild", "channel", "user", "member", "role", "message"]
-const altVal = ["this", "reply"]
+const types = ['guild', 'channel', 'user', 'member', 'role', 'message']
+const altVal = ['this', 'reply']
 
 export const command = new Command({
   name: "getdata",
@@ -14,7 +14,7 @@ export const command = new Command({
   hide: true
 }, async (client, msg, arg) => {
   arg = arg.map(strEscapeMention)
-  arg[0] ??= "message"
+  arg[0] ??= 'message'
   if (arg[0] !== 'client') arg[1] ??= altVal[+!!msg.reference]
   const type = arg.shift().toLowerCase()
   let strc
