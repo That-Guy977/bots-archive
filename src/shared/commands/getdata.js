@@ -39,7 +39,7 @@ export const command = new Command({
         : type === types[5] ? message
         : null
       )?.id ?? null
-      if (!val) return sendError(msg, "invalidThisProp", type)
+      if (!val) return sendError(msg, "invalidThisProp", { type })
     }
     const id = val
     try {
@@ -61,7 +61,7 @@ export const command = new Command({
           if (altVal.includes(arg[0])) arg.shift()
           try {
             guild = await client.guilds.fetch(guild)
-          } catch { return sendError(msg, "invalidId", types[0], guild) }
+          } catch { return sendError(msg, "invalidId", { type: types[0], id: guild }) }
           strc = await guild.members.fetch(id)
           break
         }
@@ -70,7 +70,7 @@ export const command = new Command({
           if (altVal.includes(arg[0])) arg.shift()
           try {
             guild = await client.guilds.fetch(guild)
-          } catch { return sendError(msg, "invalidId", types[0], guild) }
+          } catch { return sendError(msg, "invalidId", { type: types[0], id: guild }) }
           strc = await guild.roles.fetch(id)
           break
         }
@@ -79,19 +79,19 @@ export const command = new Command({
           if (altVal.includes(arg[0])) arg.shift()
           try {
             channel = await client.channels.fetch(channel)
-          } catch { return sendError(msg, "invalidId", types[1], channel) }
+          } catch { return sendError(msg, "invalidId", { type: types[1], id: channel }) }
           if (!channel.isText()) return sendError(msg, "invalidChannelType")
           strc = await channel.messages.fetch(id)
           break
         }
       }
-    } catch { return sendError(msg, "invalidId", type, id) }
+    } catch { return sendError(msg, "invalidId", { type, id }) }
   }
   const pchain = [type]
   for (const prop of arg) {
-    if (strc === undefined) return sendError(msg, "propUndefined", pchain)
+    if (strc === undefined) return sendError(msg, "propUndefined", { pchain })
     if (prop === 'token' && isToken(strc?.[prop])) return sendError(msg, "propToken")
-    if (isPrimitive(strc) && strc?.[prop] === undefined) return sendError(msg, "propPrimitive", pchain, strc)
+    if (isPrimitive(strc) && strc?.[prop] === undefined) return sendError(msg, "propPrimitive", { pchain, value: strc })
     if (/^\w+$/.test(prop)) {
       pchain.push(prop)
       if (['entries', 'keys', 'values'].includes(prop) && strc instanceof Map) {
@@ -101,19 +101,19 @@ export const command = new Command({
     } else if (/^\w+\(.*\)$/.test(prop)) {
       const { func, paramList } = prop.match(/^(?<func>\w+)\((?<paramList>.*)\)$/).groups
       pchain.push(func)
-      if (strc[func] === undefined) return sendError(msg, "propUndefined", pchain)
-      if (typeof strc[func] !== 'function') return sendError(msg, "methodInvalid", pchain)
+      if (strc[func] === undefined) return sendError(msg, "propUndefined", { pchain })
+      if (typeof strc[func] !== 'function') return sendError(msg, "methodInvalid", { pchain })
       const params = []
       for (const param of paramList ? paramList.split(", ") : []) {
-        if (!strIsPrimitive(param)) return sendError(msg, "methodParamInvalid", param)
+        if (!strIsPrimitive(param)) return sendError(msg, "methodParamInvalid", { value: param })
         params.push(strGetPrimitive(param))
       }
       pchain[pchain.length - 1] += `(${params.length ? "…" : ''})`
       try {
         strc = await strc[func](...params)
-      } catch (err) { return sendError(msg, "methodError", pchain, `${err}`) }
+      } catch (err) { return sendError(msg, "methodError", { pchain, err }) }
     } else {
-      return sendError(msg, "invalidProp", prop)
+      return sendError(msg, "invalidProp", { prop })
     }
   }
   const res = getStructure(strc)
@@ -126,25 +126,25 @@ export const command = new Command({
   })
 })
 
-function sendError(msg, error, ...args) {
+function sendError(msg, error, { id, type, prop, pchain, value, err }) {
   const errorMsg
-  = error === "invalidType" ? () => "Please provide a valid structure to get."
-  : error === "invalidValue" ? () => "Please specify a valid ID or keyword to get."
-  : error === "invalidId" ? () => `${strCapitalize(args[0])} of ID ${args[1]} not found.`
-  : error === "invalidReference" ? () => "Please reply to the message to get data from."
-  : error === "invalidThisProp" ? () => `Messages do not have a \`${args[0]}\` property.`
-  : error === "invalidChannelType" ? () => "The specified channel is not a text-based channel."
-  : error === "invalidProp" ? () => `Invalid property: \`${args[0]}\`.`
-  : error === "propUndefined" ? () => `Value \`undefined\` at \`${getShortChain(args[0])}\`.`
-  : error === "propPrimitive" ? () => `Primitive value \`${getShortStructure(args[1])}\` at \`${getShortChain(args[0])}\`.`
-  : error === "propToken" ? () => "Token access is prohibited."
-  : error === "methodInvalid" ? () => `Property \`${getShortChain(args[0])}\` is not a function.`
-  : error === "methodParamInvalid" ? () => `Value \`${getShortChain(args[0])}\` is not a valid primitive value.`
-  : error === "methodError" ? () => `Error at \`${args[0]}\`:\n\`${args[1]}\``
+  = error === "invalidType" ? "Please provide a valid structure to get."
+  : error === "invalidValue" ? "Please specify a valid ID or keyword to get."
+  : error === "invalidId" ? `${strCapitalize(type)} of ID ${id} not found.`
+  : error === "invalidReference" ? "Please reply to the message to get data from."
+  : error === "invalidThisProp" ? `Messages do not have a \`${type}\` property.`
+  : error === "invalidChannelType" ? "The specified channel is not a text-based channel."
+  : error === "invalidProp" ? `Invalid property: \`${prop}\`.`
+  : error === "propUndefined" ? `Value \`undefined\` at \`${getShortChain(pchain)}\`.`
+  : error === "propPrimitive" ? `Primitive value \`${getShortStructure(value)}\` at \`${getShortChain(pchain)}\`.`
+  : error === "propToken" ? "Token access is prohibited."
+  : error === "methodInvalid" ? `Property \`${getShortChain(pchain)}\` is not a function.`
+  : error === "methodParamInvalid" ? `Value \`${getShortChain(value)}\` is not a valid primitive value.`
+  : error === "methodError" ? `Error at \`${getShortChain(pchain)}\`:\n\`\`\`js\n${getStructure(err)}\n\`\`\``
   : null
   msg.channel.send(
     errorMsg.length <= 2000 ? {
-      content: errorMsg.length,
+      content: errorMsg,
       allowedMentions: { parse: [] }
     } : {
       content: "Something went wrong while executing this command.",
