@@ -50,7 +50,10 @@ export const event = new Event('ready', async (client) => {
         deleted: { type: Boolean, default: false },
         deletedTimestamp: { type: Number, default: null }
       }],
-      required: true
-    }
+      default: []
+    },
+    createdTimestamp: { type: Number, required: true },
+    deleted: { type: Boolean, default: false },
+    deletedTimestamp: { type: Number, default: null }
   }, { versionKey: false }))
 })
