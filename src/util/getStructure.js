@@ -4,20 +4,20 @@ import { BitField, DataManager, DiscordAPIError } from 'discord.js'
 
 export default function getStructure(strc) {
   let str = ""
-  switch (strc?.constructor?.name) {
-    case 'String': {
+  switch (strc?.constructor) {
+    case String: {
       str += `"${strc.replace(/```/g, "`\u200B`\u200B`")}"`
       break
     }
-    case 'BigInt': {
+    case BigInt: {
       str += `${strc}n`
       break
     }
-    case 'Date': {
+    case Date: {
       str += strc.toISOString().replace(/[TZ]/g, " $& ").trim()
       break
     }
-    case 'Array': {
+    case Array: {
       if (strc.length) {
         str += `[${strc.length <= 5 ? " " : "\n  "}`
         str += strc.map(getShortStructure).join(strc.length <= 5 ? ", " : ", \n  ")
