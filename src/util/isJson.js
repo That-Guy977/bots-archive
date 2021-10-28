@@ -5,6 +5,6 @@ export default function isJson(strc) {
     strc
     && typeof strc === 'object'
     && strc.constructor
-    && ![Array, Map, Date, BitField, DataManager].some((c) => strc instanceof c)
+    && ![Array, Map, Date, BitField, DataManager, Error].some((c) => strc instanceof c)
   )
 }
