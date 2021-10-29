@@ -8,7 +8,6 @@ export const event = new Event('messageDeleteBulk', async (client, messages) => 
   const doc = await archive.findById(messages.first().channelId).exec()
   messages.forEach((message) => {
     const msgDoc = doc.messages.id(message.id)
-    if (!msgDoc) return
     msgDoc.deleted = true
     msgDoc.deletedTimestamp = Date.now()
   })
