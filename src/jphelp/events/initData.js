@@ -20,10 +20,10 @@ export const event = new Event('ready', (client) => {
       client.state.offline.push(client.resolveId(id, 'users'))
   })
   updatePremium(client)
-  mongoose.connection.on('connected', () => console.log(`Logged into MongoDB as MONGO_${client.source}`))
+  mongoose.connection.once('connected', () => console.log(`Logged into MongoDB as MONGO_${client.source}`))
   mongoose.connect(
     `mongodb+srv://japanese101db.mcpc1.mongodb.net`,
-    { auth: { username: `MONGO_${client.source}`, password: process.env[`MONGO_${client.source}`] }, dbName: "Japanese101DB" }
+    { user: `MONGO_${client.source}`, pass: process.env[`MONGO_${client.source}`], dbName: "Japanese101DB" }
   ).then((connection) => { client.mongoose = connection })
   mongoose.model('nc_msglink', new Schema({
     _id: { type: String, validate: isSnowflake, required: true },
