@@ -6,24 +6,25 @@ import { readdir } from 'node:fs/promises'
 import mongoose from 'mongoose'
 const { Schema } = mongoose
 
-export const event = new Event('ready', async (client) => {
+export const event = new Event('ready', (client) => {
   client.interactionCommands = new Collection()
-  const files = await readdir('../jphelp/interactionCommands').then((fs) => fs.filter((f) => f.endsWith(".js")))
-  await Promise.all(files.map(async (file) => {
-    const { command } = await import(`../interactionCommands/${file}`)
-    client.interactionCommands.set(command.info.name, command)
-  }))
+  readdir('../jphelp/interactionCommands').then((fs) => fs.filter((f) => f.endsWith(".js"))).then((files) => {
+    files.forEach(async (file) => {
+      const { command } = await import(`../interactionCommands/${file}`)
+      client.interactionCommands.set(command.info.name, command)
+    })
+  })
   client.state.offline = []
-  evtData['botPresence'][client.data.guild][2].map(async (id) => {
+  evtData['botPresence'][client.data.guild][2].forEach(async (id) => {
     if (await client.getMember(id).then((m) => m.presence?.status ?? 'offline') === 'offline')
       client.state.offline.push(client.resolveId(id, 'users'))
   })
   updatePremium(client)
-  client.mongoose = await mongoose.connect(
+  mongoose.connection.on('connected', () => console.log(`Logged into MongoDB as MONGO_${client.source}`))
+  mongoose.connect(
     `mongodb+srv://japanese101db.mcpc1.mongodb.net`,
     { auth: { username: `MONGO_${client.source}`, password: process.env[`MONGO_${client.source}`] }, dbName: "Japanese101DB" }
-  )
-  console.log(`Logged into MongoDB as MONGO_${client.source}`)
+  ).then((connection) => { client.mongoose = connection })
   mongoose.model('nc_msglink', new Schema({
     _id: { type: String, validate: isSnowflake, required: true },
     name: { type: String, match: /^[a-z\d-]+$/, required: true },
