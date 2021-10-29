@@ -10,11 +10,11 @@ export const event = new Event('messageCreate', async (client, message) => {
   doc.messages.unshift({
     _id: message.id,
     content: message.content,
-    attachments: await Promise.all(message.attachments.map(async ({ name, url }, id) => ({
-      _id: id,
-      file: await fetch(url).then((res) => res.buffer()),
-      name,
-      url
+    attachments: await Promise.all(message.attachments.map(async (attachment) => ({
+      _id: attachment.id,
+      file: await fetch(attachment.url).then((res) => res.buffer()),
+      name: attachment.name,
+      url: attachment.url
     }))),
     author: message.author.id,
     createdTimestamp: message.createdTimestamp

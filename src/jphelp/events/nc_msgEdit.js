@@ -14,11 +14,11 @@ export const event = new Event('messageUpdate', async (client, _oldMessage, mess
     attachments: msgDoc.attachments
   })
   msgDoc.content = message.content
-  msgDoc.attachments = await Promise.all(message.attachments.map(async ({ name, url }, id) => ({
-    _id: id,
-    file: await fetch(url).then((res) => res.buffer()),
-    name,
-    url
+  msgDoc.attachments = await Promise.all(message.attachments.map(async (attachment) => ({
+    _id: attachment.id,
+    file: await fetch(attachment.url).then((res) => res.buffer()),
+    name: attachment.name,
+    url: attachment.url
   })))
   doc.save()
 })
