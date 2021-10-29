@@ -51,7 +51,23 @@ export const event = new Event('ready', (client) => {
         author: { type: String, validate: isSnowflake, required: true },
         createdTimestamp: { type: Number, required: true },
         deleted: { type: Boolean, default: false },
-        deletedTimestamp: { type: Number, default: null }
+        deletedTimestamp: { type: Number, default: null },
+        edits: {
+          type: [{
+            _id: { type: Number, required: true },
+            content: { type: String, required: true },
+            attachments: {
+              type: [{
+                _id: { type: String, validate: isSnowflake, required: true },
+                file: { type: Buffer, required: true },
+                name: { type: String, required: true },
+                url: { type: String, required: true }
+              }],
+              required: true
+            }
+          }],
+          default: []
+        }
       }],
       default: []
     },

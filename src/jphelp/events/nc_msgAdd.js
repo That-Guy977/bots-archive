@@ -7,14 +7,14 @@ export const event = new Event('messageCreate', async (client, message) => {
   if (cmdData['nc-manage-exempt'].some((id) => client.resolveId(id, 'channels') === message.channelId)) return
   const archive = client.mongoose.models['nc_message']
   const doc = await archive.findById(message.channelId).exec()
-  doc.messages.push({
+  doc.messages.unshift({
     _id: message.id,
     content: message.content,
-    attachments: await Promise.all(message.attachments.map(async (attachment) => ({
-      _id: attachment.id,
-      file: await fetch(attachment.url).then((res) => res.buffer()),
-      name: attachment.name,
-      url: attachment.url
+    attachments: await Promise.all(message.attachments.map(async ({ name, url }, id) => ({
+      _id: id,
+      file: await fetch(url).then((res) => res.buffer()),
+      name,
+      url
     }))),
     author: message.author.id,
     createdTimestamp: message.createdTimestamp
