@@ -23,6 +23,7 @@ export const event = new Event('ready', async (client) => {
     `mongodb+srv://japanese101db.mcpc1.mongodb.net`,
     { auth: { username: `MONGO_${client.source}`, password: process.env[`MONGO_${client.source}`] }, dbName: "Japanese101DB" }
   )
+  console.log(`Logged into MongoDB as MONGO_${client.source}`)
   mongoose.model('nc_msglink', new Schema({
     _id: { type: String, validate: isSnowflake, required: true },
     name: { type: String, match: /^[a-z\d-]+$/, required: true },
@@ -43,7 +44,7 @@ export const event = new Event('ready', async (client) => {
             name: { type: String, required: true },
             url: { type: String, required: true }
           }],
-          required: true
+          default: []
         },
         author: { type: String, validate: isSnowflake, required: true },
         createdTimestamp: { type: Number, required: true },
