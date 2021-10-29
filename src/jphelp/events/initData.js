@@ -26,44 +26,42 @@ export const event = new Event('ready', (client) => {
     { user: `MONGO_${client.source}`, pass: process.env[`MONGO_${client.source}`], dbName: "Japanese101DB" }
   ).then((connection) => { client.mongoose = connection })
   mongoose.model('nc_msglink', new Schema({
-    _id: { type: String, validate: isSnowflake, required: true },
-    name: { type: String, match: /^[a-z\d-]+$/, required: true },
+    _id: { type: String, validate: isSnowflake },
+    name: { type: String, match: /^[a-z\d-]+$/ },
     firstMsg: { type: String, validate: isSnowflake },
     linkMsg: { type: String, validate: isSnowflake },
     user: { type: String, validate: isSnowflake }
   }, { versionKey: false }))
   mongoose.model('nc_message', new Schema({
-    _id: { type: String, validate: isSnowflake, required: true },
-    name: { type: String, match: /^[a-z\d-]+$/, required: true },
+    _id: { type: String, validate: isSnowflake },
+    name: { type: String, match: /^[a-z\d-]+$/ },
     messages: {
       type: [{
-        _id: { type: String, validate: isSnowflake, required: true },
+        _id: { type: String, validate: isSnowflake },
         content: { type: String, default: "" },
         attachments: {
           type: [{
-            _id: { type: String, validate: isSnowflake, required: true },
-            file: { type: Buffer, required: true },
-            name: { type: String, required: true },
-            url: { type: String, required: true }
-          }],
-          default: []
+            _id: { type: String, validate: isSnowflake },
+            file: { type: Buffer },
+            name: { type: String },
+            url: { type: String }
+          }]
         },
-        author: { type: String, validate: isSnowflake, required: true },
-        createdTimestamp: { type: Number, required: true },
+        author: { type: String, validate: isSnowflake },
+        createdTimestamp: { type: Number },
         deleted: { type: Boolean, default: false },
         deletedTimestamp: { type: Number, default: null },
         edits: {
           type: [{
-            _id: { type: Number, required: true },
-            content: { type: String, required: true },
+            _id: { type: Number },
+            content: { type: String },
             attachments: {
               type: [{
-                _id: { type: String, validate: isSnowflake, required: true },
-                file: { type: Buffer, required: true },
-                name: { type: String, required: true },
-                url: { type: String, required: true }
-              }],
-              required: true
+                _id: { type: String, validate: isSnowflake },
+                file: { type: Buffer },
+                name: { type: String },
+                url: { type: String }
+              }]
             }
           }],
           default: []
@@ -71,7 +69,7 @@ export const event = new Event('ready', (client) => {
       }],
       default: []
     },
-    createdTimestamp: { type: Number, required: true },
+    createdTimestamp: { type: Number },
     deleted: { type: Boolean, default: false },
     deletedTimestamp: { type: Number, default: null }
   }, { versionKey: false }))
