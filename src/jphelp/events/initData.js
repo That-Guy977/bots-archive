@@ -41,6 +41,7 @@ export const event = new Event('ready', (client) => {
         content: { type: String, default: "" },
         attachments: {
           type: [{
+            _id: { type: String, validate: isSnowflake, required: true },
             file: { type: Buffer, required: true },
             name: { type: String, required: true },
             url: { type: String, required: true }
