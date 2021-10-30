@@ -14,8 +14,8 @@ export const event = new Event('channelUpdate', async (client, _oldChannel, chan
   else {
     const messageColls = []
     let lastMsg = doc.messages[0]?._id ?? "0"
-    while (!(messageColls[0]?.size < 10)) {
-      messageColls.unshift(await channel.messages.fetch({ limit: 10, after: lastMsg }))
+    while (!(messageColls[0]?.size < 100)) {
+      messageColls.unshift(await channel.messages.fetch({ limit: 100, after: lastMsg }))
       lastMsg = messageColls[0].firstKey()
     }
     const messages = messageColls.map((coll) => [...coll.values()]).flat().reverse()
