@@ -10,10 +10,10 @@ export const event = new Event('channelDelete', async (client, channel) => {
   const doc = await archive.findById(channel.id).exec()
   doc.deleted = true
   doc.deletedTimestamp = Date.now()
-  doc.messages.forEach((message) => {
-    if (message.deleted) return
+  const messages = doc.messages.filter((msg) => !msg.deleted)
+  for (const message of messages) {
     message.deleted = true
     message.deletedTimestamp = Date.now()
-  })
+  }
   doc.save()
 })
