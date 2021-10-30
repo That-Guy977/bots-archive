@@ -6,10 +6,10 @@ export const event = new Event('messageDeleteBulk', async (client, messages) => 
   if (cmdData['nc-manage-exempt'].some((id) => client.resolveId(id, 'channels') === messages.first().channelId)) return
   const archive = client.mongoose.models['nc_message']
   const doc = await archive.findById(messages.first().channelId).exec()
-  messages.forEach((message) => {
+  for (const [, message] of messages) {
     const msgDoc = doc.messages.id(message.id)
     msgDoc.deleted = true
     msgDoc.deletedTimestamp = Date.now()
-  })
+  }
   doc.save()
 })
