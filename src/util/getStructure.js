@@ -28,10 +28,10 @@ export default function getStructure(strc) {
     default: {
       if (isJson(strc)) {
         if (Object.entries(strc).length) {
-          str += strc.constructor.name === 'Object' ? "{\n  " : `${strc.constructor.name} {\n  `
+          str += strc.constructor === Object ? "{\n  " : `${strc.constructor.name} {\n  `
           str += Object.entries(strc).map((e) => e.map(getShortStructure).join(": ")).join(", \n  ")
           str += "\n}"
-        } else str += strc.constructor.name === 'Object' ? "{}" : `${strc.constructor.name} {}`
+        } else str += strc.constructor === Object ? "{}" : `${strc.constructor.name} {}`
       } else if (strc instanceof Map) {
         if (strc.size) {
           str += `${strc.constructor.name}(${strc.size}) {\n  `
