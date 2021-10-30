@@ -12,7 +12,8 @@ const options = {
   ],
   partials: [
     'CHANNEL',
-    'GUILD_MEMBER'
+    'GUILD_MEMBER',
+    'MESSAGE'
   ],
   presence: {
     activities: [{

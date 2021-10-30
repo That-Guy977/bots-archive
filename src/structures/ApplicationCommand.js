@@ -21,7 +21,7 @@ const permissionTypes = {
 export default class ApplicationCommand {
   constructor(
     {
-      type = "CHAT_INPUT",
+      type = 'CHAT_INPUT',
       name = "test",
       desc = "Unknown use",
       options = [],
@@ -32,7 +32,7 @@ export default class ApplicationCommand {
     },
     run = (_client, cmd) => cmd.reply({ content: "This command does not have functionality.", ephemeral: true })
   ) {
-    this.info = type === "CHAT_INPUT" ? {
+    this.info = type === 'CHAT_INPUT' ? {
       type,
       name,
       desc,
@@ -48,7 +48,7 @@ export default class ApplicationCommand {
       test
     }
 
-    this.structure = type === "CHAT_INPUT" ? {
+    this.structure = type === 'CHAT_INPUT' ? {
       type: commandTypes[type],
       name,
       description: desc,

@@ -5,7 +5,7 @@ export const command = new Command({
   desc: "Gives the invite link of the server.",
   help: "Gives Japanese 101's invite link."
 }, (client, msg) => {
-  if (msg.guild && msg.guild.id !== client.guild.id) return msg.channel.send("This command is not available in this guild.")
+  if (msg.channel.type !== 'DM' && msg.guildId !== client.guild.id) return msg.channel.send("This command is not available in this guild.")
   msg.channel.send(
     `**Invite link of ${
       msg.guild.name

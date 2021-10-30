@@ -2,27 +2,27 @@ import { Client, ApplicationCommand } from '../../shared/structures.js'
 import { cmdData } from '../../shared/config.js'
 
 export const command = new ApplicationCommand({
-  type: "MESSAGE",
+  type: 'MESSAGE',
   name: "Link to Message",
   isGlobal: false,
   enabled: false,
   permissions: [
     {
-      id: Client.resolveId("mod", "roles", "jp101"),
-      type: "ROLE",
+      id: Client.resolveId('mod', 'roles', 'jp101'),
+      type: 'ROLE',
       allow: true
     },
     {
-      id: Client.resolveId("contributor", "roles", "jp101"),
-      type: "ROLE",
+      id: Client.resolveId('contributor', 'roles', 'jp101'),
+      type: 'ROLE',
       allow: true
     }
   ]
 }, async (client, cmd) => {
   const exemptChannels = cmdData['nc-manage-exempt']
-  if (cmd.channel.parentId !== client.resolveId("nihongo-centre", "channels") || exemptChannels.some((id) => cmd.channelId === client.resolveId(id, "channels")))
+  if (cmd.channel.parentId !== client.resolveId('nihongo-centre', 'channels') || exemptChannels.some((id) => cmd.channelId === client.resolveId(id, 'channels')))
     return cmd.reply({ content: "This command is not available in this channel.", ephemeral: true })
-  const msgLink = client.mongoose.models["nc_msglink"]
+  const msgLink = client.mongoose.models['nc_msglink']
   const doc = await msgLink.findById(cmd.channelId).exec() ?? await msgLink.create({ _id: cmd.channelId, name: cmd.channel.name })
   doc.firstMsg = cmd.targetId
   sendLink(cmd, doc)
