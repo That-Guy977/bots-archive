@@ -104,7 +104,7 @@ export const command = new Command({
       if (strc[func] === undefined) return sendError(msg, "propUndefined", { pchain })
       if (typeof strc[func] !== 'function') return sendError(msg, "methodInvalid", { pchain })
       const params = []
-      for (const param of paramList ? paramList.split(", ") : []) {
+      for (const param of paramList ? paramList.split(",") : []) {
         if (!strIsPrimitive(param)) return sendError(msg, "methodParamInvalid", { value: param })
         params.push(strGetPrimitive(param))
       }
@@ -139,7 +139,7 @@ function sendError(msg, error, { id, type, prop, pchain, value, err }) {
   : error === "propPrimitive" ? `Primitive value \`${getShortStructure(value)}\` at \`${getShortChain(pchain)}\`.`
   : error === "propToken" ? "Token access is prohibited."
   : error === "methodInvalid" ? `Property \`${getShortChain(pchain)}\` is not a function.`
-  : error === "methodParamInvalid" ? `Value \`${getShortChain(value)}\` is not a valid primitive value.`
+  : error === "methodParamInvalid" ? `Value \`${value}\` is not a valid primitive value.`
   : error === "methodError" ? `Error at \`${getShortChain(pchain)}\`:\n\`\`\`js\n${getStructure(err)}\n\`\`\``
   : null
   msg.channel.send(
