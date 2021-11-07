@@ -29,7 +29,7 @@ export const event = new Event('messageCreate', (client, msg) => {
     channel.send(options).catch((err) => {
       channel.send({ embeds: [
         new MessageEmbed()
-        .setTitle("Files sent.")
+        .setTitle(`File ${att.name} sent.`)
         .setDescription("Something went wrong while logging.")
         .setColor(client.color)
         .setURL(msg.url)
