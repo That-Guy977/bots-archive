@@ -38,8 +38,6 @@ async function updateMsgLink(client, channel) {
   const msgLink = client.mongoose.models['nc_msglink']
   const doc = await msgLink.findById(channel.id).exec()
   if (!doc) return
-  if (doc.name !== channel.name) {
-    doc.name = channel.name
-    doc.save()
-  }
+  if (doc.name !== channel.name) doc.name = channel.name
+  doc.save()
 }
