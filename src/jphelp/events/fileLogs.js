@@ -27,13 +27,7 @@ export const event = new Event('messageCreate', (client, msg) => {
     } else embed.setDescription("File was too large to attach.")
     channel.send(options).catch((err) => {
       channel.send({ embeds: [
-        new MessageEmbed()
-        .setTitle(`File ${att.name} sent.`)
-        .setDescription("Something went wrong while logging.")
-        .setColor(client.color)
-        .setURL(msg.url)
-        .setFooter(`Sent by ${msg.author.tag} in #${msg.channel.name}`, msg.author.displayAvatarURL())
-        .setTimestamp(msg.createdAt)
+        embed.setDescription("Something went wrong while logging.").setColor('RED')
       ] })
       console.error(err)
       console.log(att)
