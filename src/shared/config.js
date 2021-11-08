@@ -90,7 +90,7 @@ const cmdData = {
     "jptest": "t!",
     "omega": "o!"
   },
-  "nc-manage-exempt": [
+  "nc_manage-exempt": [
     "q-a",
     "wotd-n4",
     "wotd-n3",

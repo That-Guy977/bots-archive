@@ -1,17 +1,13 @@
 import { Event } from '../../shared/structures.js'
-import { cmdData } from '../../shared/config.js'
+import { chnArchived } from '../../shared/util.js'
 import fetch from 'node-fetch'
 
-export const event = new Event('channelUpdate', async (client, _oldChannel, channel) => {
-  if (channel.guildId !== client.guild.id) return
-  if (channel.type !== 'GUILD_TEXT') return
-  if (channel.parentId !== client.resolveId('nihongo-centre', 'channels')) return
-  if (cmdData['nc-manage-exempt'].some((id) => client.resolveId(id, 'channels') === channel.id)) return
+export const event = new Event('channelUpdate', async (client, oldChannel, channel) => {
   updateMsgLink(client, channel)
   const archive = client.mongoose.models['nc_message']
-  const doc = await archive.findById(channel.id).exec() ?? await archive.create({ _id: channel.id, name: channel.name, createdTimestamp: channel.createdTimestamp })
-  if (doc.name !== channel.name) doc.name = channel.name
-  else {
+  const doc = await archive.findById(channel.id).exec() ?? (chnArchived(channel) ? await archive.create({ _id: channel.id, name: channel.name, createdTimestamp: channel.createdTimestamp }) : null)
+  if (!doc) return
+  if (channel.parentId !== oldChannel.parentId && chnArchived(channel)) {
     const messageColls = []
     let lastMsg = doc.messages[0]?._id ?? "0"
     while (!(messageColls[0]?.size < 100)) {
@@ -34,6 +30,7 @@ export const event = new Event('channelUpdate', async (client, _oldChannel, chan
       })
     }
   }
+  if (doc.name !== channel.name) doc.name = channel.name
   doc.save()
 })
 
@@ -41,8 +38,6 @@ async function updateMsgLink(client, channel) {
   const msgLink = client.mongoose.models['nc_msglink']
   const doc = await msgLink.findById(channel.id).exec()
   if (!doc) return
-  if (doc.name !== channel.name) {
-    doc.name = channel.name
-    doc.save()
-  }
+  if (doc.name !== channel.name) doc.name = channel.name
+  doc.save()
 }

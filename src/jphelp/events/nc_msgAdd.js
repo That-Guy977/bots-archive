@@ -1,12 +1,12 @@
 import { Event } from '../../shared/structures.js'
-import { cmdData } from '../../shared/config.js'
+import { chnArchived } from '../../shared/util.js'
 import fetch from 'node-fetch'
 
 export const event = new Event('messageCreate', async (client, message) => {
-  if (message.channel.parentId !== client.resolveId('nihongo-centre', 'channels')) return
-  if (cmdData['nc-manage-exempt'].some((id) => client.resolveId(id, 'channels') === message.channelId)) return
+  if (!chnArchived(message.channel)) return
   const archive = client.mongoose.models['nc_message']
   const doc = await archive.findById(message.channelId).exec()
+  if (!doc) return
   doc.messages.unshift({
     _id: message.id,
     content: message.content,
