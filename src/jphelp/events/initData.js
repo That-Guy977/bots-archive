@@ -25,13 +25,6 @@ export const event = new Event('ready', (client) => {
     `mongodb+srv://japanese101db.mcpc1.mongodb.net`,
     { user: `MONGO_${client.source}`, pass: process.env[`MONGO_${client.source}`], dbName: "Japanese101DB" }
   ).then((connection) => { client.mongoose = connection })
-  mongoose.model('nc_msglink', new Schema({
-    _id: { type: String, validate: isSnowflake },
-    name: { type: String, match: /^[a-z\d-]+$/ },
-    firstMsg: { type: String, validate: isSnowflake },
-    linkMsg: { type: String, validate: isSnowflake },
-    user: { type: String, validate: isSnowflake }
-  }, { versionKey: false }))
   mongoose.model('nc_message', new Schema({
     _id: { type: String, validate: isSnowflake },
     name: { type: String, match: /^[a-z\d-]+$/ },
@@ -72,5 +65,12 @@ export const event = new Event('ready', (client) => {
     createdTimestamp: { type: Number },
     deleted: { type: Boolean, default: false },
     deletedTimestamp: { type: Number, default: null }
+  }, { versionKey: false }))
+  mongoose.model('nc_msglink', new Schema({
+    _id: { type: String, validate: isSnowflake },
+    name: { type: String, match: /^[a-z\d-]+$/ },
+    firstMsg: { type: String, validate: isSnowflake },
+    linkMsg: { type: String, validate: isSnowflake },
+    user: { type: String, validate: isSnowflake }
   }, { versionKey: false }))
 })
