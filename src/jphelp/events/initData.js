@@ -1,5 +1,5 @@
 import { Event } from '../../shared/structures.js'
-import { isSnowflake, updatePremium } from '../../shared/util.js'
+import { isSnowflake, isIdData, updatePremium } from '../../shared/util.js'
 import { evtData } from '../../shared/config.js'
 import { Collection } from 'discord.js'
 import { readdir } from 'node:fs/promises'
@@ -69,8 +69,8 @@ export const event = new Event('ready', (client) => {
   mongoose.model('nc_msglink', new Schema({
     _id: { type: String, validate: isSnowflake },
     name: { type: String, match: /^[a-z\d-]+$/ },
-    firstMsg: { type: String, validate: isSnowflake },
-    linkMsg: { type: String, validate: isSnowflake },
-    user: { type: String, validate: isSnowflake }
+    firstMsg: { type: String, validate: isIdData, default: null },
+    linkMsg: { type: String, validate: isIdData, default: null },
+    user: { type: String, validate: isIdData, default: null }
   }, { versionKey: false }))
 })

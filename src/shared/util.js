@@ -1,5 +1,6 @@
 export { default as isPrimitive } from '../util/isPrimitive.js'
 export { default as isSnowflake } from '../util/isSnowflake.js'
+export { default as isIdData } from '../util/isIdData.js'
 export { default as isToken } from '../util/isToken.js'
 export { default as isJson } from '../util/isJson.js'
 
