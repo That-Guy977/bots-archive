@@ -1,6 +1,7 @@
 import { Event } from '../../shared/structures.js'
 
 export const event = new Event('channelDelete', async (client, channel) => {
+  updateMsgLink(client, channel)
   const archive = client.mongoose.models['nc_message']
   const doc = await archive.findById(channel.id).exec()
   if (!doc) return
@@ -13,3 +14,8 @@ export const event = new Event('channelDelete', async (client, channel) => {
   }
   doc.save()
 })
+
+function updateMsgLink(client, channel) {
+  const msgLink = client.mongoose.models['nc_msglink']
+  msgLink.findByIdAndDelete(channel.id).exec()
+}
