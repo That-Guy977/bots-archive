@@ -19,7 +19,7 @@ export const command = new ApplicationCommand({
     }
   ]
 }, async (client, cmd) => {
-  const exemptChannels = cmdData['nc-manage-exempt']
+  const exemptChannels = cmdData['nc_manage-exempt']
   if (cmd.channel.parentId !== client.resolveId('nihongo-centre', 'channels') || exemptChannels.some((id) => cmd.channelId === client.resolveId(id, 'channels')))
     return cmd.reply({ content: "This command is not available in this channel.", ephemeral: true })
   const msgLink = client.mongoose.models['nc_msglink']

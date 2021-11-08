@@ -14,6 +14,7 @@ export { default as strGetInteger } from '../util/strGetInteger.js'
 export { default as strCapitalize } from '../util/strCapitalize.js'
 export { default as strEscapeMention } from '../util/strEscapeMention.js'
 
+export { default as chnArchived } from '../util/chnArchived.js'
 export { default as updatePremium } from '../util/updatePremium.js'
 export { default as updatePresence } from '../util/updatePresence.js'
 export { default as genLogs } from '../util/genLogs.js'
