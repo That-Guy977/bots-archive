@@ -5,7 +5,7 @@ export const command = new ApplicationCommand({
   name: "linktotop",
   desc: "Provides a message linking to the start of the channel.",
   isGlobal: false,
-  enabled: false,
+  isEnabled: false,
   permissions: [
     {
       id: Client.resolveId('mod', 'roles', 'jp101'),
