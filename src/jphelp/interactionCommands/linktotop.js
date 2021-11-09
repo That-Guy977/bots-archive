@@ -25,7 +25,10 @@ export const command = new ApplicationCommand({
   doc.firstMsg = await cmd.channel.messages.fetch({ limit: 1, after: "0" }).then((coll) => coll.firstKey())
   if (!doc.firstMsg) return cmd.reply({ content: "This channel doesn't have any messages!", ephemeral: true })
   cmd.channel.messages.delete(doc.linkMsg).catch(() => null)
-  const reply = await cmd.reply({ content: `You may click [here](https://discord.com/channels/${cmd.guildId}/${cmd.channelId}/${doc.firstMsg}) to go to the top without scrolling.`, fetchReply: true })
+  const reply = await cmd.reply({
+    content: `Check the pinned messages to view chapters, or click [here](https://discord.com/channels/${cmd.guildId}/${cmd.channelId}/${doc.firstMsg}) to jump to the top.`,
+    fetchReply: true
+  })
   doc.linkMsg = reply.id
   doc.user = cmd.user.id
   doc.save()
