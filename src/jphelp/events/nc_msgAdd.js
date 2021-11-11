@@ -4,6 +4,7 @@ import fetch from 'node-fetch'
 
 export const event = new Event('messageCreate', async (client, message) => {
   if (!chnArchived(message.channel)) return
+  if (message.author.bot) return
   const archive = client.mongoose.models['nc_message']
   const doc = await archive.findById(message.channelId).exec()
   if (!doc) return
