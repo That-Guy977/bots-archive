@@ -16,15 +16,19 @@ async function updateMsgLink(client, message) {
   const msgLink = client.mongoose.models['nc_msglink']
   const doc = await msgLink.findById(message.channelId).exec()
   if (!doc) return
-  if (doc.firstMsg === message.id) {
-    message.channel.messages.delete(doc.linkMsg).catch(() => null)
-    doc.firstMsg = null
-    doc.linkMsg = null
-    doc.user = null
-  }
-  if (doc.linkMsg === message.id) {
-    doc.linkMsg = null
-    doc.user = null
+  switch (message.id) {
+    case doc.firstMsg: {
+      message.channel.messages.delete(doc.linkMsg).catch(() => null)
+      doc.firstMsg = null
+      doc.linkMsg = null
+      doc.user = null
+      break
+    }
+    case doc.linkMsg: {
+      doc.linkMsg = null
+      doc.user = null
+      break
+    }
   }
   doc.save()
 }
