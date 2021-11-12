@@ -20,8 +20,8 @@ const options = {
       name: `${cmdData.prefix[source]}help`
     }]
   },
-  restRequestTimeout: 60000,
-  retryLimit: 10
+  restRequestTimeout: 30000,
+  retryLimit: 5
 }
 
 init(options, source)

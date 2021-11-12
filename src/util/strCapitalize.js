@@ -1,3 +1,3 @@
 export default function strCapitalize(str) {
-  return str.charAt(0).toUpperCase() + str.slice(1).toLowerCase()
+  return str.trim().charAt(0).toUpperCase() + str.trim().slice(1).toLowerCase()
 }
