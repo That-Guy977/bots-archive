@@ -2,7 +2,7 @@ import { Client, ApplicationCommand } from '../../shared/structures.js'
 
 export const command = new ApplicationCommand({
   name: "resetchannel",
-  desc: "Clones a channel to make space to remake the content.",
+  desc: "Resets a channel to make space to remake content.",
   isGlobal: false,
   isEnabled: false,
   permissions: [
