@@ -8,12 +8,12 @@ export const command = new ApplicationCommand({
   isEnabled: false,
   permissions: [
     {
-      id: Client.resolveId('mod', 'roles', 'jp101'),
+      id: Client.resolveId('mod', 'role', 'jp101'),
       type: 'ROLE',
       allow: true
     },
     {
-      id: Client.resolveId('contributor', 'roles', 'jp101'),
+      id: Client.resolveId('contributor', 'role', 'jp101'),
       type: 'ROLE',
       allow: true
     }
