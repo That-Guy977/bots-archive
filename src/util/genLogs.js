@@ -16,9 +16,8 @@ export default async function genLogs(client, id, data, match) {
     filter,
     max: 1,
     time: 30000
-  })
-  .on('collect', (m) => updateLogs(msg, m.id))
-  .on('end', (_col, reason) => {
+  }).on('collect', (m) => updateLogs(msg, m.id))
+  .on('end', (_coll, reason) => {
     if (reason === 'time') updateLogs(msg, "N/A - Logs not found")
   })
   channel.messages.fetch().then((ms) => {

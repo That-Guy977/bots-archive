@@ -8,7 +8,7 @@ export const event = new Event('presenceUpdate', async (client, oldPresence, pre
   if (presence.guild.id !== client.guild.id) return
   if (isOnline(presence) === isOnline(oldPresence)) return
   const [, defaultColor, logUsers] = evtData[thisFile][client.data.guild]
-  if (!logUsers.some((id) => client.resolveId(id, 'users') === presence.userId)) return
+  if (!logUsers.some((id) => client.resolveId(id, 'user') === presence.userId)) return
   if (presence.user.partial) await presence.user.fetch()
   const color = defaultColor ?? client.getColor(presence.userId)
   const embed = new MessageEmbed()

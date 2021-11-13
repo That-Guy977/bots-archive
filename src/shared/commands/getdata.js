@@ -126,7 +126,7 @@ export const command = new Command({
   })
 })
 
-function sendError(msg, error, { id, type, prop, pchain, value, err }) {
+function sendError(msg, error, { id, type, prop, pchain, value, err } = {}) {
   const errorMsg
   = error === "invalidType" ? "Please provide a valid structure to get."
   : error === "invalidValue" ? "Please specify a valid ID or keyword to get."

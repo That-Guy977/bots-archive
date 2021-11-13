@@ -17,7 +17,7 @@ export const event = new Event('ready', (client) => {
   client.state.offline = []
   evtData['botPresence'][client.data.guild][2].forEach(async (id) => {
     if (await client.getMember(id).then((m) => m.presence?.status ?? 'offline') === 'offline')
-      client.state.offline.push(client.resolveId(id, 'users'))
+      client.state.offline.push(client.resolveId(id, 'user'))
   })
   updatePremium(client)
   mongoose.connection.once('connected', () => console.log(`Logged into MongoDB as MONGO_${client.source}`))

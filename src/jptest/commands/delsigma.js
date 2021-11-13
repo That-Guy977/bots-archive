@@ -19,7 +19,7 @@ export const command = new Command({
   const limit = parseInt(arg[0])
   if (limit > 20) return msg.channel.send("Cannot delete more than 20 messages.")
   if (limit < 1) return msg.channel.send("Cannot delete less than 1 message.")
-  const messages = await msg.channel.messages.fetch().then((ms) => ms.filter((m) => m.author.id === client.resolveId('sigma', 'users')).first(limit))
+  const messages = await msg.channel.messages.fetch().then((ms) => ms.filter((m) => m.author.id === client.resolveId('sigma', 'user')).first(limit))
   if (!messages.length) return msg.channel.send("No messages found to delete.")
   await msg.channel.bulkDelete(messages, true)
   msg.channel.send(`Finished deleting ${messages.length} message${messages.length - 1 ? "s" : ""}.`)

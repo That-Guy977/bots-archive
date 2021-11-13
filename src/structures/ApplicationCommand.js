@@ -26,7 +26,7 @@ export default class ApplicationCommand {
       desc = "Unknown use",
       options = [],
       isGlobal = true,
-      enabled = true,
+      isEnabled = true,
       permissions = [],
       test = false
     },
@@ -38,13 +38,13 @@ export default class ApplicationCommand {
       desc,
       options,
       isGlobal,
-      enabled,
+      isEnabled,
       test
     } : {
       type,
       name,
       isGlobal,
-      enabled,
+      isEnabled,
       test
     }
 
@@ -59,12 +59,12 @@ export default class ApplicationCommand {
         required: option.required,
         ...option.restraints
       })),
-      default_permission: enabled
+      default_permission: isEnabled
     } : {
       type: commandTypes[type],
       name,
       description: "",
-      default_permission: enabled
+      default_permission: isEnabled
     }
 
     this.permissions = !isGlobal && permissions?.length ? permissions.map((permission) => ({

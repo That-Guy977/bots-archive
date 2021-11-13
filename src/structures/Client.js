@@ -25,22 +25,22 @@ export default class Client extends DiscordClient {
   }
 
   getGuild(id) {
-    id = this.resolveId(id, 'guilds')
+    id = this.resolveId(id, 'guild')
     return this.guilds.cache.get(id) ?? null
   }
 
   getChannel(id) {
-    id = this.resolveId(id, 'channels')
+    id = this.resolveId(id, 'channel')
     return this.channels.cache.get(id) ?? null
   }
 
   getRole(id) {
-    id = this.resolveId(id, 'roles')
+    id = this.resolveId(id, 'role')
     return this.guild.roles.cache.get(id) ?? null
   }
 
   getMember(id) {
-    id = this.resolveId(id, 'users')
+    id = this.resolveId(id, 'user')
     return id ? this.guild.members.fetch(id).catch(() => null) : null
   }
 
@@ -50,12 +50,12 @@ export default class Client extends DiscordClient {
   }
 
   resolveId(id, type) {
-    const ids = botData.ids[type]
+    const ids = botData.ids[`${type}s`]
     return isSnowflake(id) ? id : ids[id] ?? ids[this.data.guild]?.[id] ?? null
   }
 
   static resolveId(id, type, guild) {
-    const ids = botData.ids[type]
+    const ids = botData.ids[`${type}s`]
     return isSnowflake(id) ? id : ids[id] ?? ids[guild]?.[id] ?? null
   }
 }

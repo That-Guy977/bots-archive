@@ -16,7 +16,7 @@ export const event = new Event('messageCreate', (client, msg) => {
   for (const [, att] of msg.attachments) {
     const { type } = att.contentType?.match(/^(?<type>\w+)/).groups ?? { type: null }
     const embed = new MessageEmbed()
-    .setTitle(`${type ? `${strCapitalize(type)} file` : "File"} sent: ${att.name}`)
+    .setTitle(`${strCapitalize(`${type ?? ""} file`)} sent: ${att.name}`)
     .setColor(client.color)
     .setURL(msg.url)
     .setFooter(`Sent by ${msg.author.tag} in #${msg.channel.name}`, msg.author.displayAvatarURL())
@@ -26,13 +26,13 @@ export const event = new Event('messageCreate', (client, msg) => {
       options.files.push(new MessageAttachment(att.url, att.name))
       if (type === 'image') embed.setImage(`attachment://${att.name}`)
     } else embed.setDescription("File was too large to attach.")
-    channel.send(options).catch((err) => {
+    channel.send(options).catch(() => {
       channel.send({ embeds: [
-        embed.setDescription("Something went wrong while logging.").setColor('RED')
+        embed
+        .setDescription(`Uploading file failed. [Link to attachment](${att.url}}).`)
+        .setColor('RED')
+        .setImage(att.url)
       ] })
-      console.error(err)
-      console.log(att)
-      console.log(new Date())
-    }) //-- remove catch logs when ok
+    })
   }
 })
