@@ -2,6 +2,6 @@
 .DS_Store
 
 !/src
-!.gitignore
+!.git*
 !package.json
 !README.md
