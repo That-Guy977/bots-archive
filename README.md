@@ -1,7 +1,7 @@
 # japanese101-bots
 
 ## About
-This repository is provided as an archive, and is not meant to be used for other servers.
+This repository is an archive, and is not meant to be used for other servers.
 
 `SOURCE` used anywhere is a placeholder for `JPHELP`, `JPTEST`, or `OMEGA`.
 
