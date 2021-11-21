@@ -1,14 +1,15 @@
+import { Client } from '../shared/structures.js'
 import { getSource } from '../shared/util.js'
-import { botData } from '../shared/config.js'
+import { readdir } from 'node:fs/promises'
 import { REST } from '@discordjs/rest'
 import { Routes } from 'discord-api-types/v9'
-import { readdir } from 'node:fs/promises'
 import { config } from 'dotenv'
 const { source } = getSource(import.meta.url)
 
 config({ path: '../../.env' })
 
-const rest = new REST({ version: '9' }).setToken(process.env[`TOKEN_${source.toUpperCase()}`])
+const client = new Client({ intents: [] }, source)
+const rest = new REST({ version: '9' }).setToken(client.token)
 const data = {
   globalCommands: [],
   guildCommands: [],
@@ -23,22 +24,22 @@ for (const file of await readdir(`../jphelp/interactionCommands`).then((files) =
 
 if (data.globalCommands.length)
   await rest.put(
-    Routes.applicationCommands(botData.ids.users[source]),
+    Routes.applicationCommands(client.resolveId(source, 'user')),
     { body: data.globalCommands }
   )
 
 if (data.guildCommands.length)
   await rest.put(
-    Routes.applicationGuildCommands(botData.ids.users[source], botData.ids.guilds['jp101']),
+    Routes.applicationGuildCommands(client.resolveId(source, 'user'), client.resolveId(client.data.guild, 'guild')),
     { body: data.guildCommands }
   )
 
 const commands = await rest.get(
-  Routes.applicationGuildCommands(botData.ids.users[source], botData.ids.guilds['jp101'])
+  Routes.applicationGuildCommands(client.resolveId(source, 'user'), client.resolveId(client.data.guild, 'guild'))
 ).then((cmds) => Object.fromEntries(cmds.map((cmd) => [cmd.name, cmd.id])))
 
 if (data.guildCommandPermissions.length)
   await rest.put(
-    Routes.guildApplicationCommandsPermissions(botData.ids.users[source], botData.ids.guilds['jp101']),
+    Routes.guildApplicationCommandsPermissions(client.resolveId(source, 'user'), client.resolveId(client.data.guild, 'guild')),
     { body: data.guildCommandPermissions.map((cmdPerms) => ({ id: commands[cmdPerms.name], permissions: cmdPerms.permissions })) }
   )
