@@ -1,8 +1,8 @@
 import { Event } from '../../shared/structures.js'
 import { isSnowflake, isIdData, updatePremium } from '../../shared/util.js'
 import { evtData } from '../../shared/config.js'
-import { Collection } from 'discord.js'
 import { readdir } from 'node:fs/promises'
+import { Collection } from 'discord.js'
 import mongoose from 'mongoose'
 const { Schema } = mongoose
 
@@ -22,8 +22,8 @@ export const event = new Event('ready', (client) => {
   updatePremium(client)
   mongoose.connection.once('connected', () => console.log(`Logged into MongoDB as MONGO_${client.source}`))
   mongoose.connect(
-    `mongodb+srv://japanese101db.mcpc1.mongodb.net`,
-    { user: `MONGO_${client.source}`, pass: process.env[`MONGO_${client.source}`], dbName: "Japanese101DB" }
+    `mongodb+srv://${process.env['MONGO_DATABASE']}.${process.env['MONGO_ID']}.mongodb.net`,
+    { user: `MONGO_${client.source}`, pass: process.env[`MONGO_${client.source}`], dbName: process.env['MONGO_DATABASE'] }
   ).then((connection) => { client.mongoose = connection })
   mongoose.model('nc_message', new Schema({
     _id: { type: String, validate: isSnowflake },
