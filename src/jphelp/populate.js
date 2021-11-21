@@ -13,8 +13,7 @@ const client = new Client({ intents: [
 ] }, source).login()
 client.on('ready', () => console.log(`Logged into Discord as ${client.user.tag}`))
 const connect = mongoose.connect(
-  `mongodb+srv://${process.env['MONGO_DATABASE']}.${process.env['MONGO_ID']}.mongodb.net`,
-  { user: `MONGO_${client.source}`, pass: process.env[`MONGO_${client.source}`], dbName: process.env['MONGO_DATABASE'] }
+  `mongodb+srv://MONGO_${client.source}:${process.env[`MONGO_${client.source}`]}@${process.env['MONGO_DATABASE']}.${process.env['MONGO_ID']}.mongodb.net/${process.env['MONGO_DATABASE']}`
 )
 mongoose.connection.once('connected', () => console.log(`Logged into MongoDB as MONGO_${client.source}`))
 mongoose.model('nc_message', new Schema({
