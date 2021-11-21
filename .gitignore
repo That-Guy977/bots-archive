@@ -4,4 +4,4 @@
 !/src
 !.git*
 !package.json
-!README.md
+!*.md
