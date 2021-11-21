@@ -14,7 +14,7 @@ export const event = new Event('channelUpdate', async (client, oldChannel, chann
       messageColls.unshift(await channel.messages.fetch({ limit: 100, after: lastMsg }))
       lastMsg = messageColls[0].firstKey()
     }
-    const messages = messageColls.map((coll) => [...coll.values()]).flat().reverse()
+    const messages = messageColls.flatMap((coll) => [...coll.values()]).reverse().filter((msg) => !msg.author.bot)
     for (const message of messages) {
       doc.messages.unshift({
         _id: message.id,
