@@ -78,7 +78,7 @@ client.on('ready', async () => {
       messageColls.unshift(await channel.messages.fetch({ limit: 100, after: lastMsg }))
       lastMsg = messageColls[0].firstKey()
     }
-    const messages = messageColls.flatMap((coll) => [...coll.values()]).reverse().filter((msg) => !msg.author.bot)
+    const messages = messageColls.flatMap((coll) => [...coll.values()]).reverse().filter((msg) => !msg.author.bot && msg.type === 'DEFAULT')
     for (const message of messages) {
       doc.messages.unshift({
         _id: message.id,
