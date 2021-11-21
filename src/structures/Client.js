@@ -20,7 +20,7 @@ export default class Client extends DiscordClient {
   get channel() { return this.getChannel(this.data.channel) }
 
   login() {
-    super.login(this.token)
+    super.login()
     return this
   }
 
