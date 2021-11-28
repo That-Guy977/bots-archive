@@ -20,11 +20,6 @@ export const event = new Event('ready', (client) => {
       client.state.offline.push(client.resolveId(id, 'user'))
   })
   updatePremium(client)
-  const dbUsername = `MONGO_${client.source.toUpperCase()}`
-  mongoose.connection.once('connected', () => console.log(`Logged into MongoDB as ${dbUsername}`))
-  mongoose.connect(
-    `mongodb+srv://${dbUsername}:${process.env[dbUsername]}@${process.env['MONGO_DATABASE']}.${process.env['MONGO_ID']}.mongodb.net/${process.env['MONGO_DATABASE']}`
-  ).then((connection) => { client.mongoose = connection })
   mongoose.model('nc_message', new Schema({
     _id: { type: String, validate: isSnowflake },
     name: { type: String, match: /^[a-z\d-]+$/ },
