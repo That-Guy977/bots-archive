@@ -6,8 +6,8 @@ const { botData, cmdData } = JSON.parse(await readFile('../shared/config.json'))
 export default class Client extends DiscordClient {
   constructor(options, source) {
     super(options)
-    this.source = source.toUpperCase()
-    this.token = process.env[`TOKEN_${this.source}`]
+    this.source = source
+    this.token = process.env[`TOKEN_${source.toUpperCase()}`]
     this.data = botData.data[source]
     this.color = botData.color[source]
     this.prefix = cmdData.prefix[source]
