@@ -1,9 +1,9 @@
 import { Event } from '../../shared/structures.js'
 import { isSnowflake, isIdData, updatePremium } from '../../shared/util.js'
-import { evtData } from '../../shared/config.js'
-import { readdir } from 'node:fs/promises'
+import { readdir, readFile } from 'node:fs/promises'
 import { Collection } from 'discord.js'
 import mongoose from 'mongoose'
+const { evtData } = JSON.parse(await readFile('../shared/config.json'))
 const { Schema } = mongoose
 
 export const event = new Event('ready', (client) => {

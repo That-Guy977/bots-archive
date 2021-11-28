@@ -1,5 +1,6 @@
 import Client from '../structures/Client.js'
-import { cmdData } from '../shared/config.js'
+import { readFile } from 'node:fs/promises'
+const { cmdData } = JSON.parse(await readFile('../shared/config.json'))
 
 export default function chnArchived(channel) {
   return channel.type === 'GUILD_TEXT'

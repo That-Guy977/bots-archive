@@ -1,6 +1,7 @@
 import { Event } from '../../shared/structures.js'
 import { getSource, strCapitalize, genLogs } from '../../shared/util.js'
-import { evtData } from '../../shared/config.js'
+import { readFile } from 'node:fs/promises'
+const { evtData } = JSON.parse(await readFile('../shared/config.json'))
 const { thisFile } = getSource(import.meta.url)
 
 export const event = new Event('guildMemberAdd', (client, member) => {

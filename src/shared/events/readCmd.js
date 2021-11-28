@@ -1,6 +1,7 @@
 import { Event } from '../../shared/structures.js'
-import { botData } from '../../shared/config.js'
 import { Permissions } from 'discord.js'
+import { readFile } from 'node:fs/promises'
+const { botData } = JSON.parse(await readFile('../shared/config.json'))
 const { FLAGS: PFlags } = Permissions
 
 export const event = new Event('messageCreate', async (client, msg) => {

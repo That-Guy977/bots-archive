@@ -1,5 +1,6 @@
 import { Event } from '../../shared/structures.js'
-import { botData } from '../../shared/config.js'
+import { readFile } from 'node:fs/promises'
+const { botData } = JSON.parse(await readFile('../shared/config.json'))
 
 export const event = new Event('interactionCreate', (client, cmd) => {
   if (!cmd.isCommand() && !cmd.isContextMenu()) return
