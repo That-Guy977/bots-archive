@@ -15,7 +15,7 @@ export const event = new Event('ready', (client) => {
     })
   })
   client.state.offline = []
-  evtData['botPresence'][client.data.guild][2].forEach(async (id) => {
+  evtData['botPresence'][client.source].forEach(async (id) => {
     if (await client.getMember(id).then((m) => m.presence?.status ?? 'offline') === 'offline')
       client.state.offline.push(client.resolveId(id, 'user'))
   })

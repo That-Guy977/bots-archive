@@ -89,21 +89,21 @@
   },
   "evtData": {
     "botPresence": {
-      "jp101": [true, null, [
+      "jphelp": [
         "dyno",
         "sigma",
         "mee6",
         "rroles",
         "kotoba",
         "sora"
-      ]],
-      "pain": [false, "RED", [
+      ],
+      "omega": [
         "jphelp"
-      ]]
+      ]
     },
     "autoRole": {
-      "jp101": [null, "bots", "role-logs"],
-      "pain": ["member", "bot", null]
+      "jphelp": [null, "bots", "role-logs"],
+      "omega": ["member", "bot", null]
     }
   }
 }
