@@ -4,7 +4,6 @@
       "users": {
         "main": "628241756235890708",
         "jphelp": "786909743649390602",
-        "jptest": "803139094480814110",
         "omega": "855711160393662464",
 
         "dyno": "155149108183695360",
@@ -56,13 +55,6 @@
         "admin": "mod",
         "logs": "mod-logs"
       },
-      "jptest": {
-        "guild": "jp101",
-        "channel": "mod-test",
-        "admin": "mod",
-        "alternate": "jphelp",
-        "logs": "mod-logs"
-      },
       "omega": {
         "guild": "pain",
         "channel": "general",
@@ -73,7 +65,6 @@
       "nitro": "ff73fa",
 
       "jphelp": "0095df",
-      "jptest": "0095df",
       "omega": "0095df",
 
       "dyno": "2470c4",
@@ -87,7 +78,6 @@
   "cmdData": {
     "prefix": {
       "jphelp": "h!",
-      "jptest": "t!",
       "omega": "o!"
     },
     "nc_manage-exempt": [
@@ -108,8 +98,7 @@
         "sora"
       ]],
       "pain": [false, "RED", [
-        "jphelp",
-        "jptest"
+        "jphelp"
       ]]
     },
     "autoRole": {

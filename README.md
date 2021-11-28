@@ -3,7 +3,7 @@
 ## About
 This repository is an archive, and is not meant to be used for other servers.
 
-`SOURCE` used anywhere is a placeholder for `JPHELP`, `JPTEST`, or `OMEGA`.
+`SOURCE` used anywhere is a placeholder for `JPHELP` or `OMEGA`.
 
 ## Usage
 
