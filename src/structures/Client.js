@@ -1,12 +1,13 @@
 import { isSnowflake } from '../shared/util.js'
-import { botData, cmdData } from '../shared/config.js'
+import { readFile } from 'node:fs/promises'
 import { Client as DiscordClient, Collection } from 'discord.js'
+const { botData, cmdData } = JSON.parse(await readFile('../shared/config.json'))
 
 export default class Client extends DiscordClient {
   constructor(options, source) {
     super(options)
-    this.source = source.toUpperCase()
-    this.token = process.env[`TOKEN_${this.source}`]
+    this.source = source
+    this.token = process.env[`TOKEN_${source.toUpperCase()}`]
     this.data = botData.data[source]
     this.color = botData.color[source]
     this.prefix = cmdData.prefix[source]
@@ -15,6 +16,7 @@ export default class Client extends DiscordClient {
   state = {}
   commands = new Collection()
   events = new Collection()
+  legacyCommands = new Collection()
 
   get guild() { return this.getGuild(this.data.guild) }
   get channel() { return this.getChannel(this.data.channel) }

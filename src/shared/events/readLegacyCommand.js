@@ -1,13 +1,14 @@
-import { Event } from '../../shared/structures.js'
-import { botData } from '../../shared/config.js'
+import { Event } from '../structures.js'
 import { Permissions } from 'discord.js'
+import { readFile } from 'node:fs/promises'
+const { botData } = JSON.parse(await readFile('../shared/config.json'))
 const { FLAGS: PFlags } = Permissions
 
 export const event = new Event('messageCreate', async (client, msg) => {
   if (msg.author.bot || !msg.content.startsWith(client.prefix)) return
   const [cmd, ...arg] = msg.content.trim().slice(client.prefix.length).split(/\s+/)
-  if (!client.commands.has(cmd.toLowerCase())) return
-  const { info, run } = client.commands.get(cmd.toLowerCase())
+  if (!client.legacyCommands.has(cmd.toLowerCase())) return
+  const { info, run } = client.legacyCommands.get(cmd.toLowerCase())
   if (msg.author.id === botData.ids.users['main']) return run(client, msg, arg)
   if (info.test) return
   if (!info.indm && msg.channel.type === 'DM')

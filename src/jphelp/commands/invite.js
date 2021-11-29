@@ -1,16 +1,15 @@
-import { Command } from '../../shared/structures.js'
+import { ApplicationCommand } from '../../shared/structures.js'
 
-export const command = new Command({
+export const command = new ApplicationCommand({
   name: "invite",
   desc: "Gives the invite link of the server.",
-  help: "Gives Japanese 101's invite link."
-}, (client, msg) => {
-  if (msg.channel.type !== 'DM' && msg.guildId !== client.guild.id) return msg.channel.send("This command is not available in this guild.")
-  msg.channel.send(
+  isGlobal: false
+}, (client, cmd) => {
+  cmd.reply(
     `**Invite link of ${
-      msg.guild.name
+      cmd.guild.name
     }**: https://discord.gg/7hvYKa4Zek\nVanity invite: ${
-      msg.guild.vanityURLCode ?? "Unavailable"
+      cmd.guild.vanityURLCode ?? "Unavailable"
     }\nThe invite link is also available in ${
       client.getChannel('rules')
     }.`

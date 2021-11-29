@@ -12,10 +12,9 @@ const client = new Client({ intents: [
   'GUILD_MESSAGES'
 ] }, source).login()
 client.on('ready', () => console.log(`Logged into Discord as ${client.user.tag}`))
-const connect = mongoose.connect(
-  `mongodb+srv://MONGO_${client.source}:${process.env[`MONGO_${client.source}`]}@${process.env['MONGO_DATABASE']}.${process.env['MONGO_ID']}.mongodb.net/${process.env['MONGO_DATABASE']}`
-)
-mongoose.connection.once('connected', () => console.log(`Logged into MongoDB as MONGO_${client.source}`))
+const dbUsername = `MONGO_${client.source.toUpperCase()}`
+const connect = mongoose.connect(`mongodb+srv://${dbUsername}:${process.env[dbUsername]}@${process.env['MONGO_DATABASE']}.${process.env['MONGO_ID']}.mongodb.net/${process.env['MONGO_DATABASE']}`)
+mongoose.connection.once('connected', () => console.log(`Logged into MongoDB as ${dbUsername}`))
 mongoose.model('nc_message', new Schema({
   _id: { type: String, validate: isSnowflake },
   name: { type: String, match: /^[a-z\d-]+$/ },
