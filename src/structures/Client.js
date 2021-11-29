@@ -16,6 +16,7 @@ export default class Client extends DiscordClient {
   state = {}
   commands = new Collection()
   events = new Collection()
+  legacyCommands = new Collection()
 
   get guild() { return this.getGuild(this.data.guild) }
   get channel() { return this.getChannel(this.data.channel) }

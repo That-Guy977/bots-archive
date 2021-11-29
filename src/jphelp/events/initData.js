@@ -1,19 +1,11 @@
 import { Event } from '../../shared/structures.js'
 import { isSnowflake, isIdData, updatePremium } from '../../shared/util.js'
-import { readdir, readFile } from 'node:fs/promises'
-import { Collection } from 'discord.js'
+import { readFile } from 'node:fs/promises'
 import mongoose from 'mongoose'
 const { evtData } = JSON.parse(await readFile('../shared/config.json'))
 const { Schema } = mongoose
 
 export const event = new Event('ready', (client) => {
-  client.interactionCommands = new Collection()
-  readdir('../jphelp/interactionCommands').then((fs) => fs.filter((f) => f.endsWith(".js"))).then((files) => {
-    files.forEach(async (file) => {
-      const { command } = await import(`../interactionCommands/${file}`)
-      client.interactionCommands.set(command.info.name, command)
-    })
-  })
   client.state.offline = []
   evtData['botPresence'][client.source].forEach(async (id) => {
     if (await client.getMember(id).then((m) => m.presence?.status ?? 'offline') === 'offline')
