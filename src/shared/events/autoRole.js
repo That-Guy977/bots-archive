@@ -19,7 +19,6 @@ export default new Event('guildMemberAdd', (client, member) => {
             role: `@${role.name} (${role.id})`,
             reason: strCapitalize(thisFile)
           },
-          logChannel: 'mod-logs',
           match: [member.id, role.name, "given"]
         })
       }
