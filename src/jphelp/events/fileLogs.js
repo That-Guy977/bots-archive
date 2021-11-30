@@ -8,7 +8,7 @@ const maxSizes = {
   TIER_3: 104857600
 }
 
-export const event = new Event('messageCreate', (client, msg) => {
+export default new Event('messageCreate', (client, msg) => {
   if (msg.author.bot) return
   if (msg.guildId !== client.guild.id) return
   const channel = client.getChannel('file-logs')

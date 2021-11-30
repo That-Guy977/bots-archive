@@ -2,13 +2,13 @@ import { Event } from '../../shared/structures.js'
 import { getSource } from '../../shared/util.js'
 import { readFile } from 'node:fs/promises'
 import { MessageEmbed } from 'discord.js'
-const { evtData } = JSON.parse(await readFile('../shared/config.json'))
+const { data } = JSON.parse(await readFile('../shared/config.json'))
 const { thisFile } = getSource(import.meta.url)
 
-export const event = new Event('presenceUpdate', async (client, oldPresence, presence) => {
+export default new Event('presenceUpdate', async (client, oldPresence, presence) => {
   if (presence.guild.id !== client.guild.id) return
   if (isOnline(presence) === isOnline(oldPresence)) return
-  const logUsers = evtData[thisFile][client.source]
+  const logUsers = data[thisFile][client.source]
   if (!logUsers.some((id) => client.resolveId(id, 'user') === presence.userId)) return
   const embed = new MessageEmbed()
   .setTitle(`${presence.user.username} ${isOnline(presence) ? "online!" : "offline."}`)

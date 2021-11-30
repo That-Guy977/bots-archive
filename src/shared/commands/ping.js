@@ -1,7 +1,7 @@
-import { ApplicationCommand } from '../../shared/structures.js'
+import { Command } from '../../shared/structures.js'
 import { MessageEmbed } from 'discord.js'
 
-export const command = new ApplicationCommand({
+export default new Command({
   name: "ping",
   desc: "Pings the bot."
 }, async (client, cmd) => {

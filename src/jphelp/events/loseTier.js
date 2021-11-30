@@ -8,7 +8,7 @@ const tiers = {
   TIER_3: 3
 }
 
-export const event = new Event('guildUpdate', (client, _oldGuild, guild) => {
+export default new Event('guildUpdate', (client, _oldGuild, guild) => {
   if (guild.id !== client.guild.id) return
   if (guild.premiumTier >= client.state.premium.premiumTier) return
   client.getChannel('announcements').send({ embeds: [
