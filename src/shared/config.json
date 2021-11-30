@@ -93,6 +93,9 @@
     "autoRole": {
       "jphelp": [null, "bots", "role-logs"],
       "omega": ["member", "bot", null]
+    },
+    "genLogs": {
+      "jphelp": ["mod-logs"]
     }
   }
 }
