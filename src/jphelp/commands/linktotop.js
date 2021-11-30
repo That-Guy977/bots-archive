@@ -1,7 +1,7 @@
-import { Client, ApplicationCommand } from '../../shared/structures.js'
+import { Client, Command } from '../../shared/structures.js'
 import { chnArchived } from '../../shared/util.js'
 
-export const command = new ApplicationCommand({
+export const command = new Command({
   name: "linktotop",
   desc: "Provides a message linking to the start of the channel.",
   isGlobal: false,

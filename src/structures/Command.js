@@ -18,7 +18,7 @@ const permissionTypes = {
   USER: 2
 }
 
-export default class ApplicationCommand {
+export default class Command {
   constructor(
     {
       type = 'CHAT_INPUT',

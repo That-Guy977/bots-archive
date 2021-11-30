@@ -1,6 +1,6 @@
-import { Client, ApplicationCommand } from '../../shared/structures.js'
+import { Client, Command } from '../../shared/structures.js'
 
-export const command = new ApplicationCommand({
+export const command = new Command({
   name: "resetchannel",
   desc: "Resets a channel to make space to remake content.",
   isGlobal: false,
