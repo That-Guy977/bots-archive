@@ -8,14 +8,13 @@ config({ path: '../../.env' })
 
 export default async function init(options, source) {
   const client = new Client(options, source).login()
-  const folders = ['commands', 'events', 'legacyCommands'].map((strc) => [`shared/${strc}`, `${source}/${strc}`]).flat()
+  const folders = ['commands', 'events'].map((strc) => [`shared/${strc}`, `${source}/${strc}`]).flat()
   await Promise.all(folders.map(async (folder) => {
     const files = await readdir(`../${folder}`).then((fs) => fs.filter((f) => f.endsWith(".js"))).catch(() => [])
     await Promise.all(files.map(async (file) => {
       const data = await import(`../${folder}/${file}`)
       if (folder.endsWith('commands')) client.commands.set(data.command.info.name, data.command)
       else if (folder.endsWith('events')) client.events.set(basename(file, ".js"), data.event)
-      else if (folder.endsWith('legacyCommands')) client.legacyCommands.set(data.command.info.name, data.command)
     }))
   }))
   for (const [, event] of client.events)

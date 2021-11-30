@@ -76,10 +76,6 @@
     }
   },
   "cmdData": {
-    "prefix": {
-      "jphelp": "h!",
-      "omega": "o!"
-    },
     "nc_manage-exempt": [
       "q-a",
       "wotd-n4",
