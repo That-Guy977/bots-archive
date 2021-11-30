@@ -2,12 +2,12 @@ import { Event } from '../../shared/structures.js'
 import { isSnowflake, isIdData, updatePremium } from '../../shared/util.js'
 import { readFile } from 'node:fs/promises'
 import mongoose from 'mongoose'
-const { evtData } = JSON.parse(await readFile('../shared/config.json'))
+const { data } = JSON.parse(await readFile('../shared/config.json'))
 const { Schema } = mongoose
 
 export const event = new Event('ready', (client) => {
   client.state.offline = []
-  evtData['botPresence'][client.source].forEach(async (id) => {
+  data['botPresence'][client.source].forEach(async (id) => {
     if (await client.getMember(id).then((m) => m.presence?.status ?? 'offline') === 'offline')
       client.state.offline.push(client.resolveId(id, 'user'))
   })

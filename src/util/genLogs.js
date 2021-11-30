@@ -1,7 +1,6 @@
 import strCapitalize from './strCapitalize.js'
 
 export default async function genLogs(client, id, data, match) {
-  if (!client.data.logs) return
   const dynoOnline = await client.getMember('dyno').then((m) => m.presence?.status ?? 'offline') !== 'offline'
   data.logs = dynoOnline ? "Pending..." : "N/A - Dyno offline"
   const msg = await client.getChannel(client.data.logs).send(
