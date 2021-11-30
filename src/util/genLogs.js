@@ -4,11 +4,7 @@ import { readFile } from 'node:fs/promises'
 const { data } = JSON.parse(await readFile('../shared/config.json'))
 const { thisFile } = getSource(import.meta.url)
 
-export default async function genLogs(client, {
-  channelId,
-  info = { note: "Test" },
-  match = []
-}) {
+export default async function genLogs(client, channelId, info, match = []) {
   const dynoOnline = await client.getMember('dyno').then((m) => m.presence?.status ?? 'offline') !== 'offline'
   info.logs ??= dynoOnline ? "Pending..." : "N/A - Dyno offline"
   const msg = await client.getChannel(data[thisFile][client.source])?.send(

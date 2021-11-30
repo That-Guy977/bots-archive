@@ -11,16 +11,12 @@ export default new Event('guildMemberAdd', (client, member) => {
   if (role) {
     member.roles.add(role).then(() => {
       if (channelId) {
-        genLogs(client, {
-          channelId,
-          info: {
-            action: "Give Role",
-            user: `@${member.user.tag} (${member.id})`,
-            role: `@${role.name} (${role.id})`,
-            reason: strCapitalize(thisFile)
-          },
-          match: [member.id, role.name, "given"]
-        })
+        genLogs(client, channelId, {
+          action: "Give Role",
+          user: `@${member.user.tag} (${member.id})`,
+          role: `@${role.name} (${role.id})`,
+          reason: strCapitalize(thisFile)
+        }, [member.id, role.name, "given"])
       }
     }).catch(() => null)
   }
