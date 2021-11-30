@@ -50,8 +50,7 @@ export default class Client extends DiscordClient {
   }
 
   resolveId(id, type) {
-    const ids = config.ids[`${type}s`]
-    return isSnowflake(id) ? id : ids[id] ?? ids[this.main.guild]?.[id] ?? null
+    return Client.resolveId(id, type, this.main.guild)
   }
 
   static resolveId(id, type, guild) {
