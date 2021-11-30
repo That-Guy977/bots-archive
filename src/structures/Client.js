@@ -16,8 +16,13 @@ export default class Client extends DiscordClient {
   commands = new Collection()
   events = new Collection()
 
-  get guild() { return this.getGuild(this.main.guild) }
-  get channel() { return this.getChannel(this.main.channel) }
+  get guild() {
+    return this.getGuild(this.main.guild)
+  }
+
+  get channel() {
+    return this.getChannel(this.main.channel)
+  }
 
   login() {
     super.login()
@@ -25,28 +30,24 @@ export default class Client extends DiscordClient {
   }
 
   getGuild(id) {
-    id = this.resolveId(id, 'guild')
-    return this.guilds.cache.get(id) ?? null
+    return this.guilds.cache.get(this.resolveId(id, 'guild')) ?? null
   }
 
   getChannel(id) {
-    id = this.resolveId(id, 'channel')
-    return this.channels.cache.get(id) ?? null
+    return this.channels.cache.get(this.resolveId(id, 'channel')) ?? null
   }
 
   getRole(id) {
-    id = this.resolveId(id, 'role')
-    return this.guild.roles.cache.get(id) ?? null
+    return this.guild.roles.cache.get(this.resolveId(id, 'role')) ?? null
   }
 
   getMember(id) {
     id = this.resolveId(id, 'user')
-    return id ? this.guild.members.fetch(id).catch(() => null) : null
+    return id && this.guild.members.fetch(id).catch(() => null)
   }
 
   getColor(id) {
-    id = isSnowflake(id) ? Object.entries(config.ids.users).find(([, v]) => v === id)?.[0] : id
-    return config.color[id] ?? null
+    return config.color[isSnowflake(id) ? Object.entries(config.ids.users).find(([, v]) => v === id)?.[0] : id] ?? null
   }
 
   resolveId(id, type) {
