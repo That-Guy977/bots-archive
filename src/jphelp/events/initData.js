@@ -5,7 +5,7 @@ import mongoose from 'mongoose'
 const { data } = JSON.parse(await readFile('../shared/config.json'))
 const { Schema } = mongoose
 
-export const event = new Event('ready', (client) => {
+export default new Event('ready', (client) => {
   client.state.offline = []
   data['botPresence'][client.source].forEach(async (id) => {
     if (await client.getMember(id).then((m) => m.presence?.status ?? 'offline') === 'offline')

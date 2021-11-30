@@ -5,7 +5,7 @@ import { MessageEmbed } from 'discord.js'
 const { data } = JSON.parse(await readFile('../shared/config.json'))
 const { thisFile } = getSource(import.meta.url)
 
-export const event = new Event('presenceUpdate', async (client, oldPresence, presence) => {
+export default new Event('presenceUpdate', async (client, oldPresence, presence) => {
   if (presence.guild.id !== client.guild.id) return
   if (isOnline(presence) === isOnline(oldPresence)) return
   const logUsers = data[thisFile][client.source]

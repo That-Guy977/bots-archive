@@ -8,7 +8,7 @@ const tiers = {
   TIER_3: 3
 }
 
-export const event = new Event('guildMemberUpdate', async (client, oldMember, member) => {
+export default new Event('guildMemberUpdate', async (client, oldMember, member) => {
   if (member.guild.id !== client.guild.id) return
   if (member.partial) await member.fetch().catch(() => null)
   if (!member.premiumSinceTimestamp || member.premiumSinceTimestamp === oldMember.premiumSinceTimestamp) return

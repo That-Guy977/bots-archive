@@ -1,7 +1,7 @@
 import { Client, Command } from '../../shared/structures.js'
 import { chnArchived } from '../../shared/util.js'
 
-export const command = new Command({
+export default new Command({
   name: "linktotop",
   desc: "Provides a message linking to the start of the channel.",
   isGlobal: false,

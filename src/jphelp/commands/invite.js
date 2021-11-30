@@ -1,6 +1,6 @@
 import { Command } from '../../shared/structures.js'
 
-export const command = new Command({
+export default new Command({
   name: "invite",
   desc: "Gives the invite link of the server.",
   isGlobal: false

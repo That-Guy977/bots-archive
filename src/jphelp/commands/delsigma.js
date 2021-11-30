@@ -1,6 +1,6 @@
 import { Command } from '../../shared/structures.js'
 
-export const command = new Command({
+export default new Command({
   name: "delsigma",
   desc: "Deletes recent messages from Apex Sigma in the channel it's used in.",
   options: [{

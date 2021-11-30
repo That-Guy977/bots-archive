@@ -4,7 +4,7 @@ import { readFile } from 'node:fs/promises'
 const { data } = JSON.parse(await readFile('../shared/config.json'))
 const { thisFile } = getSource(import.meta.url)
 
-export const event = new Event('guildMemberAdd', (client, member) => {
+export default new Event('guildMemberAdd', (client, member) => {
   if (member.guild.id !== client.guild.id) return
   const [memberRole, botRole, logChannel] = data[thisFile][client.source]
   const role = client.getRole(!member.user.bot ? memberRole : botRole)

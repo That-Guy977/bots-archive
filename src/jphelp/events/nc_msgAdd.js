@@ -2,7 +2,7 @@ import { Event } from '../../shared/structures.js'
 import { chnArchived } from '../../shared/util.js'
 import fetch from 'node-fetch'
 
-export const event = new Event('messageCreate', async (client, message) => {
+export default new Event('messageCreate', async (client, message) => {
   if (!chnArchived(message.channel)) return
   if (message.author.bot || message.type !== 'DEFAULT') return
   const archive = client.mongoose.models['nc_message']

@@ -2,7 +2,7 @@ import { Event } from '../../shared/structures.js'
 import { readFile } from 'node:fs/promises'
 const { ids } = JSON.parse(await readFile('../shared/config.json'))
 
-export const event = new Event('interactionCreate', (client, cmd) => {
+export default new Event('interactionCreate', (client, cmd) => {
   if (!cmd.isCommand() && !cmd.isContextMenu()) return
   if (!client.commands.has(cmd.commandName)) return cmd.reply({ content: "This command is not yet available.", ephemeral: true })
   const { info, run } = client.commands.get(cmd.commandName)
