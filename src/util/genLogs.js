@@ -2,8 +2,8 @@ import strCapitalize from './strCapitalize.js'
 
 export default async function genLogs(client, id, info, log, match) {
   const dynoOnline = await client.getMember('dyno').then((m) => m.presence?.status ?? 'offline') !== 'offline'
-  info.logs = dynoOnline ? "Pending..." : "N/A - Dyno offline"
   const msg = await client.getChannel(log).send(
+  info.logs ??= dynoOnline ? "Pending..." : "N/A - Dyno offline"
     `\`\`\`\n${Object.entries(info).map(
       ([field, value]) => `${strCapitalize(field).padEnd(8)}: ${value}`
     ).join("\n")}\n\`\`\``
