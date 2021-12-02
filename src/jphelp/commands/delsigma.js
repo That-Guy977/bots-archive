@@ -16,8 +16,9 @@ export default new Command({
   isGlobal: false
 }, async (client, cmd) => {
   const limit = cmd.options.get('limit')?.value ?? 1
-  const messages = await cmd.channel.messages.fetch()
-  .then((ms) => ms.filter((m) => m.author.id === client.resolveId('sigma', 'user') && !m.embeds[0]?.author?.iconURL?.startsWith("https://cdn.discordapp.com/avatars")).first(limit))
+  const messages = await cmd.channel.messages.fetch().then(
+    (ms) => ms.filter((m) => m.author.id === client.resolveId('sigma', 'user') && !m.embeds[0]?.author?.iconURL?.startsWith("https://cdn.discordapp.com/avatars")).first(limit)
+  )
   if (!messages.length) return cmd.reply({ content: "No messages found to delete.", ephemeral: true })
   await cmd.channel.bulkDelete(messages, true)
   cmd.reply(`Finished deleting ${messages.length} message${messages.length - 1 ? "s" : ""}.`)
