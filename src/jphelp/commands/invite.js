@@ -2,7 +2,7 @@ import { Command } from '../../shared/structures.js'
 
 export default new Command({
   name: "invite",
-  desc: "Gives the invite link of the server.",
+  description: "Gives the invite link of the server.",
   isGlobal: false
 }, (client, cmd) => {
   cmd.reply(

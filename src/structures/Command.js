@@ -23,7 +23,7 @@ export default class Command {
     {
       type = 'CHAT_INPUT',
       name = "test",
-      desc = "Unknown use",
+      description = "Test command",
       options = [],
       isGlobal = true,
       isEnabled = true,
@@ -35,7 +35,7 @@ export default class Command {
     this.info = type === 'CHAT_INPUT' ? {
       type,
       name,
-      desc,
+      description,
       options,
       isGlobal,
       isEnabled,
@@ -51,10 +51,10 @@ export default class Command {
     this.structure = type === 'CHAT_INPUT' ? {
       type: commandTypes[type],
       name,
-      description: desc,
+      description,
       options: options.map((option) => ({
         name: option.name,
-        description: option.desc,
+        description: option.description,
         type: optionTypes[option.type],
         required: option.required,
         ...option.restraints

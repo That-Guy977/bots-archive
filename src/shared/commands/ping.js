@@ -3,7 +3,7 @@ import { MessageEmbed } from 'discord.js'
 
 export default new Command({
   name: "ping",
-  desc: "Pings the bot."
+  description: "Pings the bot."
 }, async (client, cmd) => {
   const date = Date.now()
   await cmd.deferReply({ fetchReply: true }).then((reply) => {

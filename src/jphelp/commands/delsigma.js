@@ -2,10 +2,10 @@ import { Command } from '../../shared/structures.js'
 
 export default new Command({
   name: "delsigma",
-  desc: "Deletes recent messages from Apex Sigma in the channel it's used in.",
+  description: "Deletes recent messages from Apex Sigma in the channel it's used in.",
   options: [{
     name: "limit",
-    desc: "Limit to how many messages are deleted. 1-20, defaults to 1.",
+    description: "Limit to how many messages are deleted. 1-20, defaults to 1.",
     type: 'INTEGER',
     required: false,
     restraints: {

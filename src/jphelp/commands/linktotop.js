@@ -3,7 +3,7 @@ import { chnArchived } from '../../shared/util.js'
 
 export default new Command({
   name: "linktotop",
-  desc: "Provides a message linking to the start of the channel.",
+  description: "Provides a message linking to the start of the channel.",
   isGlobal: false,
   isEnabled: false,
   permissions: [

@@ -2,7 +2,7 @@ import { Client, Command } from '../../shared/structures.js'
 
 export default new Command({
   name: "resetchannel",
-  desc: "Resets a channel to make space to remake content.",
+  description: "Resets a channel to make space to remake content.",
   isGlobal: false,
   isEnabled: false,
   permissions: [
