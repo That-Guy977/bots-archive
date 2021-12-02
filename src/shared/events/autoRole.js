@@ -1,5 +1,5 @@
 import { Event } from '../../shared/structures.js'
-import { getSource, strCapitalize, genLogs } from '../../shared/util.js'
+import { getSource, genLogs } from '../../shared/util.js'
 import { readFile } from 'node:fs/promises'
 const { data } = JSON.parse(await readFile('../shared/config.json'))
 const { thisFile } = getSource(import.meta.url)
@@ -15,7 +15,7 @@ export default new Event('guildMemberAdd', (client, member) => {
           action: "Give Role",
           user: `@${member.user.tag} (${member.id})`,
           role: `@${role.name} (${role.id})`,
-          reason: strCapitalize(thisFile)
+          reason: "AutoRole"
         }, [member.id, role.name, "given"])
       }
     }).catch(() => null)
