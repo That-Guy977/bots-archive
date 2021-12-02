@@ -1,6 +1,6 @@
 import { Event } from '../../shared/structures.js'
 import { readFile } from 'node:fs/promises'
-const { ids } = JSON.parse(await readFile('../shared/config.json'))
+const { ids } = JSON.parse(await readFile('../shared/data.json'))
 
 export default new Event('interactionCreate', (client, cmd) => {
   if (!cmd.isCommand() && !cmd.isContextMenu()) return

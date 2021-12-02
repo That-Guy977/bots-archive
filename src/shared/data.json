@@ -70,7 +70,7 @@
     "kotoba": "a3817d",
     "sora": "e7d5d4"
   },
-  "data": {
+  "config": {
     "nc_manage-exempt": [
       "q-a",
       "wotd-n4",
