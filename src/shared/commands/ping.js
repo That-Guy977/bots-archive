@@ -13,8 +13,9 @@ export default new Command({
       .setColor(client.color)
       .setFooter(`Requested by ${cmd.user.tag}`, cmd.user.displayAvatarURL())
       .setTimestamp()
+      .setDescription(`\u{1F493} \`${client.ws.ping} ms\``)
       .addFields(
-        { name: "\u{1F493} Heartbeat", value: `\`${client.ws.ping} ms\``, inline: true },
+        { name: "\u{1F553} Latency", value: `\`${reply.createdTimestamp - cmd.createdTimestamp} ms\``, inline: true },
         { name: "\u{1F4E5} Recieving", value: `\`${date - cmd.createdTimestamp} ms\``, inline: true },
         { name: "\u{1F4E4} Sending", value: `\`${reply.createdTimestamp - date} ms\``, inline: true }
       )
