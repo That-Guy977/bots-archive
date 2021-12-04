@@ -2,6 +2,7 @@ import { Event } from '../../shared/structures.js'
 import fetch from 'node-fetch'
 
 export default new Event('messageUpdate', async (client, _oldMessage, message) => {
+  if (!client.mongoose) return
   const archive = client.mongoose.models['nc_message']
   const doc = await archive.findById(message.channelId).exec()
   if (!doc) return

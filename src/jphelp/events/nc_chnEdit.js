@@ -3,6 +3,7 @@ import { chnArchived } from '../../shared/util.js'
 import fetch from 'node-fetch'
 
 export default new Event('channelUpdate', async (client, oldChannel, channel) => {
+  if (!client.mongoose) return
   updateMsgLink(client, channel)
   const archive = client.mongoose.models['nc_message']
   const doc = await archive.findById(channel.id).exec() ?? (chnArchived(channel) ? await archive.create({ _id: channel.id, name: channel.name, createdTimestamp: channel.createdTimestamp }) : null)
