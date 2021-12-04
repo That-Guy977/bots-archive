@@ -22,7 +22,7 @@ Setup a [MongoDB database](https://mongodb.com/) and save the name in the `.env`
 
 Add a user with the username `MONGO_SOURCE` and save the password in the `.env` file in the format `MONGO_SOURCE`.
 
-Choose connect to the database and save the ID (directly after the database name in the generated URI) in the `.env` file in the format `MONGO_ID`.
+Choose connect to the database and save the host in the `.env` file in the format `MONGO_HOST`.
 
 `cd` into `src/SOURCE` and run `node populate` to populate the database.
 
