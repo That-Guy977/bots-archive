@@ -16,7 +16,7 @@ export default new Event('guildMemberAdd', (client, member) => {
           user: `@${member.user.tag} (${member.id})`,
           role: `@${role.name} (${role.id})`,
           reason: "AutoRole"
-        }, [member.id, role.name, "given"])
+        }, [{ name: "Give Role", match: [member.id, role.name, "given"] }])
       }
     }).catch(() => null)
   }
