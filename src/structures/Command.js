@@ -27,44 +27,36 @@ export default class Command {
       options = [],
       isGlobal = true,
       isEnabled = true,
-      permissions = [],
-      test = false
+      permissions = []
     },
     run = (_client, cmd) => cmd.reply({ content: "This command does not have functionality.", ephemeral: true })
   ) {
-    this.info = type === 'CHAT_INPUT' ? {
-      type,
-      name,
-      description,
-      options,
-      isGlobal,
-      isEnabled,
-      test
-    } : {
+    this.info = {
       type,
       name,
       isGlobal,
-      isEnabled,
-      test
+      isEnabled
     }
 
-    this.structure = type === 'CHAT_INPUT' ? {
-      type: commandTypes[type],
-      name,
-      description,
-      options: options.map((option) => ({
-        name: option.name,
-        description: option.description,
-        type: optionTypes[option.type],
-        required: option.required,
-        ...option.restraints
-      })),
-      default_permission: isEnabled
-    } : {
+    this.structure = {
       type: commandTypes[type],
       name,
       description: "",
       default_permission: isEnabled
+    }
+
+    if (type === 'CHAT_INPUT') {
+      Object.assign(this.info, { description, options })
+      Object.assign(this.structure, {
+        description,
+        options: options.map((option) => ({
+          name: option.name,
+          description: option.description,
+          type: optionTypes[option.type],
+          required: option.required,
+          ...option.restraints
+        }))
+      })
     }
 
     this.permissions = !isGlobal && permissions?.length ? permissions.map((permission) => ({
