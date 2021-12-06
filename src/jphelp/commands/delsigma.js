@@ -7,7 +7,6 @@ export default new Command({
     name: 'limit',
     description: "Limit to how many messages are deleted. 1-20, defaults to 1.",
     type: 'INTEGER',
-    required: false,
     restraints: {
       min_value: 1,
       max_value: 20

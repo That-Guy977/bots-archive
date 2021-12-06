@@ -53,7 +53,7 @@ export default class Command {
           name: option.name,
           description: option.description,
           type: optionTypes[option.type],
-          required: option.required,
+          required: option.required ?? false,
           ...option.restraints
         }))
       })
