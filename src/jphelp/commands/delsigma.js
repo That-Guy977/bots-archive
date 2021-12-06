@@ -4,7 +4,7 @@ export default new Command({
   name: "delsigma",
   description: "Deletes recent messages from Apex Sigma in the channel it's used in.",
   options: [{
-    name: "limit",
+    name: 'limit',
     description: "Limit to how many messages are deleted. 1-20, defaults to 1.",
     type: 'INTEGER',
     required: false,
