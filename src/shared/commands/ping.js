@@ -5,9 +5,10 @@ export default new Command({
   name: "ping",
   description: "Pings the bot."
 }, async (client, cmd) => {
+  const now = Date.now()
   await cmd.deferReply({ fetchReply: true }).then((reply) => {
     cmd.editReply({
-      embeds: [generatePong(client, cmd, reply)],
+      embeds: [generatePong(client, cmd, reply, now)],
       components: [
         new MessageActionRow()
         .addComponents({
@@ -23,8 +24,9 @@ export default new Command({
         time: 600000,
         idle: 60000
       }).on('collect', (int) => {
+        const intNow = Date.now()
         int.update({ content: "Pinging...", fetchReply: true }).then((intReply) => {
-          int.editReply({ content: null, embeds: [generatePong(client, int, intReply)] })
+          int.editReply({ content: null, embeds: [generatePong(client, int, intReply, intNow)] })
         })
       }).on('end', () => {
         cmd.editReply({ components: [] })
@@ -33,10 +35,9 @@ export default new Command({
   })
 })
 
-function generatePong(client, int, reply) {
+function generatePong(client, int, reply, date) {
   const intDate = int.createdTimestamp
   const replyDate = int.isCommand() ? reply.createdTimestamp : reply.editedTimestamp
-  const date = Date.now()
   return new MessageEmbed()
   .setTitle("Pong!")
   .setColor(client.color)
