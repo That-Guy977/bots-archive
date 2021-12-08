@@ -4,6 +4,8 @@ const commandTypes = {
   MESSAGE: 3
 }
 const optionTypes = {
+  SUB_COMMAND: 1,
+  SUB_COMMAND_GROUP: 2,
   STRING: 3,
   INTEGER: 4,
   BOOLEAN: 5,
@@ -49,22 +51,41 @@ export default class Command {
       Object.assign(this.info, { description, options })
       Object.assign(this.structure, {
         description,
-        options: options.map((option) => ({
-          name: option.name,
-          description: option.description,
-          type: optionTypes[option.type],
-          required: option.required ?? false,
-          ...option.restraints
-        }))
+        options: options.map(parseOption)
       })
+      const autocomplete = options.map(parseAutocomplete).reduce((acc, cur) => Object.assign(acc, cur), {})
+      if (Object.keys(autocomplete).length) Object.assign(this.info, { autocomplete })
     }
 
-    this.permissions = !isGlobal && permissions?.length ? permissions.map((permission) => ({
-      id: permission.id,
-      type: permissionTypes[permission.type],
-      permission: permission.allow
-    })) : null
+    if (!isGlobal && permissions.length) Object.assign(this, { permissions: permissions.map(parsePermission) })
 
     this.run = run
   }
+}
+
+function parseOption(option) {
+  const structure = {
+    name: option.name,
+    description: option.description,
+    type: optionTypes[option.type],
+    autocomplete: Boolean(option.autocomplete),
+    ...option.restraints
+  }
+  if ('required' in option) Object.assign(structure, { required: option.required })
+  if ('options' in option) Object.assign(structure, { options: option.options.map(parseOption) })
+  return structure
+}
+
+function parsePermission(permission) {
+  return {
+    id: permission.id,
+    type: permissionTypes[permission.type],
+    permission: permission.allow
+  }
+}
+
+function parseAutocomplete(option) {
+  if ('options' in option) return { [option.name]: { ...option.options.map(parseAutocomplete).reduce((acc, cur) => Object.assign(acc, cur), {}) } }
+  if ('autocomplete' in option) return { [option.name]: option.autocomplete }
+  return {}
 }
