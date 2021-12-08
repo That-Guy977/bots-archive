@@ -19,9 +19,9 @@ const commandData = {
 await Promise.all(['shared/commands', `${source}/commands`].map(async (folder) => {
   const files = await readdir(`../${folder}`).then((fs) => fs.filter((f) => f.endsWith(".js"))).catch(() => [])
   await Promise.all(files.map(async (file) => {
-    const { command } = await import(`../${folder}/${file}`)
+    const { default: command } = await import(`../${folder}/${file}`)
     commandData[command.info.isGlobal ? "globalCommands" : "guildCommands"].push(command.structure)
-    if (command.permissions) commandData.guildCommandPermissions.push({ name: command.info.name, permissions: command.permissions })
+    if ('permissions' in command) commandData.guildCommandPermissions.push({ name: command.info.name, permissions: command.permissions })
   }))
 }))
 
@@ -33,16 +33,16 @@ if (commandData.globalCommands.length)
 
 if (commandData.guildCommands.length)
   await rest.put(
-    Routes.applicationGuildCommands(client.resolveId(source, 'user'), client.resolveId(client.data.guild, 'guild')),
+    Routes.applicationGuildCommands(client.resolveId(source, 'user'), client.resolveId(client.main.guild, 'guild')),
     { body: commandData.guildCommands }
   )
 
 const commands = await rest.get(
-  Routes.applicationGuildCommands(client.resolveId(source, 'user'), client.resolveId(client.data.guild, 'guild'))
+  Routes.applicationGuildCommands(client.resolveId(source, 'user'), client.resolveId(client.main.guild, 'guild'))
 ).then((cmds) => Object.fromEntries(cmds.map((cmd) => [cmd.name, cmd.id])))
 
 if (commandData.guildCommandPermissions.length)
   await rest.put(
-    Routes.guildApplicationCommandsPermissions(client.resolveId(source, 'user'), client.resolveId(client.data.guild, 'guild')),
+    Routes.guildApplicationCommandsPermissions(client.resolveId(source, 'user'), client.resolveId(client.main.guild, 'guild')),
     { body: commandData.guildCommandPermissions.map((cmdPerms) => ({ id: commands[cmdPerms.name], permissions: cmdPerms.permissions })) }
   )
