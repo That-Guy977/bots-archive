@@ -40,13 +40,13 @@ function generatePong(client, int, reply, date) {
   const replyDate = int.isCommand() ? reply.createdTimestamp : reply.editedTimestamp
   return new MessageEmbed()
   .setTitle("Pong!")
+  .setDescription(`\u{1F493} \`${client.ws.ping} ms\``)
   .setColor(client.color)
   .setFooter(`Requested by ${int.user.tag}`, int.user.displayAvatarURL())
-  .setTimestamp()
-  .setDescription(`\u{1F493} \`${client.ws.ping} ms\``)
   .addFields(
     { name: "\u{1F553} Latency", value: `\`${replyDate - intDate} ms\``, inline: true },
     { name: "\u{1F4E5} Recieving", value: `\`${date - intDate} ms\``, inline: true },
     { name: "\u{1F4E4} Sending", value: `\`${replyDate - date} ms\``, inline: true }
   )
+  .setTimestamp()
 }
