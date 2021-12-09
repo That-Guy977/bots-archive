@@ -20,5 +20,5 @@ export default new Command({
   )
   if (!messages.length) return cmd.reply({ content: "No messages found to delete.", ephemeral: true })
   await cmd.channel.bulkDelete(messages, true)
-  cmd.reply(`Finished deleting ${messages.length} message${messages.length - 1 ? "s" : ""}.`)
+  cmd.reply(`Finished deleting ${messages.length} ${messages.length === 1 ? "message" : "messages"}.`)
 })
