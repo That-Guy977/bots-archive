@@ -12,7 +12,7 @@ export default async function genLogs(client, channelId, info, logInfo = []) {
       ([field, value]) => `${strCapitalize(field).padEnd(8)}: ${value}`
     ).join("\n")}\n\`\`\``
   )
-  if (!msg || !dynoOnline || !logInfo.length) return console.log(msg, dynoOnline, logInfo)
+  if (!msg || !dynoOnline || !logInfo.length) return
   const channel = client.getChannel(channelId)
   const logData = []
   const logCheck = (m) => logInfo.findIndex(({ match }) => match.every((str) => m.embeds[0]?.description?.includes(str)))
