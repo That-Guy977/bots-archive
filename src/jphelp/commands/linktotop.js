@@ -22,15 +22,16 @@ export default new Command({
   if (!chnArchived(cmd.channel)) return cmd.reply({ content: "This command is not available in this channel.", ephemeral: true })
   const msgLink = client.mongoose.models['nc_msglink']
   const doc = await msgLink.findById(cmd.channelId).exec() ?? await msgLink.create({ _id: cmd.channelId, name: cmd.channel.name })
-  const prevMsg = doc.linkMsg
-  doc.firstMsg = await cmd.channel.messages.fetch({ limit: 1, after: "0" }).then((coll) => coll.firstKey())
-  if (!doc.firstMsg) return cmd.reply({ content: "This channel doesn't have any messages!", ephemeral: true })
+  const prevLinkMsg = doc.linkMsg
+  const firstMsg = await cmd.channel.messages.fetch({ limit: 1, after: "0" }).then((coll) => coll.first())
+  if (!firstMsg) return cmd.reply({ content: "This channel doesn't have any messages!", ephemeral: true })
   const reply = await cmd.reply({
-    content: `Check the pinned messages to view chapters, or click [here](https://discord.com/channels/${cmd.guildId}/${cmd.channelId}/${doc.firstMsg}) to jump to the top.`,
+    content: `Check the pinned messages to view chapters, or click [here](${firstMsg.url}) to jump to the top.`,
     fetchReply: true
   })
+  doc.firstMsg = firstMsg.id
   doc.linkMsg = reply.id
   doc.user = cmd.user.id
   await doc.save()
-  cmd.channel.messages.delete(prevMsg).catch(() => null)
+  cmd.channel.messages.delete(prevLinkMsg).catch(() => null)
 })
