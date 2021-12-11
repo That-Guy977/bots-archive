@@ -41,7 +41,7 @@ function generatePong(client, int, reply, date) {
   return new MessageEmbed()
   .setTitle("Pong!")
   .setDescription(`\u{1F493} \`${client.ws.ping} ms\``)
-  .setColor(client.color)
+  .setColor('BLUE')
   .setFooter(`Requested by ${int.user.tag}`, int.user.displayAvatarURL())
   .addFields(
     { name: "\u{1F553} Latency", value: `\`${replyDate - intDate} ms\``, inline: true },

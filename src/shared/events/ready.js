@@ -6,7 +6,7 @@ export default new Event('ready', (client) => {
   client.channel.send({ embeds: [
     new MessageEmbed()
     .setTitle(`${client.guild.me.displayName} online!`)
-    .setColor(client.color)
+    .setColor('BLUE')
     .setTimestamp()
   ] })
 })

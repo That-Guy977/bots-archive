@@ -16,7 +16,7 @@ export default new Event('messageCreate', (client, msg) => {
     const { type } = att.contentType?.match(/^(?<type>\w+)/).groups ?? { type: null }
     const embed = new MessageEmbed()
     .setTitle(`${strCapitalize(`${type ?? ""} file`)} sent: ${att.name}`)
-    .setColor(client.color)
+    .setColor('BLUE')
     .setURL(msg.url)
     .setFooter(`Sent by ${msg.author.tag} in #${msg.channel.name}`, msg.author.displayAvatarURL())
     .setTimestamp(msg.createdAt)

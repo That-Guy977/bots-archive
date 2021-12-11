@@ -9,7 +9,6 @@ export default class Client extends DiscordClient {
     this.source = source
     this.token = process.env[`TOKEN_${source.toUpperCase()}`]
     this.main = data.main[source]
-    this.color = data.color[source]
   }
 
   state = {}
