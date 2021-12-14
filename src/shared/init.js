@@ -4,13 +4,13 @@ import { basename } from 'node:path'
 import mongoose from 'mongoose'
 import { config } from 'dotenv'
 
-config({ path: '../../.env' })
+config({ path: '../.env' })
 
 export default async function init(options, source) {
   const client = new Client(options, source).login()
   const folders = ['commands', 'events'].map((strc) => [`shared/${strc}`, `${source}/${strc}`]).flat()
   await Promise.all(folders.map(async (folder) => {
-    const files = await readdir(`../${folder}`).then((fs) => fs.filter((f) => f.endsWith(".js"))).catch(() => [])
+    const files = await readdir(folder).then((fs) => fs.filter((f) => f.endsWith(".js"))).catch(() => [])
     await Promise.all(files.map(async (file) => {
       const { default: structure } = await import(`../${folder}/${file}`)
       if (folder.endsWith('commands')) client.commands.set(structure.info.name, structure)
@@ -23,7 +23,7 @@ export default async function init(options, source) {
     const mongoUsername = `MONGO_${client.source.toUpperCase()}`
     mongoose.connection.once('connected', () => console.log(`Logged into MongoDB as ${mongoUsername}`))
     mongoose.connect(
-      `mongodb+srv://${mongoUsername}:${process.env[mongoUsername]}@${process.env['MONGO_DATABASE']}.${process.env['MONGO_ID']}.mongodb.net/${process.env['MONGO_DATABASE']}`
+      `mongodb+srv://${mongoUsername}:${process.env[mongoUsername]}@${process.env['MONGO_HOST']}/${process.env['MONGO_DATABASE']}`
     ).then((connection) => { client.mongoose = connection })
   }
 }

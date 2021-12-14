@@ -5,16 +5,16 @@ import fetch from 'node-fetch'
 import { config } from 'dotenv'
 const { Schema } = mongoose
 const { source } = getSource(import.meta.url)
-config({ path: '../../.env' })
+config({ path: '../.env' })
 
 const client = new Client({ intents: [
   'GUILDS',
   'GUILD_MESSAGES'
 ] }, source).login()
 client.on('ready', () => console.log(`Logged into Discord as ${client.user.tag}`))
-const dbUsername = `MONGO_${client.source.toUpperCase()}`
-const connect = mongoose.connect(`mongodb+srv://${dbUsername}:${process.env[dbUsername]}@${process.env['MONGO_DATABASE']}.${process.env['MONGO_ID']}.mongodb.net/${process.env['MONGO_DATABASE']}`)
-mongoose.connection.once('connected', () => console.log(`Logged into MongoDB as ${dbUsername}`))
+const mongoUsername = `MONGO_${client.source.toUpperCase()}`
+const connect = mongoose.connect(`mongodb+srv://${mongoUsername}:${process.env[mongoUsername]}@${process.env['MONGO_HOST']}/${process.env['MONGO_DATABASE']}`)
+mongoose.connection.once('connected', () => console.log(`Logged into MongoDB as ${mongoUsername}`))
 mongoose.model('nc_message', new Schema({
   _id: { type: String, validate: isSnowflake },
   name: { type: String, match: /^[a-z\d-]+$/ },

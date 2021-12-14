@@ -2,6 +2,7 @@ import { Event } from '../../shared/structures.js'
 import fetch from 'node-fetch'
 
 export default new Event('messageUpdate', async (client, _oldMessage, message) => {
+  if (!client.mongoose) return
   const archive = client.mongoose.models['nc_message']
   const doc = await archive.findById(message.channelId).exec()
   if (!doc) return
@@ -9,7 +10,8 @@ export default new Event('messageUpdate', async (client, _oldMessage, message) =
   if (!msgDoc) return
   if (
     msgDoc.content === message.content
-    && msgDoc.attachments.map((att) => att._id).join(" ") === message.attachments.map((att) => att.id).join(" ")
+    && msgDoc.attachments.length === message.attachments.size
+    && msgDoc.attachments.every((att) => message.attachments.has(att._id))
   ) return
   msgDoc.edits.push({
     _id: message.editedTimestamp,

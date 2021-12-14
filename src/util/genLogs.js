@@ -1,36 +1,44 @@
 import strCapitalize from './strCapitalize.js'
 import getSource from './getSource.js'
 import { readFile } from 'node:fs/promises'
-const { data } = JSON.parse(await readFile('../shared/config.json'))
+const { config } = JSON.parse(await readFile('shared/data.json'))
 const { thisFile } = getSource(import.meta.url)
 
-export default async function genLogs(client, channelId, info, match = []) {
+export default async function genLogs(client, channelId, info, logInfo = []) {
   const dynoOnline = await client.getMember('dyno').then((m) => m.presence?.status ?? 'offline') !== 'offline'
-  info.logs ??= dynoOnline ? "Pending..." : "N/A - Dyno offline"
-  const msg = await client.getChannel(data[thisFile][client.source])?.send(
+  if (logInfo.length) info.logs ??= dynoOnline ? "Pending..." : "N/A - Dyno offline"
+  const msg = await client.getChannel(config[thisFile][client.source])?.send(
     `\`\`\`\n${Object.entries(info).map(
       ([field, value]) => `${strCapitalize(field).padEnd(8)}: ${value}`
     ).join("\n")}\n\`\`\``
   )
-  if (!msg || !dynoOnline) return
+  if (!msg || !dynoOnline || !logInfo.length) return
   const channel = client.getChannel(channelId)
-  const filter = (m) => match.every((str) => m.embeds[0]?.description?.includes(str))
+  const logData = []
+  const logCheck = (m) => logInfo.findIndex(({ match }) => match.every((str) => m.embeds[0]?.description?.includes(str)))
+  const filter = (m) => logCheck(m) !== -1
   const coll = channel.createMessageCollector({
     filter,
-    max: 1,
+    max: logInfo.length,
     time: 30000
-  }).on('collect', (m) => updateLogs(msg, m.id))
-  .on('end', (_coll, reason) => {
-    if (reason === 'time') updateLogs(msg, "N/A - Logs not found")
+  }).on('collect', (m) => {
+    logInfo.splice(logCheck(m), 1)
+    logData.push(m.id)
+    if (!logInfo.length) coll.stop()
+  }).on('end', () => {
+    msg.edit(msg.content.replace(/^(?<header>Logs +): (?:Pending\.\.\.)?.*/m, `$<header>: ${
+      logData.length ? logData.concat(logInfo.map((log) => `${log.name} logs not found`)).join(", ") : "N/A - Logs not found"
+    }`))
   })
-  channel.messages.fetch().then((ms) => {
-    const m = ms.filter(filter).first()
-    if (!m) return
-    coll.stop()
-    updateLogs(msg, m.id)
+  channel.messages.fetch({ limit: 10 }).then((ms) => {
+    for (const [, m] of ms) {
+      if (!filter(m)) continue
+      logData.push(m.id)
+      logInfo.splice(logCheck(m), 1)
+      if (!logInfo.length) {
+        coll.stop()
+        break
+      }
+    }
   })
-}
-
-function updateLogs(msg, val) {
-  msg.edit(msg.content.replace(/^(?<header>Logs +): .+/m, `$<header>: ${val}`))
 }

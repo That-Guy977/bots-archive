@@ -6,43 +6,43 @@ import { Routes } from 'discord-api-types/v9'
 import { config } from 'dotenv'
 const { source } = getSource(import.meta.url)
 
-config({ path: '../../.env' })
+config({ path: '../.env' })
 
 const client = new Client({ intents: [] }, source)
 const rest = new REST({ version: '9' }).setToken(client.token)
-const data = {
+const commandData = {
   globalCommands: [],
   guildCommands: [],
   guildCommandPermissions: []
 }
 
 await Promise.all(['shared/commands', `${source}/commands`].map(async (folder) => {
-  const files = await readdir(`../${folder}`).then((fs) => fs.filter((f) => f.endsWith(".js"))).catch(() => [])
+  const files = await readdir(folder).then((fs) => fs.filter((f) => f.endsWith(".js"))).catch(() => [])
   await Promise.all(files.map(async (file) => {
-    const { command } = await import(`../${folder}/${file}`)
-    data[command.info.isGlobal ? "globalCommands" : "guildCommands"].push(command.structure)
-    if (command.permissions) data.guildCommandPermissions.push({ name: command.info.name, permissions: command.permissions })
+    const { default: command } = await import(`../${folder}/${file}`)
+    commandData[command.info.isGlobal ? "globalCommands" : "guildCommands"].push(command.structure)
+    if ('permissions' in command) commandData.guildCommandPermissions.push({ name: command.info.name, permissions: command.permissions })
   }))
 }))
 
-if (data.globalCommands.length)
+if (commandData.globalCommands.length)
   await rest.put(
     Routes.applicationCommands(client.resolveId(source, 'user')),
-    { body: data.globalCommands }
+    { body: commandData.globalCommands }
   )
 
-if (data.guildCommands.length)
+if (commandData.guildCommands.length)
   await rest.put(
-    Routes.applicationGuildCommands(client.resolveId(source, 'user'), client.resolveId(client.data.guild, 'guild')),
-    { body: data.guildCommands }
+    Routes.applicationGuildCommands(client.resolveId(source, 'user'), client.resolveId(client.main.guild, 'guild')),
+    { body: commandData.guildCommands }
   )
 
 const commands = await rest.get(
-  Routes.applicationGuildCommands(client.resolveId(source, 'user'), client.resolveId(client.data.guild, 'guild'))
+  Routes.applicationGuildCommands(client.resolveId(source, 'user'), client.resolveId(client.main.guild, 'guild'))
 ).then((cmds) => Object.fromEntries(cmds.map((cmd) => [cmd.name, cmd.id])))
 
-if (data.guildCommandPermissions.length)
+if (commandData.guildCommandPermissions.length)
   await rest.put(
-    Routes.guildApplicationCommandsPermissions(client.resolveId(source, 'user'), client.resolveId(client.data.guild, 'guild')),
-    { body: data.guildCommandPermissions.map((cmdPerms) => ({ id: commands[cmdPerms.name], permissions: cmdPerms.permissions })) }
+    Routes.guildApplicationCommandsPermissions(client.resolveId(source, 'user'), client.resolveId(client.main.guild, 'guild')),
+    { body: commandData.guildCommandPermissions.map((cmdPerms) => ({ id: commands[cmdPerms.name], permissions: cmdPerms.permissions })) }
   )

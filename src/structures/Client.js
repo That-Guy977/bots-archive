@@ -1,15 +1,14 @@
 import { isSnowflake } from '../shared/util.js'
 import { readFile } from 'node:fs/promises'
 import { Client as DiscordClient, Collection } from 'discord.js'
-const config = JSON.parse(await readFile('../shared/config.json'))
+const data = JSON.parse(await readFile('shared/data.json'))
 
 export default class Client extends DiscordClient {
   constructor(options, source) {
     super(options)
     this.source = source
     this.token = process.env[`TOKEN_${source.toUpperCase()}`]
-    this.main = config.main[source]
-    this.color = config.color[source]
+    this.main = data.main[source]
   }
 
   state = {}
@@ -47,7 +46,7 @@ export default class Client extends DiscordClient {
   }
 
   getColor(id) {
-    return config.color[isSnowflake(id) ? Object.entries(config.ids.users).find(([, v]) => v === id)?.[0] : id] ?? null
+    return data.color[isSnowflake(id) ? Object.entries(data.ids.users).find(([, v]) => v === id)?.[0] : id] ?? null
   }
 
   resolveId(id, type) {
@@ -55,7 +54,7 @@ export default class Client extends DiscordClient {
   }
 
   static resolveId(id, type, guild) {
-    const ids = config.ids[`${type}s`]
+    const ids = data.ids[`${type}s`]
     return isSnowflake(id) ? id : ids[id] ?? ids[guild]?.[id] ?? null
   }
 }

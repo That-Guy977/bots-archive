@@ -6,11 +6,9 @@ const options = {
     'GUILDS',
     'GUILD_MEMBERS',
     'GUILD_PRESENCES',
-    'GUILD_MESSAGES',
-    'DIRECT_MESSAGES'
+    'GUILD_MESSAGES'
   ],
   partials: [
-    'CHANNEL',
     'GUILD_MEMBER'
   ]
 }

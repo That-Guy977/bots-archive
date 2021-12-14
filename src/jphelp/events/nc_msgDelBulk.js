@@ -1,15 +1,17 @@
 import { Event } from '../../shared/structures.js'
 
 export default new Event('messageDeleteBulk', async (client, messages) => {
+  if (!client.mongoose) return
   updateMsgLink(client, messages)
   const archive = client.mongoose.models['nc_message']
   const doc = await archive.findById(messages.first().channelId).exec()
   if (!doc) return
+  const date = Date.now()
   for (const [, message] of messages) {
     const msgDoc = doc.messages.id(message.id)
     if (!msgDoc) continue
     msgDoc.deleted = true
-    msgDoc.deletedTimestamp = Date.now()
+    msgDoc.deletedTimestamp = date
   }
   doc.save()
 })
