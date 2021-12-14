@@ -33,4 +33,4 @@ Run `node SOURCE/deploy` to register slash commands.
 Run `node SOURCE` to run the bot.
 
 ## Contact
-You can contact me at `That_Guy977#5882` on Discord, or in the `Japanese 101` Discord server at https://discord.gg/jp101.
+You can contact me at `That_Guy977#5882` on Discord, or in the `Japanese 101` Discord server at [jp101](https://discord.gg/jp101).
