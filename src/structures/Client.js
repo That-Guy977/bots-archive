@@ -1,7 +1,7 @@
 import { isSnowflake } from '../shared/util.js'
 import { readFile } from 'node:fs/promises'
 import { Client as DiscordClient, Collection } from 'discord.js'
-const data = JSON.parse(await readFile('../shared/data.json'))
+const data = JSON.parse(await readFile('shared/data.json'))
 
 export default class Client extends DiscordClient {
   constructor(options, source) {

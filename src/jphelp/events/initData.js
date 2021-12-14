@@ -2,7 +2,7 @@ import { Event } from '../../shared/structures.js'
 import { isSnowflake, isIdData, updatePremium } from '../../shared/util.js'
 import { readFile } from 'node:fs/promises'
 import mongoose from 'mongoose'
-const { config } = JSON.parse(await readFile('../shared/data.json'))
+const { config } = JSON.parse(await readFile('shared/data.json'))
 const { Schema } = mongoose
 
 export default new Event('ready', (client) => {

@@ -1,7 +1,7 @@
 import strCapitalize from './strCapitalize.js'
 import getSource from './getSource.js'
 import { readFile } from 'node:fs/promises'
-const { config } = JSON.parse(await readFile('../shared/data.json'))
+const { config } = JSON.parse(await readFile('shared/data.json'))
 const { thisFile } = getSource(import.meta.url)
 
 export default async function genLogs(client, channelId, info, logInfo = []) {

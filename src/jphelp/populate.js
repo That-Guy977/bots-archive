@@ -5,7 +5,7 @@ import fetch from 'node-fetch'
 import { config } from 'dotenv'
 const { Schema } = mongoose
 const { source } = getSource(import.meta.url)
-config({ path: '../../.env' })
+config({ path: '../.env' })
 
 const client = new Client({ intents: [
   'GUILDS',

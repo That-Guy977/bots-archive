@@ -4,13 +4,13 @@ import { basename } from 'node:path'
 import mongoose from 'mongoose'
 import { config } from 'dotenv'
 
-config({ path: '../../.env' })
+config({ path: '../.env' })
 
 export default async function init(options, source) {
   const client = new Client(options, source).login()
   const folders = ['commands', 'events'].map((strc) => [`shared/${strc}`, `${source}/${strc}`]).flat()
   await Promise.all(folders.map(async (folder) => {
-    const files = await readdir(`../${folder}`).then((fs) => fs.filter((f) => f.endsWith(".js"))).catch(() => [])
+    const files = await readdir(folder).then((fs) => fs.filter((f) => f.endsWith(".js"))).catch(() => [])
     await Promise.all(files.map(async (file) => {
       const { default: structure } = await import(`../${folder}/${file}`)
       if (folder.endsWith('commands')) client.commands.set(structure.info.name, structure)

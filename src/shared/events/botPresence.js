@@ -2,7 +2,7 @@ import { Event } from '../../shared/structures.js'
 import { getSource } from '../../shared/util.js'
 import { readFile } from 'node:fs/promises'
 import { MessageEmbed } from 'discord.js'
-const { config } = JSON.parse(await readFile('../shared/data.json'))
+const { config } = JSON.parse(await readFile('shared/data.json'))
 const { thisFile } = getSource(import.meta.url)
 
 export default new Event('presenceUpdate', async (client, oldPresence, presence) => {

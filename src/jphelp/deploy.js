@@ -6,7 +6,7 @@ import { Routes } from 'discord-api-types/v9'
 import { config } from 'dotenv'
 const { source } = getSource(import.meta.url)
 
-config({ path: '../../.env' })
+config({ path: '../.env' })
 
 const client = new Client({ intents: [] }, source)
 const rest = new REST({ version: '9' }).setToken(client.token)
@@ -17,7 +17,7 @@ const commandData = {
 }
 
 await Promise.all(['shared/commands', `${source}/commands`].map(async (folder) => {
-  const files = await readdir(`../${folder}`).then((fs) => fs.filter((f) => f.endsWith(".js"))).catch(() => [])
+  const files = await readdir(folder).then((fs) => fs.filter((f) => f.endsWith(".js"))).catch(() => [])
   await Promise.all(files.map(async (file) => {
     const { default: command } = await import(`../${folder}/${file}`)
     commandData[command.info.isGlobal ? "globalCommands" : "guildCommands"].push(command.structure)
