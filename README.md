@@ -3,7 +3,7 @@
 ## About
 This repository is an archive, and is not meant to be used for other servers.
 
-`SOURCE` is a placeholder for `JPHELP` or `OMEGA`. Console commands are run from [src](src).
+`SOURCE` is a placeholder for `JPHELP` or `OMEGA`. Console commands are run from [`src`](src).
 
 ## Usage
 
@@ -12,7 +12,7 @@ Install a version of [Node.js](https://nodejs.org) above `16.6.0` and run `npm i
 
 Create a `.env` file in the project root to store sensitive data.
 
-Set the `ids` field in [data.json](src/shared/data.json) to match used ids. Update as necessary as applications are created.
+Set the `ids` field in [`data.json`](src/shared/data.json) to match used ids. Update as necessary as applications are created.
 
 ### Setting up applications
 Create applications in the [Discord Developer Portal](https://discord.com/developers), create a bot for each application, and copy each token to save in the `.env` file in the format `TOKEN_SOURCE`.
