@@ -3,7 +3,7 @@
 ## About
 This repository is an archive, and is not meant to be used for other servers.
 
-`SOURCE` used anywhere is a placeholder for `JPHELP` or `OMEGA`.
+`SOURCE` is a placeholder for `JPHELP` or `OMEGA`. Console commands are run from [src](src).
 
 ## Usage
 
@@ -24,13 +24,13 @@ Add a user with the username `MONGO_SOURCE` and save the password in the `.env` 
 
 Choose connect to the database and save the host in the `.env` file in the format `MONGO_HOST`.
 
-`cd` into `src/SOURCE` and run `node populate` to populate the database.
+Run `node SOURCE/populate` to populate the database.
 
 ### Setting application commands
-`cd` into `src/SOURCE` and run `node deploy` to register slash commands.
+Run `node SOURCE/deploy` to register slash commands.
 
 ### Running the bots
-`cd` into `src/SOURCE` and run `node index` to run the bot.
+Run `node SOURCE` to run the bot.
 
 ## Contact
 You can contact me at `That_Guy977#5882` on Discord, or in the `Japanese 101` Discord server at https://discord.gg/jp101.
