@@ -13,7 +13,7 @@ export default new Event('presenceUpdate', async (client, oldPresence, presence)
   const embed = new MessageEmbed()
   .setTitle(`${presence.user.username} ${isOnline(presence) ? "online!" : "offline."}`)
   .setColor(client.source === 'jphelp' ? client.getColor(presence.userId) : 'RED')
-  .setAuthor(presence.user.tag, presence.user.displayAvatarURL())
+  .setAuthor({ name: presence.user.tag, iconURL: presence.user.displayAvatarURL() })
   .setTimestamp()
   if (client.source === 'jphelp') {
     if (isOnline(presence)) {
