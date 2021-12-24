@@ -13,6 +13,7 @@ export default new Event('guildMemberUpdate', async (client, oldMember, member) 
   if (member.partial) await member.fetch().catch(() => null)
   if (!member.premiumSinceTimestamp || member.premiumSinceTimestamp === oldMember.premiumSinceTimestamp) return
   const times = member.guild.premiumSubscriptionCount - client.state.premium.premiumSubscriptionCount
+  //-- Move to webhook for improved availability
   client.getChannel('announcements').send({ embeds: [
     new MessageEmbed()
     .setTitle(`${member.displayName} just boosted the server${times > 1 ? ` ${times} times` : ""}! ありがとうございます！`)
@@ -21,6 +22,6 @@ export default new Event('guildMemberUpdate', async (client, oldMember, member) 
     .setAuthor({ name: member.user.tag, iconURL: member.user.displayAvatarURL() })
     .setFooter(member.guild.name, member.guild.iconURL())
     .setTimestamp()
-  ] })
+  ] }).catch(() => null)
   updatePremium(client)
 })

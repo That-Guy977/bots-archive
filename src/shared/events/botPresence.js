@@ -35,7 +35,7 @@ export default new Event('presenceUpdate', async (client, oldPresence, presence)
 })
 
 function sendStatus(client, embed) {
-  client.channel.send({ embeds: [embed] })
+  client.channel.send({ embeds: [embed] }).catch(() => null)
 }
 
 function isOnline(presence) {

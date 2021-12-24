@@ -11,7 +11,7 @@ export default async function genLogs(client, channelId, info, logInfo = []) {
     `\`\`\`\n${Object.entries(info).map(
       ([field, value]) => `${strCapitalize(field).padEnd(8)}: ${value}`
     ).join("\n")}\n\`\`\``
-  )
+  ).catch(() => null)
   if (!msg || !dynoOnline || !logInfo.length) return
   const channel = client.getChannel(channelId)
   const logData = []
