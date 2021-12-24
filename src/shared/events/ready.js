@@ -8,5 +8,5 @@ export default new Event('ready', (client) => {
     .setTitle(`${client.guild.me.displayName} online!`)
     .setColor('BLUE')
     .setTimestamp()
-  ] })
+  ] }).catch(() => null)
 })

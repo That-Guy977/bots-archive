@@ -25,13 +25,14 @@ export default new Event('messageCreate', (client, msg) => {
       options.files.push(new MessageAttachment(att.url, att.name))
       if (type === 'image') embed.setImage(`attachment://${att.name}`)
     } else embed.setDescription("File was too large to attach.")
+    //-- Move to webhook for improved availability
     channel.send(options).catch(() => {
       channel.send({ embeds: [
         embed
         .setDescription(`Uploading file failed. [Link to attachment](${att.url}}).`)
         .setColor('RED')
         .setImage(att.url)
-      ] })
+      ] }).catch(() => null)
     })
   }
 })

@@ -13,26 +13,30 @@ export default new Event('presenceUpdate', async (client, oldPresence, presence)
   const embed = new MessageEmbed()
   .setTitle(`${presence.user.username} ${isOnline(presence) ? "online!" : "offline."}`)
   .setColor(client.source === 'jphelp' ? client.getColor(presence.userId) : 'RED')
-  .setAuthor(presence.user.tag, presence.user.displayAvatarURL())
+  .setAuthor({ name: presence.user.tag, iconURL: presence.user.displayAvatarURL() })
   .setTimestamp()
   if (client.source === 'jphelp') {
     if (isOnline(presence)) {
       if (!client.state.offline.includes(presence.userId)) return
       client.state.offline = client.state.offline.filter((id) => id !== presence.userId)
-      client.channel.send({ embeds: [embed] })
+      sendStatus(client, embed)
     } else {
       setTimeout(async () => {
         if (await presence.member.fetch().then((m) => isOnline(m.presence))) return
-        client.channel.send({ embeds: [embed] })
+        sendStatus(client, embed)
         client.state.offline.push(presence.userId)
       }, 300000)
     }
   } else if (client.source === 'omega') {
     if (isOnline(presence)) return
     if (presence.user.partial) await presence.user.fetch()
-    client.channel.send({ embeds: [embed] })
+    sendStatus(client, embed)
   }
 })
+
+function sendStatus(client, embed) {
+  client.channel.send({ embeds: [embed] }).catch(() => null)
+}
 
 function isOnline(presence) {
   return (presence?.status ?? 'offline') !== 'offline'
