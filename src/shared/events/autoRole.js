@@ -10,14 +10,13 @@ export default new Event('guildMemberAdd', (client, member) => {
   const role = client.getRole(!member.user.bot ? memberRole : botRole)
   if (role) {
     member.roles.add(role).then(() => {
-      if (channelId) {
+      if (channelId)
         genLogs(client, channelId, {
           action: "Give Role",
           user: `@${member.user.tag} (${member.id})`,
           role: `@${role.name} (${role.id})`,
           reason: "AutoRole"
         }, [{ name: "Give Role", match: [member.id, role.name, "given"] }])
-      }
     }).catch(() => null)
   }
 })
