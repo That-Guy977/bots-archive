@@ -22,7 +22,7 @@ export default new Event('presenceUpdate', async (client, oldPresence, presence)
       sendStatus(client, embed)
     } else {
       setTimeout(async () => {
-        if (await presence.member.fetch().then((m) => isOnline(m.presence))) return
+        if (await presence.member.fetch().then((m) => isOnline(m.presence)).catch(() => true)) return
         sendStatus(client, embed)
         client.state.offline.push(presence.userId)
       }, 300000)
