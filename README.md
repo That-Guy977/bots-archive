@@ -10,6 +10,8 @@ This repository is an archive, and is not meant to be used for other servers.
 
 ### Setting up the environment
 
+Download [Git](https://git-scm.com/downloads) or [GitHub Desktop](https://desktop.github.com/) and fork and clone the repository.
+
 Install a version of [Node.js](https://nodejs.org) above `16.6.0` and run `npm i` in console to install needed packages.
 
 Create a `.env` file in the project root to store sensitive data.
