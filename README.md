@@ -1,9 +1,9 @@
-# japanese101-bots
+# that-guy977/bots
 
 ## About
 This repository is an archive, and is not meant to be used for other servers.
 
-`SOURCE` is a placeholder for `JPHELP` or `OMEGA`. Console commands are run from [`src`](src).
+`SOURCE` is a placeholder for `JPHELP`, `DREAM`, or `OMEGA`. Console commands are run from [`src`](src).
 
 ## Usage
 
