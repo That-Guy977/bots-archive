@@ -1,7 +1,8 @@
 import { Event } from '../../shared/structures.js'
 import { chnArchived } from '../../shared/util.js'
 const reactions = [
-  ['inui_lurk', 'inui_pat']
+  ['inui_lurk', 'inui_pat'],
+  ['mio_stare', 'mio_pat']
 ]
 
 export default new Event('messageCreate', (client, msg) => {
