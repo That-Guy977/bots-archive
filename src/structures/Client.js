@@ -45,6 +45,10 @@ export default class Client extends DiscordClient {
     return id && this.guild.members.fetch(id).catch(() => null)
   }
 
+  getEmoji(id) {
+    return this.guild.emojis.cache.get(this.resolveId(id, 'emoji')) ?? null
+  }
+
   getColor(id) {
     return data.color[isSnowflake(id) ? Object.entries(data.ids.users).find(([, v]) => v === id)?.[0] : id] ?? null
   }
