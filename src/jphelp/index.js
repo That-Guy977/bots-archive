@@ -5,6 +5,7 @@ const options = {
   intents: [
     'GUILDS',
     'GUILD_MEMBERS',
+    'GUILD_EMOJIS_AND_STICKERS',
     'GUILD_PRESENCES',
     'GUILD_MESSAGES'
   ],
