@@ -5,6 +5,7 @@ const options = {
   intents: [
     'GUILDS',
     'GUILD_MEMBERS',
+    'GUILD_EMOJIS_AND_STICKERS',
     'GUILD_PRESENCES',
     'GUILD_MESSAGES'
   ],
@@ -17,9 +18,3 @@ const options = {
 }
 
 init(options, source)
-
-/**
- * //-- to test
- * guildMemberUpdate - gain level
- * guildUpdate - lose level
- */
