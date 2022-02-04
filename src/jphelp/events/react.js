@@ -7,6 +7,7 @@ const reactions = [
 
 export default new Event('messageCreate', (client, msg) => {
   if (msg.guild.id !== client.guild.id) return
+  if (msg.reference) return
   if (!['hangout', 'nihongo-centre', 'voice-channels'].some((id) => msg.channel.parentId === client.resolveId(id, 'channel')) || chnArchived(msg.channel)) return
   const reaction = reactions.find(([id]) => msg.content === client.getEmoji(id)?.toString())
   if (!reaction) return
