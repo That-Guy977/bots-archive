@@ -1,27 +1,22 @@
 import { Event } from '../../shared/structures.js'
-import { updatePremium } from '../../shared/util.js'
+import { updatePremium, setVanity } from '../../shared/util.js'
 import { MessageEmbed } from 'discord.js'
-const tiers = {
-  NONE: 0,
-  TIER_1: 1,
-  TIER_2: 2,
-  TIER_3: 3
-}
 
-export default new Event('guildMemberUpdate', async (client, oldMember, member) => {
-  if (member.guild.id !== client.guild.id) return
-  if (member.partial) await member.fetch().catch(() => null)
-  if (!member.premiumSinceTimestamp || member.premiumSinceTimestamp === oldMember.premiumSinceTimestamp) return
-  const times = member.guild.premiumSubscriptionCount - client.state.premium.premiumSubscriptionCount
+export default new Event('messageCreate', async (client, msg) => {
+  if (msg.guild.id !== client.guild.id) return
+  if (!msg.type.startsWith("USER_PREMIUM_GUILD_SUBSCRIPTION")) return
+  const { guild } = msg
+  const member = await guild.members.fetch(msg)
   //-- Move to webhook for improved availability
   client.getChannel('announcements').send({ embeds: [
     new MessageEmbed()
-    .setTitle(`${member.displayName} just boosted the server${times > 1 ? ` ${times} times` : ""}! ありがとうございます！`)
-    .setDescription(member.guild.premiumTier > client.state.premium.premiumTier ? `${member.guild.name} just leveled up to level ${tiers[member.guild.premiumTier]}!` : "")
+    .setTitle(`${member.displayName} just boosted the server! ありがとうございます！`)
+    .setDescription(/\d$/.test(msg.type) ? `${guild.name} just leveled up to level ${msg.type[37]}!` : "")
     .setColor(client.getColor('nitro'))
-    .setAuthor({ name: member.user.tag, iconURL: member.user.displayAvatarURL() })
-    .setFooter(member.guild.name, member.guild.iconURL())
+    .setAuthor({ name: msg.author.tag, iconURL: member.displayAvatarURL() })
+    .setFooter(guild.name, guild.iconURL())
     .setTimestamp()
   ] }).catch(() => null)
+  if (msg.type.endsWith("3")) setVanity(client, guild)
   updatePremium(client)
 })
