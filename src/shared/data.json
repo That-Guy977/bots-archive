@@ -113,6 +113,9 @@
       "jphelp": [null, "bots", "role-logs"],
       "omega": ["member", "bot", null]
     },
+    "setVanity": {
+      "jphelp": "jp101"
+    },
     "genLogs": {
       "jphelp": ["mod-logs"]
     }

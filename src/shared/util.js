@@ -1,6 +1,7 @@
 export { default as isSnowflake } from '../util/isSnowflake.js'
 export { default as isIdData } from '../util/isIdData.js'
 export { default as getSource } from '../util/getSource.js'
+export { default as setVanity } from '../util/setVanity.js'
 export { default as strCapitalize } from '../util/strCapitalize.js'
 export { default as chnArchived } from '../util/chnArchived.js'
 export { default as updatePremium } from '../util/updatePremium.js'
