@@ -15,7 +15,7 @@ export default new Event('channelUpdate', async (client, oldChannel, channel) =>
       messageColls.unshift(await channel.messages.fetch({ limit: 100, after: lastMsg }))
       lastMsg = messageColls[0].firstKey()
     }
-    const messages = messageColls.flatMap((coll) => [...coll.values()]).reverse().filter((msg) => !msg.author.bot && msg.type === 'DEFAULT')
+    const messages = messageColls.flatMap((coll) => [...coll.values()]).reverse().filter((msg) => !msg.author.bot && ['DEFAULT', 'REPLY'].includes(msg.type))
     for (const message of messages) {
       doc.messages.unshift({
         _id: message.id,

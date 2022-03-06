@@ -5,7 +5,7 @@ import fetch from 'node-fetch'
 export default new Event('messageCreate', async (client, message) => {
   if (!client.mongoose) return
   if (!chnArchived(message.channel)) return
-  if (message.author.bot || message.type !== 'DEFAULT') return
+  if (message.author.bot || !['DEFAULT', 'REPLY'].includes(message.type)) return
   const archive = client.mongoose.models['nc_message']
   const doc = await archive.findById(message.channelId).exec()
   if (!doc) return
