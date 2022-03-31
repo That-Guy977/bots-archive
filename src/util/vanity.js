@@ -1,14 +1,16 @@
+import getSource from './getSource.js'
 import { readFile } from 'node:fs/promises'
-import REST from '@discordjs/rest'
+import { REST } from '@discordjs/rest'
 import { Routes } from 'discord-api-types/v9'
 const { config } = JSON.parse(await readFile('shared/data.json'))
+const { thisFile } = getSource(import.meta.url)
 
-export default async function setVanity(client, guild) {
+export default async function vanity(client, guild) {
   const rest = new REST({ version: '9' }).setToken(client.token)
-  const code = config.vanity[client.source]
+  const code = config[thisFile][client.source]
   if (!code) return
   await rest.patch(
     Routes.guildVanityUrl(guild.id),
-    { data: { code } }
+    { body: { code } }
   )
 }

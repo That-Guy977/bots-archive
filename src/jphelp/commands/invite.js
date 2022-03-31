@@ -1,5 +1,5 @@
 import { Command } from '../../shared/structures.js'
-import { setVanity } from '../../shared/util.js'
+import { vanity } from '../../shared/util.js'
 import { readFile } from 'node:fs/promises'
 const { config } = JSON.parse(await readFile('shared/data.json'))
 
@@ -9,8 +9,9 @@ export default new Command({
   isGlobal: false
 }, async (client, cmd) => {
   const { guild } = cmd
-  if (!guild.vanityURLCode && guild.premiumTier === 'TIER_3') await setVanity(client, guild)
-  cmd.reply(
+  await cmd.deferReply()
+  if (!guild.vanityURLCode && guild.premiumTier === 'TIER_3') await vanity(client, guild)
+  cmd.editReply(
     `**Invite link of ${
       guild.name
     }**: https://discord.gg/7hvYKa4Zek\nVanity invite: ${

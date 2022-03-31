@@ -1,5 +1,5 @@
 import { Event } from '../../shared/structures.js'
-import { updatePremium, setVanity } from '../../shared/util.js'
+import { updatePremium, vanity } from '../../shared/util.js'
 import { MessageEmbed } from 'discord.js'
 
 export default new Event('messageCreate', async (client, msg) => {
@@ -17,6 +17,6 @@ export default new Event('messageCreate', async (client, msg) => {
     .setFooter(guild.name, guild.iconURL())
     .setTimestamp()
   ] }).catch(() => null)
-  if (msg.type.endsWith("3")) setVanity(client, guild)
+  if (msg.type.endsWith("3")) vanity(client, guild)
   updatePremium(client)
 })
