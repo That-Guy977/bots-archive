@@ -44,6 +44,7 @@ export default new Command({
     }
   ]
 }, async (client, cmd) => {
+  const defer = cmd.deferReply()
   const save = cmd.options.get('save')?.value === "yes"
   const withAtt = cmd.options.get('with-attachments')?.value === "yes"
   if (save && cmd.user.id !== client.resolveId('main', 'user')) return cmd.reply("No.")
@@ -78,7 +79,7 @@ export default new Command({
       if (msg.content) msgData.content = msg.content
       if (msg.attachments.size) msgData.files = msg.attachments.map((att) => {
         attachments.push(att)
-        return `${att.name} [${attachments.length.toString().padStart(2, 0)}]`
+        return `${att.name} [${attachments.length.toString().padStart(3, 0)}]`
       })
       return msgData
     })
@@ -89,16 +90,19 @@ export default new Command({
     if (withAtt) {
       const archiveDir = `${ARCHIVE_PATH}/${archiveDate}-files`
       await mkdir(archiveDir)
-      await attachments.map(async (att, i) =>
-        writeFile(`${archiveDir}/arch_${(i + 1).toString().padStart(2, 0)}${att.name.match(/\.\w+?$/)[0]}`, await fetch(att.url).then((res) => res.buffer())))
+      await Promise.all(
+        attachments.map(async (att, i) =>
+          writeFile(`${archiveDir}/arch_${(i + 1).toString().padStart(3, 0)}${att.name.match(/\.\w+?$/)[0]}`, await fetch(att.url).then((res) => res.buffer())))
+      )
     }
   }
-  await cmd.reply({
+  await defer
+  await cmd.editReply({
     content: `Archive ${save ? "saved" : "created"} from ${messages.length} messages${withAtt ? ` with ${attachments.length} attachments` : ""}`,
     files: [{ attachment: archive, name: `archive-${archiveDate}.yaml` }]
   })
   if (withAtt && !save) {
-    const attachmentArchive = attachments.map((att, i) => `[arch_${(i + 1).toString().padStart(2, 0)}${att.name.match(/\.\w+?$/)[0]}](${att.url})`)
+    const attachmentArchive = attachments.map((att, i) => `[arch_${(i + 1).toString().padStart(3, 0)}${att.name.match(/\.\w+?$/)[0]}](${att.url})`)
     const attachmentSections = attachmentArchive.reduce((acc, cur) => {
       if (!acc.length || acc[acc.length - 1].length === 10) acc.push([])
       acc[acc.length - 1].push(cur)
