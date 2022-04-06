@@ -78,7 +78,7 @@ export default new Command({
           action: "Clone Channel, Delete Channel",
           channel: `#${channel.name} (${cmd.channelId}, ${channel.id})`,
           executor: `@${cmd.user.tag} (${cmd.user.id})`,
-          reason: "ResetChannel"
+          reason
         }, [
           { name: "Clone Channel", match: [channel.name, "Channel Created"] },
           { name: "Delete Channel", match: [channel.name, "Channel Deleted"] }
