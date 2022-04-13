@@ -13,25 +13,13 @@ export default new Command({
   options: [
     {
       name: 'save',
-      description: "Create local save (default no)",
-      type: 'STRING',
-      restraints: {
-        choices: [
-          { name: "yes", value: "yes" },
-          { name: "no", value: "no" }
-        ]
-      }
+      description: "Create local save (default False)",
+      type: 'BOOLEAN',
     },
     {
       name: 'with-attachments',
-      description: "Include attachments (default no)",
-      type: 'STRING',
-      restraints: {
-        choices: [
-          { name: "yes", value: "yes" },
-          { name: "no", value: "no" }
-        ]
-      }
+      description: "Include attachments (default False)",
+      type: 'BOOLEAN'
     }
   ],
   isGlobal: false,
@@ -45,8 +33,8 @@ export default new Command({
   ]
 }, async (client, cmd) => {
   const defer = cmd.deferReply()
-  const save = cmd.options.get('save')?.value === "yes"
-  const withAtt = cmd.options.get('with-attachments')?.value === "yes"
+  const save = cmd.options.get('save')?.value
+  const withAtt = cmd.options.get('with-attachments')?.value
   if (save && cmd.user.id !== client.resolveId('main', 'user')) return cmd.reply("No.")
   const channel = client.channels.cache.get(ARCHIVE_CHANNEL)
   const messageColls = []
@@ -100,7 +88,7 @@ export default new Command({
   await cmd.editReply({
     content: `Archive ${save ? "saved" : "created"} from ${messages.length} messages${withAtt ? ` with ${attachments.length} attachments` : ""}`,
     files: [{ attachment: archive, name: `archive-${archiveDate}.yaml` }]
-  })
+  }).catch(() => null)
   if (withAtt && !save) {
     const attachmentArchive = attachments.map((att, i) => `[arch_${(i + 1).toString().padStart(3, 0)}${att.name.match(/\.\w+?$/)[0]}](${att.url})`)
     const attachmentSections = attachmentArchive.reduce((acc, cur) => {
