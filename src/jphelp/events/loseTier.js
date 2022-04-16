@@ -16,7 +16,7 @@ export default new Event('guildUpdate', (client, _oldGuild, guild) => {
     new MessageEmbed()
     .setTitle(`${guild.name} just lost a level and is now level ${tiers[guild.premiumTier]}.`)
     .setColor('RED')
-    .setFooter(guild.name, guild.iconURL())
+    .setFooter({ text: guild.name, iconURL: guild.iconURL()})
     .setTimestamp()
   ] }).catch(() => null)
   updatePremium(client)

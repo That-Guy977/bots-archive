@@ -1,10 +1,10 @@
 import { Client, Command } from '../../shared/structures.js'
-import { chnArchived, genLogs } from '../../shared/util.js'
+import { chnArchived } from '../../shared/util.js'
 import { MessageActionRow } from 'discord.js'
 
 export default new Command({
-  name: "resetchannel",
-  description: "Resets a channel to make space to remake content.",
+  name: "unpinall",
+  description: "Removes all pins in a channel.",
   isGlobal: false,
   isEnabled: false,
   permissions: [
@@ -22,7 +22,8 @@ export default new Command({
 }, async (client, cmd) => {
   if (!chnArchived(cmd.channel))
     return cmd.reply({ content: "This command is not available in this channel.", ephemeral: true })
-  if (!await cmd.channel.messages.fetch({ limit: 1 }).then((coll) => coll.size)) return cmd.reply({ content: "This channel doesn't have any messages!", ephemeral: true })
+  const pinned = await cmd.channel.messages.fetchPinned();
+  if (!pinned.size) return cmd.reply({ content: "This channel doesn't have any pins!", ephemeral: true })
   const actionRow = new MessageActionRow()
   .addComponents(
     {
@@ -33,14 +34,14 @@ export default new Command({
     },
     {
       type: 'BUTTON',
-      label: "Confirm Reset",
+      label: "Confirm Unpin",
       style: 'DANGER',
       disabled: true,
       customId: 'confirm'
     }
   )
   const reply = await cmd.reply({
-    content: `Are you sure you want to reset ${cmd.channel}? **This action cannot be undone!**`,
+    content: `Are you sure you want to remove all pins in ${cmd.channel}? **This action cannot be undone!**`,
     components: [actionRow],
     fetchReply: true
   })
@@ -62,6 +63,7 @@ export default new Command({
       }
     }
   }
+  let unpin = Promise.resolve()
   reply.createMessageComponentCollector({
     filter,
     max: 1,
@@ -70,19 +72,10 @@ export default new Command({
     clearTimeout(enable)
     switch (i.customId) {
       case 'confirm': {
-        const reason = "ResetChannel"
-        await cmd.editReply({ content: "Command confirmed, resetting channel...", components: [] })
-        const channel = await cmd.channel.clone({ reason })
-        await cmd.channel.delete(reason)
-        genLogs(client, 'mod-logs', {
-          action: "Clone Channel, Delete Channel",
-          channel: `#${channel.name} (${cmd.channelId}, ${channel.id})`,
-          executor: `@${cmd.user.tag} (${cmd.user.id})`,
-          reason
-        }, [
-          { name: "Clone Channel", match: [channel.name, "Channel Created"] },
-          { name: "Delete Channel", match: [channel.name, "Channel Deleted"] }
-        ])
+        cmd.editReply({ content: "Command confirmed, unpinning messages...", components: [] })
+        unpin = Promise.all(pinned.map((msg) => msg.unpin().catch(() => null)))
+        await unpin
+        await cmd.editReply("Finished unpinning messages.")
         break
       }
       case 'cancel': {
@@ -90,8 +83,9 @@ export default new Command({
         break
       }
     }
-  }).on('end', (_coll, reason) => {
+  }).on('end', async (_coll, reason) => {
     if (reason === 'time') cmd.editReply({ content: "Command timed out.", components: [] })
+    await unpin
     setTimeout(() => cmd.deleteReply().catch(() => null), 5000)
   })
 })

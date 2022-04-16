@@ -18,7 +18,7 @@ export default new Event('messageCreate', (client, msg) => {
     .setTitle(`${strCapitalize(`${type ?? ""} file`)} sent: ${att.name}`)
     .setColor('BLUE')
     .setURL(msg.url)
-    .setFooter(`Sent by ${msg.author.tag} in #${msg.channel.name}`, msg.member.displayAvatarURL())
+    .setFooter({ text: `Sent by ${msg.author.tag} in #${msg.channel.name}`, iconURL: msg.member.displayAvatarURL()})
     .setTimestamp(msg.createdAt)
     const options = { embeds: [embed], files: [] }
     if (att.size <= maxSizes[msg.guild.premiumTier]) {
