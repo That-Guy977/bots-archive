@@ -14,7 +14,7 @@ export default new Event('messageCreate', async (client, msg) => {
     .setDescription(/\d$/.test(msg.type) ? `${guild.name} just leveled up to level ${msg.type[37]}!` : "")
     .setColor(client.getColor('nitro'))
     .setAuthor({ name: msg.author.tag, iconURL: member.displayAvatarURL() })
-    .setFooter(guild.name, guild.iconURL())
+    .setFooter({ text: guild.name, iconURL: guild.iconURL()})
     .setTimestamp()
   ] }).catch(() => null)
   if (msg.type.endsWith("3")) vanity(client, guild)

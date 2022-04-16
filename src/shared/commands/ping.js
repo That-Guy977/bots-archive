@@ -42,7 +42,7 @@ function generatePong(client, int, reply, date) {
   .setTitle("Pong!")
   .setDescription(`\u{1F493} \`${client.ws.ping} ms\``)
   .setColor('BLUE')
-  .setFooter(`Requested by ${int.user.tag}`, int.member.displayAvatarURL())
+  .setFooter({ text: `Requested by ${int.user.tag}`, iconURL: int.member.displayAvatarURL()})
   .addFields(
     { name: "\u{1F553} Latency", value: `\`${replyDate - intDate} ms\``, inline: true },
     { name: "\u{1F4E5} Recieving", value: `\`${date - intDate} ms\``, inline: true },
