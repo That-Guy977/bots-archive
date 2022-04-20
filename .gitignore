@@ -2,7 +2,9 @@
 .DS_Store
 
 !/src
+!/assets
 !.git*
+!README.md
 !package.json
-!*.md
-!.*rc*
+!tsconfig.json
+!.eslint*

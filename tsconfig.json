@@ -1,0 +1,39 @@
+{
+  "compilerOptions": {
+    // Type Checking
+    "allowUnreachableCode": false,
+    "exactOptionalPropertyTypes": true,
+    "noFallthroughCasesInSwitch": true,
+    "noImplicitOverride": true,
+    "noImplicitReturns": true,
+    "noPropertyAccessFromIndexSignature": true,
+    "noUncheckedIndexedAccess": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "strict": true,
+
+    // Modules
+    "baseUrl": "src",
+    "module": "esnext",
+    "moduleResolution": "node",
+    "paths": {
+      "*": ["core/*", "common/*", "structures/*", "util/*"]
+    },
+    "resolveJsonModule": true,
+    "rootDir": "src",
+
+    // Emit
+    "newLine": "lf",
+    "outDir": "dist",
+    "removeComments": true,
+
+    // Interop Constraints
+    "allowSyntheticDefaultImports": true,
+    "forceConsistentCasingInFileNames": true,
+
+    // Language and Environment
+    "lib": ["esnext"],
+    "target": "esnext",
+  },
+  "include": ["src"]
+}
