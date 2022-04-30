@@ -8,7 +8,7 @@ export default new Event('messageCreate', async (client, msg) => {
   const { guild } = msg
   const member = await guild.members.fetch(msg)
   //-- Move to webhook for improved availability
-  client.getChannel('announcements').send({ embeds: [
+  client.getChannel('boost-status').send({ embeds: [
     new MessageEmbed()
     .setTitle(`${member.displayName} just boosted the server! ありがとうございます！`)
     .setDescription(/\d$/.test(msg.type) ? `${guild.name} just leveled up to level ${msg.type[37]}!` : "")

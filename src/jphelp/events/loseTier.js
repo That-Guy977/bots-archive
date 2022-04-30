@@ -12,7 +12,7 @@ export default new Event('guildUpdate', (client, _oldGuild, guild) => {
   if (guild.id !== client.guild.id) return
   if (guild.premiumTier >= client.state.premium.premiumTier) return
   //-- Move to webhook for improved availability
-  client.getChannel('announcements').send({ embeds: [
+  client.getChannel('boost-status').send({ embeds: [
     new MessageEmbed()
     .setTitle(`${guild.name} just lost a level and is now level ${tiers[guild.premiumTier]}.`)
     .setColor('RED')
