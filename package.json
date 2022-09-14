@@ -2,25 +2,35 @@
   "name": "bots",
   "type": "module",
   "author": "That-Guy977",
-  "main": "./src/core/index.ts",
+  "main": "./build/core",
+  "scripts": {
+    "start": "npm run build && node .",
+    "debug": "npm run compile && node .",
+    "build": "npm run lint && npm run compile",
+    "compile": "tsc && tsc-alias",
+    "clean": "rm -rf build",
+    "lint": "eslint src"
+  },
   "dependencies": {
-    "@discordjs/rest": "^0.3.0",
-    "discord-api-types": "^0.31.1",
-    "discord.js": "^13.6.0",
-    "dotenv": "^16.0.0",
-    "mongoose": "^6.3.0",
-    "node-fetch": "^3.2.3"
+    "chalk": "^5.0.1",
+    "discord-api-types": "^0.37.10",
+    "discord.js": "^14.4.0",
+    "dotenv": "^16.0.2",
+    "mongoose": "^6.6.1",
+    "node-fetch": "^3.2.10"
   },
   "devDependencies": {
-    "@typescript-eslint/eslint-plugin": "^5.19.0",
-    "@typescript-eslint/parser": "^5.19.0",
-    "eslint": "^8.13.0",
-    "eslint-import-resolver-typescript": "^2.7.1",
+    "@types/node": "^18.7.20",
+    "@typescript-eslint/eslint-plugin": "^5.38.0",
+    "@typescript-eslint/parser": "^5.38.0",
+    "eslint": "^8.24.0",
+    "eslint-import-resolver-typescript": "^3.5.1",
     "eslint-plugin-import": "^2.26.0",
     "eslint-plugin-node": "^11.1.0",
-    "typescript": "^4.6.3"
+    "tsc-alias": "^1.7.0",
+    "typescript": "^4.8.3"
   },
   "engines": {
-    "node": "^16"
+    "node": "^16.9"
   }
 }

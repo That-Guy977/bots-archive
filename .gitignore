@@ -1,10 +1,8 @@
-/*
-.DS_Store
+_*
+/build/
+node_modules/
+package-lock.json
 
-!/src
-!/assets
+.*
 !.git*
-!README.md
-!package.json
-!tsconfig.json
 !.eslint*

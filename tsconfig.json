@@ -17,14 +17,14 @@
     "module": "esnext",
     "moduleResolution": "node",
     "paths": {
-      "*": ["core/*", "common/*", "structures/*", "util/*"]
+      "@/*": ["core/*", "common/*"]
     },
     "resolveJsonModule": true,
     "rootDir": "src",
 
     // Emit
     "newLine": "lf",
-    "outDir": "dist",
+    "outDir": "build",
     "removeComments": true,
 
     // Interop Constraints
@@ -35,5 +35,8 @@
     "lib": ["esnext"],
     "target": "esnext",
   },
-  "include": ["src"]
+  "include": ["src"],
+  "tsc-alias": {
+    "resolveFullPaths": true
+  }
 }
