@@ -8,20 +8,26 @@ const logLevelColor: { [K in keyof typeof LogLevel]: string } = {
   INFO: chalk.blue("INFO"),
   DEBUG: chalk.magenta("DEBUG"),
   WARN: chalk.yellow("WARN"),
-  ERR: chalk.red("ERR"),
+  ERROR: chalk.red("ERROR"),
 };
 
 export default class Client extends DiscordClient<true> {
-  commands = new Map<string, Command>();
-  events = new Map<string, EventListener>();
+  readonly path: string;
+  readonly commands = new Map<string, Command>();
+  readonly events = new Map<string, EventListener>();
+  readonly state: Record<string, unknown> = {};
 
   constructor(options: ClientOptions, readonly source: string, readonly debug: boolean = false) {
-    options.intents.push(
-      GatewayIntentBits.Guilds,
-      GatewayIntentBits.GuildMessages,
-      GatewayIntentBits.MessageContent,
-    );
-    super(options);
+    super({
+      allowedMentions: { parse: [] },
+      ...options,
+      intents: (options.intents ?? []).concat(
+        GatewayIntentBits.Guilds,
+        GatewayIntentBits.GuildMessages,
+        GatewayIntentBits.MessageContent,
+      ),
+    });
+    this.path = `build/custom/${source}`;
   }
 
   log(content: string, scope: string, level: LogLevel = LogLevel.INFO): void {

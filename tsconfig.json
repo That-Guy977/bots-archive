@@ -17,7 +17,7 @@
     "module": "esnext",
     "moduleResolution": "node",
     "paths": {
-      "@/*": ["core/*", "common/*"]
+      "@/*": ["core/*", "common/*", "custom/*"]
     },
     "resolveJsonModule": true,
     "rootDir": "src",

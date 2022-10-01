@@ -25,7 +25,7 @@
     "no-self-compare": "warn",
     "no-unmodified-loop-condition": "warn",
     "no-unreachable-loop": "warn",
-    "require-atomic-updates": "warn",
+    "require-atomic-updates": ["warn", { "allowProperties": true }],
     // ESLint - Suggestions
     "arrow-body-style": "warn",
     "curly": ["warn", "multi"],

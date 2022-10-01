@@ -5,23 +5,32 @@ import type {
   LocalizationMap,
 } from "discord.js";
 
-export type ClientOptions = DiscordClientOptions & {
-  intents: GatewayIntentBits[];
+export type ClientOptions = Partial<DiscordClientOptions> & {
+  intents?: GatewayIntentBits[];
 };
 export type ClientConfig = {
-  guild?: string;
-  channel?: string;
+  scripts?: string[];
+  events?: Record<string, Record<string, string | number>>;
+};
+export type IdKey = Record<string, string>;
+export type IdConfig = {
+  guild: string;
+  channel?: IdKey;
+  user?: IdKey;
+  role?: IdKey;
+  emoji?: IdKey;
 };
 export type SourceConfig = {
   config: ClientConfig;
   clientOptions: ClientOptions;
+  ids: IdConfig;
 };
 
 export enum LogLevel {
   INFO,
   DEBUG,
   WARN,
-  ERR,
+  ERROR,
 }
 
 export type CommandConfig = {
