@@ -13,7 +13,7 @@ export const clientOptions: ClientOptions = {
   ],
 };
 
-export const ids: IdConfig = {
+export const idConfig: IdConfig = {
   guild: "847136199436009502",
   channel: {
     spam: "1008586602844540998",

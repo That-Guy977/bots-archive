@@ -9,7 +9,7 @@ export default function deploy(client: Client): void {
   }
   for (const [guild, commands] of commandMap) {
     const commandData = commands.map((command) => command.construct());
-    if (!guild) client.application.commands.set(commandData);
-    else client.application.commands.set(commandData, guild);
+    if (guild === null) client.application.commands.set(commandData);
+    else client.application.commands.set(commandData, guild || client.getGuildId());
   }
 }

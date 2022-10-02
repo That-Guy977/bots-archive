@@ -23,7 +23,7 @@ export type IdConfig = {
 export type SourceConfig = {
   config: ClientConfig;
   clientOptions: ClientOptions;
-  ids: IdConfig;
+  idConfig: IdConfig;
 };
 
 export enum LogLevel {

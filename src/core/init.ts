@@ -8,8 +8,8 @@ import type EventListener from "@/structure/EventListener";
 const commonPaths = ["core", "common"];
 
 export default async function init(source: string, scripts: string[] = []): Promise<void> {
-  const { config, clientOptions } = await import(`../custom/${source}/config.js`) as SourceConfig;
-  const client = new Client(clientOptions, source);
+  const { config, clientOptions, idConfig } = await import(`../custom/${source}/config.js`) as SourceConfig;
+  const client = new Client(clientOptions, source, idConfig);
   const scriptFns: ((client: Client) => void)[] = [];
   const paths = [...commonPaths, `custom/${source}`];
   scripts.push(...config.scripts ?? []);
@@ -58,4 +58,7 @@ export default async function init(source: string, scripts: string[] = []): Prom
   await client.login(process.env[`${source.toUpperCase()}_TOKEN`]);
   await Promise.all(scriptFns.map((script) => script(client)));
   client.log("init", "core");
+  client.log("state:", "core");
+  for (const key in client.state)
+    client.log(`  ${key}: ${client.state[key]}`, "core");
 }
