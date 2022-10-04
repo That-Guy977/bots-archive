@@ -48,9 +48,9 @@ export default async function init(source: string, scripts: string[] = []): Prom
     ...scripts.map(
       (script) => (
         scriptFiles[2]!.includes(script)
-          ? import(`../custom/${source}/scripts/${script}`)
-          : import(`./scripts/${script}`)
-      ).then((scriptFn: (client: Client) => void) => scriptFns.push(scriptFn))
+          ? import(`../custom/${source}/scripts/${script}.js`)
+          : import(`./scripts/${script}.js`)
+      ).then(({ default: scriptFn }: DefImport<(client: Client) => void>) => scriptFns.push(scriptFn))
     ),
   ]);
   for (const [, listener] of client.events)
