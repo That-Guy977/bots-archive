@@ -7,9 +7,9 @@ import type Command from "@/structure/Command";
 import type EventListener from "@/structure/EventListener";
 const commonPaths = ["core", "common"];
 
-export default async function init(source: string, scripts: string[] = []): Promise<void> {
+export default async function init(source: string, scripts: string[] = [], debug = false): Promise<void> {
   const { config, clientOptions, idConfig } = await import(`../custom/${source}/config.js`) as SourceConfig;
-  const client = new Client(clientOptions, source, idConfig);
+  const client = new Client(clientOptions, source.toUpperCase(), idConfig, debug);
   const scriptFns: ((client: Client) => void)[] = [];
   const paths = [...commonPaths, `custom/${source}`];
   scripts.push(...config.scripts ?? []);
@@ -55,7 +55,7 @@ export default async function init(source: string, scripts: string[] = []): Prom
   ]);
   for (const [, listener] of client.events)
     client.on(listener.event, (...args) => listener.emit(client, ...args));
-  await client.login(process.env[`${source.toUpperCase()}_TOKEN`]);
+  await client.login(process.env[`${client.source}_TOKEN`]);
   await Promise.all(scriptFns.map((script) => script(client)));
   client.log("Init", "core");
   client.log("State:", "core");
