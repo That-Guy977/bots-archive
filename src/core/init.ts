@@ -1,6 +1,6 @@
 import Client from "@/structure/Client";
 import asModule from "@/util/asModule";
-import { LogLevel } from "@/types";
+import { log } from "@/types";
 import fs from "node:fs/promises";
 import type { SourceConfig, DefImport } from "@/types";
 import type Command from "@/structure/Command";
@@ -21,7 +21,7 @@ export default async function init(source: string, scripts: string[] = []): Prom
     )
   );
   if (!scripts.every((script) => scriptFiles.flat().includes(script))) {
-    client.log(`Script(s) ${scripts.filter((script) => !scriptFiles.flat().includes(script)).join(", ")} not found.`, "core", LogLevel.ERROR);
+    client.log(`Script(s) ${scripts.filter((script) => !scriptFiles.flat().includes(script)).join(", ")} not found.`, "core", log.ERROR);
     return;
   }
   await Promise.all([
@@ -57,8 +57,8 @@ export default async function init(source: string, scripts: string[] = []): Prom
     client.on(listener.event, (...args) => listener.emit(client, ...args));
   await client.login(process.env[`${source.toUpperCase()}_TOKEN`]);
   await Promise.all(scriptFns.map((script) => script(client)));
-  client.log("init", "core");
-  client.log("state:", "core");
+  client.log("Init", "core");
+  client.log("State:", "core");
   for (const key in client.state)
     client.log(`  ${key}: ${client.state[key]}`, "core");
 }

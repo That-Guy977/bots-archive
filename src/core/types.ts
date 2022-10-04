@@ -1,3 +1,4 @@
+import chalk from "chalk";
 import type {
   ClientOptions as DiscordClientOptions,
   GatewayIntentBits,
@@ -26,12 +27,12 @@ export type SourceConfig = {
   idConfig: IdConfig;
 };
 
-export enum LogLevel {
-  INFO,
-  DEBUG,
-  WARN,
-  ERROR,
-}
+export const log = {
+  INFO: chalk.blue("INFO"),
+  DEBUG: chalk.magenta("DEBUG"),
+  WARN: chalk.yellow("WARN"),
+  ERROR: chalk.red("ERROR"),
+};
 
 export type CommandConfig = {
   permissions?: CommandPermissions;
