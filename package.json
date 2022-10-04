@@ -9,7 +9,8 @@
     "build": "npm run lint && npm run compile",
     "compile": "tsc && tsc-alias",
     "clean": "rm -rf build",
-    "lint": "eslint src"
+    "lint": "eslint src",
+    "lint:all": "eslint src --no-inline-config"
   },
   "dependencies": {
     "chalk": "^5.0.1",
@@ -25,6 +26,7 @@
     "@typescript-eslint/parser": "^5.38.1",
     "eslint": "^8.24.0",
     "eslint-import-resolver-typescript": "^3.5.1",
+    "eslint-plugin-eslint-comments": "^3.2.0",
     "eslint-plugin-import": "^2.26.0",
     "eslint-plugin-node": "^11.1.0",
     "tsc-alias": "^1.7.0",
