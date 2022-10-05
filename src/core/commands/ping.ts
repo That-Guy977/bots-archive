@@ -19,17 +19,17 @@ export default new ChatInputCommand("ping", "Pings the bot.", async (client, cmd
         .setCustomId("ping")
       ),
     ],
-  });
-  msg.createMessageComponentCollector({
+  }).catch(() => null);
+  msg?.createMessageComponentCollector({
     time: 600000,
     idle: 60000,
   }).on("collect", async (i) => {
     if (i.customId !== "ping") return;
     const iNow = Date.now();
     const iReply = await i.update({ content: "Pinging...", fetchReply: true });
-    i.editReply({ content: null, embeds: [pingEmbed(client, i, iReply.createdTimestamp, iNow)] });
+    i.editReply({ content: null, embeds: [pingEmbed(client, i, iReply.editedTimestamp!, iNow)] }).catch(() => null);
   }).on("end", () => {
-    cmd.editReply({ components: [] });
+    cmd.editReply({ components: [] }).catch(() => null);
   });
 });
 
