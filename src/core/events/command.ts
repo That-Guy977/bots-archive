@@ -6,9 +6,9 @@ export default new EventListener("interactionCreate", (client, interaction) => {
   const cmd = client.commands.get(interaction.commandName);
   if (cmd) {
     cmd.exec(client, interaction);
-    client.log(`Command ${cmd.name} executed`, "event.command", log.DEBUG);
+    client.log(`Command ${cmd.name} executed`, "core.event.command", log.DEBUG);
   } else {
     interaction.reply({ content: "Unknown command", ephemeral: true });
-    client.log(`Unknown command ${interaction.commandName} executed`, "event.command", log.WARN);
+    client.log(`Unknown command ${interaction.commandName} executed`, "core.event.command", log.WARN);
   }
 });
