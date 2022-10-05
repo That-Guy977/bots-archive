@@ -4,9 +4,11 @@
   "author": "That-Guy977",
   "main": "./build/core",
   "scripts": {
-    "start": "npm run build && node .",
-    "debug": "npm run compile && node .",
+    "start": "node .",
+    "debug": "node . --debug",
     "build": "npm run lint && npm run compile",
+    "build:start": "npm run build && npm start",
+    "build:debug": "npm run compile && npm run debug",
     "compile": "tsc && tsc-alias",
     "clean": "rm -rf build",
     "lint": "eslint src",
