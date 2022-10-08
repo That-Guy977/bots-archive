@@ -3,11 +3,15 @@ import type Client from "@/structure/Client";
 import type { User, GuildMember, ColorResolvable } from "discord.js";
 
 export default class BaseEmbed extends EmbedBuilder {
-  constructor(client: Client, title: string, color: ColorResolvable, req: User | GuildMember) {
+  constructor(client: Client, title: string, color: ColorResolvable, requester?: User | GuildMember) {
     super({ title });
     this.setColor(color)
     .setAuthor({ name: client.user.username, iconURL: client.user.displayAvatarURL() })
-    .setFooter({ text: `Requested by ${"tag" in req ? req.tag : req.user.tag}`, iconURL: req.displayAvatarURL() })
     .setTimestamp();
+    if (requester)
+      this.setFooter({
+        text: `Requested by ${"tag" in requester ? requester.tag : requester.user.tag}`,
+        iconURL: requester.displayAvatarURL(),
+      });
   }
 }
