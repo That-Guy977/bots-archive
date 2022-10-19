@@ -193,6 +193,7 @@
     "@typescript-eslint/no-invalid-this": "error",
     "@typescript-eslint/no-loop-func": "error",
     "@typescript-eslint/no-redeclare": "error",
+    "@typescript-eslint/no-restricted-imports": ["warn", { "patterns": [".*"] }],
     "@typescript-eslint/no-shadow": ["warn", { "builtinGlobals": true, "hoist": "all" }],
     "@typescript-eslint/no-throw-literal": "error",
     "@typescript-eslint/no-unused-expressions": "warn",
@@ -245,5 +246,6 @@
     "eslint-comments/no-use": ["error", { "allow": ["eslint-disable-next-line"] }],
     "eslint-comments/require-description": "error"
   },
+  "ignorePatterns": ["_*", "/build/"],
   "reportUnusedDisableDirectives": true
 }

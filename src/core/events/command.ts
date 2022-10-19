@@ -1,5 +1,5 @@
 import EventListener from "@/structure/EventListener";
-import { log } from "../types";
+import { log } from "@/types";
 
 export default new EventListener("interactionCreate", (client, interaction) => {
   if (!interaction.isCommand()) return;
