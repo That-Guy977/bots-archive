@@ -150,8 +150,7 @@
     "@typescript-eslint/naming-convention": ["warn",
       { "selector": "default", "format": ["camelCase"], "leadingUnderscore": "forbid", "trailingUnderscore": "forbid" },
       { "selector": ["typeLike", "enumMember"], "format": ["PascalCase"], "leadingUnderscore": "forbid", "trailingUnderscore": "forbid" },
-      { "selector": "property", "format": ["camelCase", "UPPER_CASE"], "leadingUnderscore": "forbid", "trailingUnderscore": "forbid" },
-      { "selector": "variable", "modifiers": ["const", "global"], "types": ["number", "string", "boolean"], "format": ["UPPER_CASE", "camelCase"], "leadingUnderscore": "forbid", "trailingUnderscore": "forbid" },
+      { "selector": "property", "format": ["camelCase"], "leadingUnderscore": "forbid", "trailingUnderscore": "forbid" },
       { "selector": "parameter", "modifiers": ["unused"], "format": ["camelCase"], "leadingUnderscore": "require", "trailingUnderscore": "forbid" }
     ],
     "@typescript-eslint/no-explicit-any": "warn",
