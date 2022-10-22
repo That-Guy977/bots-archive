@@ -10,7 +10,7 @@ export default class BaseEmbed extends EmbedBuilder {
     .setTimestamp();
     if (requester)
       this.setFooter({
-        text: `Requested by ${"tag" in requester ? requester.tag : requester.user.tag}`,
+        text: `Requested by ${client.users.resolve(requester)!.tag}`,
         iconURL: requester.displayAvatarURL(),
       });
   }
