@@ -17,7 +17,12 @@ export const clientOptions: ClientOptions = {
   },
 };
 
-export const config: ClientConfig = {};
+export const config: ClientConfig = {
+  botPresence: {
+    channel: "modtest",
+    delay: 600,
+  },
+};
 
 export const idConfig: IdConfig = {
   guild: "778426035141869620",

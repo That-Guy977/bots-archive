@@ -11,7 +11,12 @@ export const clientOptions: ClientOptions = {
   ],
 };
 
-export const config: ClientConfig = {};
+export const config: ClientConfig = {
+  botPresence: {
+    channel: "spam",
+    online: false,
+  },
+};
 
 export const idConfig: IdConfig = {
   guild: "847136199436009502",
