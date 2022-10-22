@@ -11,6 +11,6 @@ export default new ChatInputCommand("reset", "Reset user reference", async (clie
     cmd.guild!.members.me!.setNickname(null),
     setState(client, ""),
   ]);
-  client.log("Reset state", "commands.reset");
+  client.log("Reset state", "command.reset");
   cmd.editReply("Reset user reference.");
 }, "");
