@@ -1,4 +1,3 @@
-import { log } from "@/types";
 import { Client as DiscordClient, GatewayIntentBits } from "discord.js";
 import chalk from "chalk";
 import type Command from "@/structure/Command";
@@ -35,19 +34,31 @@ export default class Client extends DiscordClient<true> {
     };
   }
 
-  log(content: string, scope: string, level: string = log.INFO): void {
-    if (!this.debug && level === log.DEBUG) return;
-    /* eslint-disable-next-line no-console -- Client#log */
-    console.log(`[${chalk.magenta(new Date().toISOString())}][${level};${this.source}] ${chalk.green(scope)}:`, content);
-  }
-
   getGuildId(): string {
     return this.idConfig.guild;
   }
 
   getId(name: string, type: Exclude<keyof IdConfig, "guild">): string | null {
     const id = this.idConfig[type][name] ?? null;
-    if (!id) this.log(`Id \`${name}\` type \`${type}\` not found`, "client.getId", log.WARN);
+    if (!id) this.warn(`Id \`${name}\` type \`${type}\` not found`, "client.getId");
     return id;
+  }
+
+  log(content: string, scope: string, level: string = chalk.blue("INFO")): void {
+    if (level === chalk.magenta("DEBUG") && !this.state.debug) return;
+    /* eslint-disable-next-line no-console -- Client#log */
+    console.log(`[${chalk.magenta(new Date().toISOString())}][${this.source};${level}] ${chalk.green(scope)}:`, content);
+  }
+
+  debug(content: string, scope: string): void {
+    this.log(content, scope, chalk.magenta("DEBUG"));
+  }
+
+  warn(content: string, scope: string): void {
+    this.log(content, scope, chalk.yellow("WARN"));
+  }
+
+  error(content: string, scope: string): void {
+    this.log(content, scope, chalk.red("ERROR"));
   }
 }

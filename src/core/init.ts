@@ -1,6 +1,5 @@
 import Client from "@/structure/Client";
 import asModule from "@/util/asModule";
-import { log } from "@/types";
 import fs from "node:fs/promises";
 import type { SourceConfig, DefImport } from "@/types";
 import type Command from "@/structure/Command";
@@ -22,7 +21,7 @@ export default async function init(source: string, scripts: string[] = [], debug
     )
   );
   if (!scripts.every((script) => scriptFiles.flat().includes(script))) {
-    client.log(`Script(s) ${scripts.filter((script) => !scriptFiles.flat().includes(script)).join(", ")} not found.`, "core", log.ERROR);
+    client.error(`Script(s) ${scripts.filter((script) => !scriptFiles.flat().includes(script)).join(", ")} not found.`, "core");
     return;
   }
   await Promise.all([

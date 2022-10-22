@@ -1,17 +1,9 @@
-import chalk from "chalk";
 import type {
   ClientOptions as DiscordClientOptions,
   GatewayIntentBits,
   PermissionsString,
   LocalizationMap,
 } from "discord.js";
-
-export const log = {
-  INFO: chalk.blue("INFO"),
-  DEBUG: chalk.magenta("DEBUG"),
-  WARN: chalk.yellow("WARN"),
-  ERROR: chalk.red("ERROR"),
-};
 
 export interface ClientConfig {
   scripts?: string[];
