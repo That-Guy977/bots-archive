@@ -3,7 +3,7 @@ import chalk from "chalk";
 import type Command from "@/structure/Command";
 import type EventListener from "@/structure/EventListener";
 import type { ClientOptions, ClientConfig, IdConfig, ClientState } from "@/types";
-import type { Guild, Channel } from "discord.js";
+import type { Guild, Channel, Role } from "discord.js";
 
 export default class Client extends DiscordClient<true> {
   readonly path: string;
@@ -46,6 +46,12 @@ export default class Client extends DiscordClient<true> {
     const channel = this.channels.cache.get(this.getId(name, "channel")!);
     if (!channel) this.warn(`Channel ${name} invalid`, "client.getChannel");
     return channel!;
+  }
+
+  getRole(name: string): Role {
+    const role = this.getGuild().roles.cache.get(this.getId(name, "role")!);
+    if (!role) this.warn(`Role ${name} invalid`, "client.getRole");
+    return role!;
   }
 
   getGuildId(): string {
