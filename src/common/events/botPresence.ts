@@ -40,7 +40,7 @@ declare module "@/types" {
 function sendStatus(client: Client, embed: BaseEmbed): void {
   const channelName = client.config.botPresence!.channel;
   const channel = client.getChannel(channelName);
-  const warnUnavailable = (): void => client.warn(`Channel ${channelName} unavailable.`, "event.botPresence");
+  const warnUnavailable = (): void => client.error(`Channel ${channelName} unavailable.`, "event.botPresence");
   if (channel.isTextBased())
     channel.send({ embeds: [embed] }).catch(warnUnavailable);
   else warnUnavailable();

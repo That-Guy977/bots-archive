@@ -17,7 +17,7 @@ export default new ChatInputCommand("set", "Set user reference", async (client, 
         setState(client, id),
       ]);
       cmd.editReply(`Set state to ${member}`);
-      client.log(`Set state to ${member}`, "command.set");
+      client.debug(`Set state to ${member}`, "command.set");
     } else cmd.reply({ content: "Invalid member", ephemeral: true });
   }
 }, "", [

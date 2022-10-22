@@ -8,6 +8,6 @@ export default new EventListener("interactionCreate", (client, interaction) => {
     client.debug(`Command ${cmd.name} executed`, "core.event.command");
   } else {
     interaction.reply({ content: "Unknown command", ephemeral: true });
-    client.warn(`Unknown command ${interaction.commandName} executed`, "core.event.command");
+    client.error(`Unknown command ${interaction.commandName} executed`, "core.event.command");
   }
 });
