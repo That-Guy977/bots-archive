@@ -5,11 +5,11 @@ import type {
   LocalizationMap,
 } from "discord.js";
 
-export interface ClientConfig {
-  scripts?: string[];
-}
 export interface ClientOptions extends Partial<DiscordClientOptions> {
   intents?: GatewayIntentBits[];
+}
+export interface ClientConfig {
+  scripts?: string[];
 }
 export type IdKey = Record<string, string>;
 export interface IdConfig {
@@ -23,6 +23,10 @@ export interface SourceConfig {
   config: ClientConfig;
   clientOptions: ClientOptions;
   idConfig: IdConfig;
+}
+
+export interface ClientState {
+  debug: boolean;
 }
 
 export interface CommandConfig {

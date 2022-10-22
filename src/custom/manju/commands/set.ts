@@ -6,7 +6,7 @@ export default new ChatInputCommand("set", "Set user reference", async (client, 
   const { id } = cmd.options.getUser("user", true);
   if (id === client.user.id)
     client.commands.get("reset")!.exec(client, cmd);
-  else if (id === client.state["current"])
+  else if (id === client.state.current)
     client.commands.get("update")!.exec(client, cmd);
   else {
     const member = await cmd.guild!.members.fetch(id).catch(() => null);
@@ -28,3 +28,9 @@ export default new ChatInputCommand("set", "Set user reference", async (client, 
     required: true,
   },
 ]);
+
+declare module "@/types" {
+  interface ClientState {
+    current?: string;
+  }
+}

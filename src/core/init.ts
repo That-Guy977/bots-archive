@@ -7,8 +7,8 @@ import type EventListener from "@/structure/EventListener";
 const commonPaths = ["core", "common"];
 
 export default async function init(source: string, scripts: string[] = [], debug = false): Promise<void> {
-  const { config, clientOptions, idConfig } = await import(`../custom/${source}/config.js`) as SourceConfig;
-  const client = new Client(clientOptions, source.toUpperCase(), idConfig, debug);
+  const { clientOptions, config, idConfig } = await import(`../custom/${source}/config.js`) as SourceConfig;
+  const client = new Client(clientOptions, source.toUpperCase(), config, idConfig, debug);
   client.log("Start", "core.init");
   const scriptFns: ((client: Client) => void)[] = [];
   const paths = [...commonPaths, `custom/${source}`];
@@ -58,7 +58,4 @@ export default async function init(source: string, scripts: string[] = [], debug
   await client.login(process.env[`${client.source}_TOKEN`]);
   await Promise.all(scriptFns.map((script) => script(client)));
   client.log("Done", "core.init");
-  client.log("State:", "core.init");
-  for (const key in client.state)
-    client.log(`  ${key}: ${client.state[key]}`, "core");
 }

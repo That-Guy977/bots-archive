@@ -2,16 +2,16 @@ import { Client as DiscordClient, GatewayIntentBits } from "discord.js";
 import chalk from "chalk";
 import type Command from "@/structure/Command";
 import type EventListener from "@/structure/EventListener";
-import type { ClientOptions, IdConfig } from "@/types";
+import type { ClientOptions, ClientConfig, IdConfig, ClientState } from "@/types";
 
 export default class Client extends DiscordClient<true> {
   readonly path: string;
   readonly commands = new Map<string, Command>();
   readonly events = new Map<string, EventListener>();
-  readonly state: Record<string, string> = {};
+  readonly state: ClientState;
   readonly idConfig: Required<IdConfig>;
 
-  constructor(options: ClientOptions, readonly source: string, idConfig: IdConfig, readonly debug: boolean = false) {
+  constructor(options: ClientOptions, readonly source: string, readonly config: ClientConfig, idConfig: IdConfig, debug: boolean = false) {
     super({
       allowedMentions: { parse: [] },
       ...options,
@@ -22,6 +22,7 @@ export default class Client extends DiscordClient<true> {
       ),
     });
     this.path = `build/custom/${source}`;
+    this.state = { debug };
     this.idConfig = {
       guild: idConfig.guild,
       channel: idConfig.channel ?? {},

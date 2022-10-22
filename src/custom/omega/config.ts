@@ -1,8 +1,6 @@
 import { GatewayIntentBits, Partials } from "discord.js";
 import type { ClientConfig, ClientOptions, IdConfig } from "@/types";
 
-export const config: ClientConfig = {};
-
 export const clientOptions: ClientOptions = {
   intents: [
     GatewayIntentBits.GuildMembers,
@@ -12,6 +10,8 @@ export const clientOptions: ClientOptions = {
     Partials.GuildMember,
   ],
 };
+
+export const config: ClientConfig = {};
 
 export const idConfig: IdConfig = {
   guild: "847136199436009502",
