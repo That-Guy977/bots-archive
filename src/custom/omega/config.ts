@@ -12,6 +12,10 @@ export const clientOptions: ClientOptions = {
 };
 
 export const config: ClientConfig = {
+  autoRole: {
+    member: "member",
+    bot: "bot",
+  },
   botPresence: {
     channel: "spam",
     online: false,
