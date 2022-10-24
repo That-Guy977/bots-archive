@@ -1,19 +1,24 @@
 import type Client from "@/structure/Client";
 import type { CommandPermissions } from "@/types";
 import type {
+  ApplicationCommandType,
   ApplicationCommandData,
   BaseApplicationCommandData,
-  CommandInteraction,
+  InteractionType,
+  Interaction,
   LocalizationMap,
 } from "discord.js";
 
-export default abstract class Command<T extends CommandInteraction = CommandInteraction> {
+export default abstract class Command<T extends ApplicationCommandType = ApplicationCommandType> {
   constructor(
     readonly name: string,
-    readonly exec: (client: Client, interaction: T) => void,
-    readonly guild: string | null = null,
-    readonly permissions: CommandPermissions = {},
-    readonly nameLocalizations: LocalizationMap = {},
+    readonly exec: (
+      client: Client,
+      interaction: Extract<Interaction, { type: InteractionType.ApplicationCommand; commandType: T }>
+    ) => void,
+    readonly guild: string | null,
+    readonly permissions: CommandPermissions,
+    readonly nameLocalizations: LocalizationMap,
   ) {}
 
   baseData(): BaseApplicationCommandData {
@@ -25,5 +30,5 @@ export default abstract class Command<T extends CommandInteraction = CommandInte
     };
   }
 
-  abstract construct(): ApplicationCommandData;
+  abstract construct(): Extract<ApplicationCommandData, { type?: T }>;
 }

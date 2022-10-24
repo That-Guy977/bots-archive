@@ -30,6 +30,7 @@ export interface ClientState {
 }
 
 export interface CommandConfig {
+  guild?: string | null;
   permissions?: CommandPermissions;
   nameLocalizations?: LocalizationMap;
 }

@@ -3,22 +3,22 @@ import { ApplicationCommandType } from "discord.js";
 import type Client from "@/structure/Client";
 import type { ChatInputCommandConfig } from "@/types";
 import type {
+  ChatInputApplicationCommandData,
   ChatInputCommandInteraction,
-  ApplicationCommandData,
   ApplicationCommandOptionData,
   LocalizationMap,
 } from "discord.js";
 
-export default class ChatInputCommand extends Command<ChatInputCommandInteraction> {
+export default class ChatInputCommand extends Command<ApplicationCommandType.ChatInput> {
   readonly descriptionLocalizations: LocalizationMap;
 
   constructor(
     name: string,
     readonly description: string,
     exec: (client: Client, interaction: ChatInputCommandInteraction) => void,
-    guild: string | null = null,
     readonly options: ApplicationCommandOptionData[] = [],
     {
+      guild = null,
       permissions = {},
       nameLocalizations = {},
       descriptionLocalizations = {},
@@ -28,7 +28,7 @@ export default class ChatInputCommand extends Command<ChatInputCommandInteractio
     this.descriptionLocalizations = descriptionLocalizations;
   }
 
-  construct(): ApplicationCommandData {
+  construct(): ChatInputApplicationCommandData {
     return {
       type: ApplicationCommandType.ChatInput,
       ...this.baseData(),

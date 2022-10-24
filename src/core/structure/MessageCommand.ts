@@ -3,16 +3,16 @@ import { ApplicationCommandType } from "discord.js";
 import type Client from "@/structure/Client";
 import type { CommandConfig } from "@/types";
 import type {
+  MessageApplicationCommandData,
   MessageContextMenuCommandInteraction,
-  ApplicationCommandData,
 } from "discord.js";
 
-export default class MessageCommand extends Command<MessageContextMenuCommandInteraction> {
+export default class MessageCommand extends Command<ApplicationCommandType.Message> {
   constructor(
     name: string,
     exec: (client: Client, interaction: MessageContextMenuCommandInteraction) => void,
-    guild: string | null = null,
     {
+      guild = null,
       permissions = {},
       nameLocalizations = {},
     }: CommandConfig = {},
@@ -20,7 +20,7 @@ export default class MessageCommand extends Command<MessageContextMenuCommandInt
     super(name, exec, guild, permissions, nameLocalizations);
   }
 
-  construct(): ApplicationCommandData {
+  construct(): MessageApplicationCommandData {
     return {
       type: ApplicationCommandType.Message,
       ...this.baseData(),
