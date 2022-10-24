@@ -17,4 +17,6 @@ export default new ChatInputCommand("update", "Update user reference", async (cl
     cmd.guild!.members.me!.setNickname(member.displayName),
   ]);
   cmd.editReply(`Updated user reference to ${member}.`);
-}, "");
+}, [], {
+  guild: "",
+});

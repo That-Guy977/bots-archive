@@ -13,4 +13,6 @@ export default new ChatInputCommand("reset", "Reset user reference", async (clie
   ]);
   client.debug("Reset state", "command.reset");
   cmd.editReply("Reset user reference.");
-}, "");
+}, [], {
+  guild: "",
+});

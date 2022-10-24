@@ -20,14 +20,16 @@ export default new ChatInputCommand("set", "Set user reference", async (client, 
       client.debug(`Set state to ${member}`, "command.set");
     } else cmd.reply({ content: "Invalid member", ephemeral: true });
   }
-}, "", [
+}, [
   {
     name: "user",
     description: "Reset user reference",
     type: ApplicationCommandOptionType.User,
     required: true,
   },
-]);
+], {
+  guild: "",
+});
 
 declare module "@/types" {
   interface ClientState {

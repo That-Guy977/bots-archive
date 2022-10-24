@@ -7,4 +7,6 @@ export default new ChatInputCommand("check", "Check user reference", (client, cm
       : "No user reference",
     ephemeral: true,
   });
-}, "");
+}, [], {
+  guild: "",
+});
