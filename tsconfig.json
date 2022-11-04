@@ -19,7 +19,6 @@
     "paths": {
       "@/*": ["core/*", "common/*", "custom/*"]
     },
-    "resolveJsonModule": true,
     "rootDir": "src",
 
     // Emit
