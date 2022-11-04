@@ -6,6 +6,7 @@ export const clientOptions: ClientOptions = {
     GatewayIntentBits.GuildMembers,
     GatewayIntentBits.GuildEmojisAndStickers,
     GatewayIntentBits.GuildPresences,
+    GatewayIntentBits.MessageContent,
   ],
   partials: [
     Partials.GuildMember,

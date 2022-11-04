@@ -19,7 +19,6 @@ export default class Client extends DiscordClient<true> {
       intents: (options.intents ?? []).concat(
         GatewayIntentBits.Guilds,
         GatewayIntentBits.GuildMessages,
-        GatewayIntentBits.MessageContent,
       ),
     });
     this.path = `build/custom/${source}`;
