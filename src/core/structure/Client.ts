@@ -64,7 +64,7 @@ export default class Client extends DiscordClient<true> {
   }
 
   log(content: string, scope: string, level: string = chalk.cyan("INFO")): void {
-    if (level === chalk.magenta("DEBUG") && !this.state.debug) return;
+    if (level.includes("DEBUG") && !this.state.debug) return;
     /* eslint-disable-next-line no-console -- Client#log */
     console.log(`[${chalk.magenta(new Date().toISOString())}][${this.source};${level}] ${chalk.green(scope)}:`, content);
   }
