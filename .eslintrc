@@ -153,6 +153,7 @@
       { "selector": "property", "format": ["camelCase"], "leadingUnderscore": "forbid", "trailingUnderscore": "forbid" },
       { "selector": "parameter", "modifiers": ["unused"], "format": ["camelCase"], "leadingUnderscore": "require", "trailingUnderscore": "forbid" }
     ],
+    "@typescript-eslint/no-base-to-string": ["warn", { "ignoredTypeNames": ["GuildBasedChannel"] }],
     "@typescript-eslint/no-explicit-any": "warn",
     "@typescript-eslint/no-floating-promises": "off",
     "@typescript-eslint/no-inferrable-types": ["warn", { "ignoreParameters": true, "ignoreProperties": true }],
