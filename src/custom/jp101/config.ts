@@ -31,6 +31,7 @@ export const config: ClientConfig = {
 export const idConfig: IdConfig = {
   guild: "778426035141869620",
   channel: {
+    rules: "778430643901825044",
     modtest: "779380025299959829",
   },
   role: {
