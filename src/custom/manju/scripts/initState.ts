@@ -1,8 +1,9 @@
 import fs from "node:fs/promises";
+import chalk from "chalk";
 import type Client from "@/structure/Client";
 
 export default async function initState(client: Client): Promise<void> {
   client.log("Fetching state", "scripts.initState");
   client.state.current = await fs.readFile(`${client.path}/_state`, "utf8").catch(() => "");
-  client.log(`Current state: ${client.state.current}`, "scripts.initState");
+  client.log(`Current state: ${chalk.cyan(client.state.current)}`, "scripts.initState");
 }

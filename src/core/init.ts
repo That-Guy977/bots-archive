@@ -2,6 +2,7 @@ import Client from "@/structure/Client";
 import isModule from "@/util/isModule";
 import path from "node:path";
 import glob from "tiny-glob";
+import chalk from "chalk";
 import type { SourceConfig, DefImport } from "@/types";
 import type Command from "@/structure/Command";
 import type EventListener from "@/structure/EventListener";
@@ -24,7 +25,7 @@ export default async function init(source: string, scripts: string[] = [], debug
     }
   }
   if (!scripts.every((script) => scriptPaths.has(script))) {
-    client.error(`Script(s) ${scripts.filter((script) => !scriptPaths.has(script)).join(", ")} not found.`, "core");
+    client.error(`Script(s) ${scripts.filter((script) => !scriptPaths.has(script)).map(chalk.cyan).join(", ")} not found.`, "core");
     return;
   }
   const scriptFns: ((client: Client) => void)[] = [];

@@ -63,14 +63,14 @@ export default class Client extends DiscordClient<true> {
     return id;
   }
 
-  log(content: string, scope: string, level: string = chalk.blue("INFO")): void {
+  log(content: string, scope: string, level: string = chalk.cyan("INFO")): void {
     if (level === chalk.magenta("DEBUG") && !this.state.debug) return;
     /* eslint-disable-next-line no-console -- Client#log */
     console.log(`[${chalk.magenta(new Date().toISOString())}][${this.source};${level}] ${chalk.green(scope)}:`, content);
   }
 
   debug(content: string, scope: string): void {
-    this.log(content, scope, chalk.magenta("DEBUG"));
+    this.log(content, scope, chalk.blue("DEBUG"));
   }
 
   warn(content: string, scope: string): void {
@@ -78,6 +78,6 @@ export default class Client extends DiscordClient<true> {
   }
 
   error(content: string, scope: string): void {
-    this.log(content, scope, chalk.red("ERROR"));
+    this.log(content, scope, chalk.bold.red("ERROR"));
   }
 }

@@ -1,5 +1,6 @@
 import ChatInputCommand from "@/structure/ChatInputCommand";
 import setState from "@/manju/util/setState";
+import chalk from "chalk";
 import { ApplicationCommandOptionType } from "discord.js";
 
 export default new ChatInputCommand("set", "Set user reference", async (client, cmd) => {
@@ -17,7 +18,7 @@ export default new ChatInputCommand("set", "Set user reference", async (client, 
         setState(client, id),
       ]);
       cmd.editReply(`Set state to ${member}`);
-      client.debug(`Set state to ${member}`, "command.set");
+      client.debug(`Set state to ${chalk.green(member.displayName)} (${chalk.yellow(member.id)})`, "command.set");
     } else cmd.reply({ content: "Invalid member", ephemeral: true });
   }
 }, "", [

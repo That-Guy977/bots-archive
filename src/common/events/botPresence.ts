@@ -1,5 +1,6 @@
 import EventListener from "@/structure/EventListener";
 import BaseEmbed from "@/structure/BaseEmbed";
+import chalk from "chalk";
 import { Colors } from "discord.js";
 import type Client from "@/structure/Client";
 import type { Presence } from "discord.js";
@@ -40,7 +41,7 @@ declare module "@/types" {
 function sendStatus(client: Client, embed: BaseEmbed): void {
   const channelName = client.config.botPresence!.channel;
   const channel = client.getChannel(channelName);
-  const warnUnavailable = (): void => client.error(`Channel ${channelName} unavailable.`, "event.botPresence");
+  const warnUnavailable = (): void => client.error(`Channel ${chalk.cyan(channelName)} unavailable.`, "event.botPresence");
   if (channel.isTextBased())
     channel.send({ embeds: [embed] }).catch(warnUnavailable);
   else warnUnavailable();

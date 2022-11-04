@@ -1,3 +1,4 @@
+import chalk from "chalk";
 import type Client from "@/structure/Client";
 import type Command from "@/structure/Command";
 
@@ -12,6 +13,6 @@ export default function deploy(client: Client): void {
     const commandData = commands.map((command) => command.construct());
     client.log(`  ${(guild ?? "global") || "main"}: ${commandData.length}`, "scripts.deploy");
     if (guild === null) client.application.commands.set(commandData).then(() => client.debug("Deployed global", "scripts.deploy"));
-    else client.application.commands.set(commandData, guild || client.getGuildId()).then(() => client.debug(`Deployed for ${guild || "main"}`, "scripts.deploy"));
+    else client.application.commands.set(commandData, guild || client.getGuildId()).then(() => client.debug(`Deployed for ${chalk.blue(guild || "main")}`, "scripts.deploy"));
   }
 }
