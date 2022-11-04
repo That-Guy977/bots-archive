@@ -17,19 +17,18 @@
     "lint:all": "eslint src --no-inline-config"
   },
   "dependencies": {
-    "chalk": "^5.0.1",
-    "discord-api-types": "^0.37.11",
-    "discord.js": "^14.5.0",
+    "chalk": "^5.1.2",
+    "discord.js": "^14.6.0",
     "dotenv": "^16.0.3",
-    "mongoose": "^6.6.2",
+    "mongoose": "^6.7.1",
     "node-fetch": "^3.2.10"
   },
   "devDependencies": {
-    "@types/node": "^18.7.23",
-    "@typescript-eslint/eslint-plugin": "^5.38.1",
-    "@typescript-eslint/parser": "^5.38.1",
-    "eslint": "^8.24.0",
-    "eslint-import-resolver-typescript": "^3.5.1",
+    "@types/node": "^18.11.9",
+    "@typescript-eslint/eslint-plugin": "^5.42.0",
+    "@typescript-eslint/parser": "^5.42.0",
+    "eslint": "^8.26.0",
+    "eslint-import-resolver-typescript": "^3.5.2",
     "eslint-plugin-eslint-comments": "^3.2.0",
     "eslint-plugin-import": "^2.26.0",
     "eslint-plugin-node": "^11.1.0",
