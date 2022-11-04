@@ -34,7 +34,7 @@ Can be run using `npm <script>`.
 
 ##### `start`
 
-Runs `build`, then `node .`.
+Runs the module with the selected bots or scripts.
 
 #### Custom scripts
 
@@ -42,11 +42,19 @@ Can be run using `npm run <script>`.
 
 ##### `debug`
 
-Runs `compile`, then `node .`.
+Runs the selected bots or scripts in debug mode.
 
 ##### `build`
 
 Runs `lint`, then `compile`.
+
+##### `build:start`
+
+Runs `build`, then `start`.
+
+##### `build:debug`
+
+Runs `compile`, then `debug`.
 
 ##### `compile`
 
@@ -54,12 +62,23 @@ Compiles the `src` directory from TypeScript to JavaScript, outputting in `build
 
 ##### `clean`
 
-Removes the `build` directory.
+Removes the contents of the `build` directory.
+
+##### `check`
+
+Runs `lint` and `typecheck`.
+
+##### `typecheck`
+
+Verifies type safety via TypeScript.
 
 ##### `lint`
 
-Lints the `src` directory for style or formatting issues.
+Lints the `src` directory for logic or style issues.
 
+##### `lint:all`
+
+Lints the `src` directory, ignoring ESLint directives.
 
 ## Contact
 You can contact me at `That_Guy977#5882` on Discord, or in the `Japanese 101` Discord server at [jp101](https://discord.gg/jp101).
