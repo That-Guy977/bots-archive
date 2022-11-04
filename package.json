@@ -21,7 +21,8 @@
     "discord.js": "^14.6.0",
     "dotenv": "^16.0.3",
     "mongoose": "^6.7.1",
-    "node-fetch": "^3.2.10"
+    "node-fetch": "^3.2.10",
+    "tiny-glob": "^0.2.9"
   },
   "devDependencies": {
     "@types/node": "^18.11.9",
