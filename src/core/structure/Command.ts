@@ -1,10 +1,10 @@
 import type Client from "@/structure/Client";
-import type { CommandPermissions } from "@/types";
 import type {
   ApplicationCommandType,
   ApplicationCommandData,
   BaseApplicationCommandData,
   InteractionType,
+  PermissionsString,
   Interaction,
   LocalizationMap,
 } from "discord.js";
@@ -14,10 +14,10 @@ export default abstract class Command<T extends ApplicationCommandType = Applica
     readonly name: string,
     readonly exec: (
       client: Client,
-      interaction: Extract<Interaction, { type: InteractionType.ApplicationCommand; commandType: T }>
+      interaction: Extract<Interaction<"cached">, { type: InteractionType.ApplicationCommand; commandType: T }>
     ) => void,
     readonly guild: string | null,
-    readonly permissions: CommandPermissions,
+    readonly permissions: PermissionsString[],
     readonly nameLocalizations: LocalizationMap,
   ) {}
 
@@ -25,8 +25,8 @@ export default abstract class Command<T extends ApplicationCommandType = Applica
     return {
       name: this.name,
       nameLocalizations: this.nameLocalizations,
-      dmPermission: this.permissions.dm ?? true,
-      defaultMemberPermissions: this.permissions.default ?? null,
+      dmPermission: false,
+      defaultMemberPermissions: this.permissions,
     };
   }
 

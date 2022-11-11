@@ -9,11 +9,11 @@ export default new ChatInputCommand("set", "Set user reference", async (client, 
   else if (id === client.state.current)
     client.commands.get("update")!.exec(client, cmd);
   else {
-    const member = await cmd.guild!.members.fetch(id).catch(() => null);
+    const member = await cmd.guild.members.fetch(id).catch(() => null);
     if (member) {
       await Promise.all([
         cmd.deferReply(),
-        cmd.guild!.members.me!.setNickname(member.displayName),
+        cmd.guild.members.me!.setNickname(member.displayName),
         setState(client, id),
       ]);
       cmd.editReply(`Set state to ${member}`);

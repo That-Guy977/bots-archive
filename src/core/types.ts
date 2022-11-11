@@ -31,15 +31,11 @@ export interface ClientState {
 
 export interface CommandConfig {
   guild?: string | null;
-  permissions?: CommandPermissions;
+  permissions?: PermissionsString[];
   nameLocalizations?: LocalizationMap;
 }
 export interface ChatInputCommandConfig extends CommandConfig {
   descriptionLocalizations?: LocalizationMap;
-}
-export interface CommandPermissions {
-  default?: PermissionsString[];
-  dm?: boolean;
 }
 
 export interface DefImport<T = unknown> { default: T }

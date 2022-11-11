@@ -8,7 +8,7 @@ export default new ChatInputCommand("reset", "Reset user reference", async (clie
   }
   await Promise.all([
     cmd.deferReply(),
-    cmd.guild!.members.me!.setNickname(null),
+    cmd.guild.members.me!.setNickname(null),
     setState(client, ""),
   ]);
   client.debug("Reset state", "command.reset");

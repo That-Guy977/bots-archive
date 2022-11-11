@@ -15,11 +15,11 @@ export default class ChatInputCommand extends Command<ApplicationCommandType.Cha
   constructor(
     name: string,
     readonly description: string,
-    exec: (client: Client, interaction: ChatInputCommandInteraction) => void,
+    exec: (client: Client, interaction: ChatInputCommandInteraction<"cached">) => void,
     readonly options: ApplicationCommandOptionData[] = [],
     {
       guild = null,
-      permissions = {},
+      permissions = [],
       nameLocalizations = {},
       descriptionLocalizations = {},
     }: ChatInputCommandConfig = {},

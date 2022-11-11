@@ -10,10 +10,10 @@ import type {
 export default class MessageCommand extends Command<ApplicationCommandType.Message> {
   constructor(
     name: string,
-    exec: (client: Client, interaction: MessageContextMenuCommandInteraction) => void,
+    exec: (client: Client, interaction: MessageContextMenuCommandInteraction<"cached">) => void,
     {
       guild = null,
-      permissions = {},
+      permissions = [],
       nameLocalizations = {},
     }: CommandConfig = {},
   ) {
