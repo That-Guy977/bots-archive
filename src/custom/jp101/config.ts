@@ -34,6 +34,9 @@ export const idConfig: IdConfig = {
     rules: "778430643901825044",
     modtest: "779380025299959829",
   },
+  user: {
+    sigma: "216437513709944832",
+  },
   role: {
     bots: "778961297987207208",
   },
