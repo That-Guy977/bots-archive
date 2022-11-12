@@ -30,15 +30,15 @@ export interface ClientState {
 }
 
 export interface CommandConfig {
-  permissions?: CommandPermissions;
-  nameLocalizations?: LocalizationMap;
+  name: string;
+  guild?: string | null;
+  permissions?: PermissionsString[];
+  localizations?: LocalizationMap;
 }
-export interface ChatInputCommandConfig extends CommandConfig {
-  descriptionLocalizations?: LocalizationMap;
+export interface ChatInputCommandConfig extends Omit<CommandConfig, "localizations"> {
+  description: string;
+  localizations?: Localized<"name" | "description">;
 }
-export interface CommandPermissions {
-  default?: PermissionsString[];
-  dm?: boolean;
-}
+export type Localized<K extends string> = Partial<Record<K, LocalizationMap>>;
 
 export interface DefImport<T = unknown> { default: T }

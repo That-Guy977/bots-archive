@@ -4,7 +4,10 @@ import { ActionRowBuilder, ButtonBuilder, ButtonStyle, Colors, GuildMember } fro
 import type Client from "@/structure/Client";
 import type { Interaction } from "discord.js";
 
-export default new ChatInputCommand("ping", "Pings the bot.", async (client, cmd) => {
+export default new ChatInputCommand({
+  name: "ping",
+  description: "Pings the bot.",
+}, async (client, cmd) => {
   const now = Date.now();
   const reply = await cmd.deferReply({ fetchReply: true });
   const msg = await cmd.editReply({

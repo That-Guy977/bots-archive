@@ -1,16 +1,20 @@
 import ChatInputCommand from "@/structure/ChatInputCommand";
 import setState from "@/manju/util/setState";
 
-export default new ChatInputCommand("reset", "Reset user reference", async (client, cmd) => {
+export default new ChatInputCommand({
+  name: "reset",
+  description: "Reset user reference",
+  guild: "",
+}, async (client, cmd) => {
   if (!client.state.current) {
     cmd.reply({ content: "No user reference", ephemeral: true });
     return;
   }
   await Promise.all([
     cmd.deferReply(),
-    cmd.guild!.members.me!.setNickname(null),
+    cmd.guild.members.me!.setNickname(null),
     setState(client, ""),
   ]);
   client.debug("Reset state", "command.reset");
   cmd.editReply("Reset user reference.");
-}, "");
+});

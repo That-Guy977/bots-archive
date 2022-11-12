@@ -2,7 +2,7 @@ import EventListener from "@/structure/EventListener";
 import chalk from "chalk";
 
 export default new EventListener("interactionCreate", (client, interaction) => {
-  if (!interaction.isCommand()) return;
+  if (!interaction.isCommand() || !interaction.inCachedGuild()) return;
   const cmd = client.commands.get(interaction.commandName);
   if (cmd) {
     cmd.exec(client, interaction);
