@@ -10,22 +10,23 @@ import type {
 } from "discord.js";
 
 export default class ChatInputCommand extends Command<ApplicationCommandType.ChatInput> {
+  readonly description: string;
   readonly descriptionLocalizations: LocalizationMap;
 
   constructor(
-    name: string,
-    readonly description: string,
-    exec: (client: Client, interaction: ChatInputCommandInteraction<"cached">) => void,
-    readonly options: ApplicationCommandOptionData[] = [],
     {
+      name,
+      description,
       guild = null,
       permissions = [],
-      nameLocalizations = {},
-      descriptionLocalizations = {},
-    }: ChatInputCommandConfig = {},
+      localizations = {},
+    }: ChatInputCommandConfig,
+    exec: (client: Client, interaction: ChatInputCommandInteraction<"cached">) => void,
+    readonly options: ApplicationCommandOptionData[] = [],
   ) {
-    super(name, exec, guild, permissions, nameLocalizations);
-    this.descriptionLocalizations = descriptionLocalizations;
+    super(name, exec, guild, permissions, localizations.name ?? {});
+    this.description = description;
+    this.descriptionLocalizations = localizations.description ?? {};
   }
 
   construct(): ChatInputApplicationCommandData {

@@ -9,15 +9,15 @@ import type {
 
 export default class UserCommand extends Command<ApplicationCommandType.User> {
   constructor(
-    name: string,
-    exec: (client: Client, interaction: UserContextMenuCommandInteraction<"cached">) => void,
     {
+      name,
       guild = null,
       permissions = [],
-      nameLocalizations = {},
-    }: CommandConfig = {},
+      localizations = {},
+    }: CommandConfig,
+    exec: (client: Client, interaction: UserContextMenuCommandInteraction<"cached">) => void,
   ) {
-    super(name, exec, guild, permissions, nameLocalizations);
+    super(name, exec, guild, permissions, localizations);
   }
 
   construct(): UserApplicationCommandData {

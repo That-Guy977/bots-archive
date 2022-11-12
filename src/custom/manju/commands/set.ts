@@ -2,7 +2,11 @@ import ChatInputCommand from "@/structure/ChatInputCommand";
 import setState from "@/manju/util/setState";
 import { ApplicationCommandOptionType } from "discord.js";
 
-export default new ChatInputCommand("set", "Set user reference", async (client, cmd) => {
+export default new ChatInputCommand({
+  name: "set",
+  description: "Set user reference",
+  guild: "",
+}, async (client, cmd) => {
   const { id } = cmd.options.getUser("user", true);
   if (id === client.user.id)
     client.commands.get("reset")!.exec(client, cmd);
@@ -27,9 +31,7 @@ export default new ChatInputCommand("set", "Set user reference", async (client, 
     type: ApplicationCommandOptionType.User,
     required: true,
   },
-], {
-  guild: "",
-});
+]);
 
 declare module "@/types" {
   interface ClientState {

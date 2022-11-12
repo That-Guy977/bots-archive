@@ -9,15 +9,15 @@ import type {
 
 export default class MessageCommand extends Command<ApplicationCommandType.Message> {
   constructor(
-    name: string,
-    exec: (client: Client, interaction: MessageContextMenuCommandInteraction<"cached">) => void,
     {
+      name,
       guild = null,
       permissions = [],
-      nameLocalizations = {},
-    }: CommandConfig = {},
+      localizations = {},
+    }: CommandConfig,
+    exec: (client: Client, interaction: MessageContextMenuCommandInteraction<"cached">) => void,
   ) {
-    super(name, exec, guild, permissions, nameLocalizations);
+    super(name, exec, guild, permissions, localizations);
   }
 
   construct(): MessageApplicationCommandData {
