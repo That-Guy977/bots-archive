@@ -6,6 +6,7 @@ import chalk from "chalk";
 import type { SourceConfig, DefImport } from "@/types";
 import type Command from "@/structure/Command";
 import type EventListener from "@/structure/EventListener";
+import type DevCmd from "@/structure/DevCmd";
 const commonPaths = ["core", "common"];
 
 export default async function init(source: string, scripts: string[] = [], debug = false): Promise<void> {
@@ -47,6 +48,16 @@ export default async function init(source: string, scripts: string[] = [], debug
         eventModules.map(
           async (eventModule) => import(`../../${eventModule}`)
           .then(({ default: event }: DefImport<EventListener>) => client.events.set(path.basename(eventModule, ".js"), event))
+        )
+      ))
+    ),
+    ...paths.map(
+      (src) => glob(`build/${src}/devcmds/**/*.js`, { filesOnly: true })
+      .then((ls) => ls.filter(isModule), () => [])
+      .then((devcmdModules) => Promise.all(
+        devcmdModules.map(
+          async (devcmdModule) => import(`../../${devcmdModule}`)
+          .then(({ default: devcmd }: DefImport<DevCmd>) => client.on(`command-${devcmd.name}`, devcmd.exec))
         )
       ))
     ),
